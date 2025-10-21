@@ -4,6 +4,7 @@
 ## General guidelines
 - Always use Laravel's built-in structures (Eloquent, Blade, Service Container, Farcades)
 - No spaghetti code: separate responsibilities (Controllers, Models, Services)
+- All code is required to be in english
 
 ## code languages & frameworks
 -  backend: C#
