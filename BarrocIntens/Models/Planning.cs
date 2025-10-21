@@ -9,5 +9,9 @@ namespace BarrocIntens.Models
     internal class Planning
     {
         public int Id { get; set; }
+
+
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
     }
 }

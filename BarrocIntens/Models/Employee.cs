@@ -24,8 +24,6 @@ namespace BarrocIntens.Models
         [MaxLength(50)]
         public string Password { get; set; }
 
-        //[Required]
-        // add role
 
         [Required]
         public int AppointmentId { get; set; }
@@ -33,10 +31,12 @@ namespace BarrocIntens.Models
         [Required]
         public Appointment Appointment { get; set; }
 
-        //[Required]
-        // add tasks
-
-
         public List<Appointment> Appointments { get; set; }
+
+        public List<Planning> tasks { get; set; }
+
+
+
+
     }
 }
