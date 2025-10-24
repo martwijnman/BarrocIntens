@@ -13,7 +13,6 @@ namespace BarrocIntens.Models
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Dashboard> Dashboards { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Malfunction> Malfunctions { get; set; }
@@ -28,6 +27,7 @@ namespace BarrocIntens.Models
                 ServerVersion.Parse("8.0.30")
             );
         }
+
         // models are required here
 
     }

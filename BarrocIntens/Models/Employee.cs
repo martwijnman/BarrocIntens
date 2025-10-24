@@ -12,27 +12,27 @@ namespace BarrocIntens.Models
         [Required]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vul naam in")]
         [MaxLength(280)]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email is verplicht")]
         [MaxLength(280)]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "voer een wachtwoord in")]
         [MaxLength(50)]
         public string Password { get; set; }
 
 
-        [Required]
+        [Required (ErrorMessage = "Afspraak moet gemaakt worden")]
         public int AppointmentId { get; set; }
 
-        [Required]
         public Appointment Appointment { get; set; }
 
         public List<Appointment> Appointments { get; set; }
 
+        [Required]
         public List<Planning> tasks { get; set; }
 
 
