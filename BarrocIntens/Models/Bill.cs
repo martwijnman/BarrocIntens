@@ -9,7 +9,7 @@ namespace BarrocIntens.Models
 {
     internal class Bill
     {
-        [Required]
+        [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Voeg een klant toe")]

@@ -9,7 +9,7 @@ namespace BarrocIntens.Models
 {
     internal class Department
     {
-        [Required]
+        [Key]
         public int Id { get; set; }
         
         [Required(ErrorMessage ="Voer afdelingnaam in")]

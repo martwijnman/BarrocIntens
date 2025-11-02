@@ -9,30 +9,30 @@ namespace BarrocIntens.Models
 {
     internal class Employee
     {
-        [Required]
+        [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Vul naam in")]
+        [Required]
         [MaxLength(280)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Email is verplicht")]
+        [Required]
         [MaxLength(280)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "voer een wachtwoord in")]
+        [Required]
         [MaxLength(50)]
         public string Password { get; set; }
 
 
-        [Required (ErrorMessage = "Afspraak moet gemaakt worden")]
+        [Required]
         public int AppointmentId { get; set; }
 
+        [Required]
         public Appointment Appointment { get; set; }
 
         public List<Appointment> Appointments { get; set; }
 
-        [Required]
         public List<Planning> tasks { get; set; }
 
 

@@ -9,7 +9,7 @@ namespace BarrocIntens.Models
 {
     internal class Malfunction
     {
-        [Required]
+        [Key]
         public int Id { get; set; }
 
         [Required]
