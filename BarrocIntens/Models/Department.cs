@@ -14,9 +14,40 @@ namespace BarrocIntens.Models
         
         [Required(ErrorMessage ="Voer afdelingnaam in")]
         [MaxLength(180)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public string description { get; set; }
+        public string Description { get; set; }
+
+        // CRUD operations for Department
+
+        // Update
+        public void Update(int departmentId, string name, string description)
+        {
+            using (var db = new AppDbContext())
+            {
+                var department = db.Departments.FirstOrDefault(b => b.Id == departmentId);
+                if (department != null)
+                {
+                    department.Name = name;
+                    department.Description = description;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        // Delete
+        public void Delete(int departmentId)
+        {
+            using (var db = new AppDbContext())
+            {
+                var department = db.Departments.FirstOrDefault(d => d.Id == departmentId);
+                if (department != null)
+                {
+                    db.Departments.Remove(department);
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }

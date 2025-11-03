@@ -14,25 +14,59 @@ namespace BarrocIntens.Models
         
         [Required(ErrorMessage ="Voer een naam in")]
         [MaxLength(180)]
-        public string name { get; set; }
+        public string Name { get; set; }
         
         [Required(ErrorMessage = "Voer een naam in")]
         [MaxLength(180)]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Voer een naam in")]
         [MaxLength(180)]
-        public string phoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Voer een naam in")]
         [MaxLength(180)]
-        public string city { get; set; }
+        public string City { get; set; }
 
         [Required(ErrorMessage = "Voer een monteur in")]
-        public int malfunctionId { get; set; }
+        public int MalfunctionId { get; set; }
         public Malfunction Malfunction { get; set; }
         // contractduur
         // financiele status
-        public bool bkrStatus { get; set; } // nullable
+        public bool BkrStatus { get; set; } // nullable
+                                            // CRUD operations for Department
+
+        // Update
+        public void Update(int customerId, string name, string email, string phoneNumber, string city, int malfunctionId, bool bkrStatus)
+        {
+            using (var db = new AppDbContext())
+            {
+                var customer = db.Customers.FirstOrDefault(c => c.Id == customerId);
+                if (customer != null)
+                {
+                    customer.Name = name;
+                    customer.Email = email;
+                    customer.PhoneNumber = phoneNumber;
+                    customer.City = city;
+                    customer.MalfunctionId = malfunctionId;
+                    customer.BkrStatus = bkrStatus;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        // Delete
+        public void Delete(int customerId)
+        {
+            using (var db = new AppDbContext())
+            {
+                var customer = db.Customers.FirstOrDefault(c => c.Id == customerId);
+                if (customer != null)
+                {
+                    db.Customers.Remove(customer);
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }

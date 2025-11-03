@@ -39,5 +39,38 @@ namespace BarrocIntens.Models
         public string Description { get; set; }
 
 
+        // CRUD operations for Planning
+
+        // Update
+        public void Update(int planningId, DateOnly date, string plan, string status, string location, string description)
+        {
+            using (var db = new AppDbContext())
+            {
+                var planning = db.Plannings.FirstOrDefault(p => p.Id == planningId);
+                if (planning != null)
+                {
+                    planning.Date = date;
+                    planning.Plan = plan;
+                    planning.Status = status;
+                    planning.Location = location;
+                    planning.Description = description;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        // Delete
+        public void Delete(int planningId)
+        {
+            using (var db = new AppDbContext())
+            {
+                var planning = db.Plannings.FirstOrDefault(p => p.Id == planningId);
+                if (planning != null)
+                {
+                    db.Plannings.Remove(planning);
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }

@@ -36,5 +36,6 @@ namespace BarrocIntens.Models
 
         [Required(ErrorMessage = "Zet een tijd")]
         public int Time { get; set; }
+
     }
 }

@@ -13,17 +13,47 @@ namespace BarrocIntens.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Voeg een klant toe")]
-        public int employeeId { get; set; }
+        public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
 
         [Required(ErrorMessage = "Voeg een klant toe")]
-        public int costumerId { get; set; }
+        public int CostumerId { get; set; }
         public Customer Customer { get; set; }
 
         [Required(ErrorMessage = "Voeg een bedrag toe")]
-        public int totalAmount { get; set; }
+        public int TotalAmount { get; set; }
 
+        // CRUD operations for Bill
 
+        // Update
+        public void Update(int billId, int employeeId, int costumerIdemail, int totalAmount)
+        {
+            using (var db = new AppDbContext())
+            {
+                var bill = db.Bills.FirstOrDefault(b => b.Id == billId);
+                if (bill != null)
+                {
+                    bill.EmployeeId = employeeId;
+                    bill.CostumerId = costumerIdemail;
+                    bill.TotalAmount = totalAmount;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        // Delete
+        public void Delete(int billId)
+        {
+            using (var db = new AppDbContext())
+            {
+                var bill = db.Bills.FirstOrDefault(e => e.Id == billId);
+                if (bill != null)
+                {
+                    db.Bills.Remove(bill);
+                    db.SaveChanges();
+                }
+            }
+        }
 
     }
 }
