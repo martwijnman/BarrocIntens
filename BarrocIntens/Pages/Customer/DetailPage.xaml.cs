@@ -1,5 +1,3 @@
-using BarrocIntens.Data;
-using BarrocIntens.Pages.Customer;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -18,25 +16,16 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace BarrocIntens.Pages.Product
+namespace BarrocIntens.Pages.Customer
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class OverviewPage : Page
+    public sealed partial class DetailPage : Page
     {
-        public OverviewPage()
+        public DetailPage()
         {
             InitializeComponent();
-            using (var db = new AppDbContext())
-            {
-                var products = db.Products.ToList();
-            }
-        }
-        private void ProductClick(object sender, ItemClickEventArgs e)
-        {
-            var selectedProduct = (Data.Product)e.ClickedItem;
-            Frame.Navigate(typeof(DetailPage), selectedProduct);
         }
     }
 }
