@@ -13,7 +13,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Pages\Appointments\OverviewPage.xaml" />
+    <None Remove="Pages\Bill\OverviewPage.xaml" />
+    <None Remove="Pages\Customer\DetailPage.xaml" />
+    <None Remove="Pages\Customer\OverviewPage.xaml" />
+    <None Remove="Pages\DashboardPage.xaml" />
+    <None Remove="Pages\Login\LoginPage.xaml" />
     <None Remove="Pages\Product\OverviewPage.xaml" />
+    
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +55,42 @@
     <Page Update="Pages\Product\OverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Appointments\OverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Bill\OverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\Malfunction\" />
+    <Folder Include="Pages\Department\" />
+    <Folder Include="Pages\Planning\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\DashboardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Login\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Customer\DetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Customer\OverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
   </ItemGroup>
 
   <!--
