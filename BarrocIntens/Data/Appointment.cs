@@ -17,13 +17,13 @@ namespace BarrocIntens.Data
         public Customer Customer { get; set; }
 
         public int EmployeeId { get; set; }
-        public Employee employee { get; set; }
+        public Employee Employee { get; set; }
         
         [Required(ErrorMessage = "Zet een datum")]
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Zet een datum")]
-        public string location { get; set; }
+        public string Location { get; set; }
 
         [Required(ErrorMessage = "voer de notities in")]
         public string Notes { get; set; }
