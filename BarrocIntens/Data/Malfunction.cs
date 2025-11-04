@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BarrocIntens.Models
+namespace BarrocIntens.Data
 {
     internal class Malfunction
     {
