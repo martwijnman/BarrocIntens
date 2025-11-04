@@ -9,6 +9,22 @@
     mc:Ignorable="d">
 
     <Grid>
-
+        <ListView x:Name="ProductListView"
+                  IsItemClickEnabled="True"
+                  ItemClick="RoomItem"
+                  >
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:Product">
+                    <StackPanel>
+                        <TextBlock Text="{x:Bind Name }" x:Name="detailSelectorBarItem" />
+                        <TextBlock Text="{x:Bind Category}" x:Name="detailSelectorBarItem" />
+                        <TextBlock Text="{x:Bind Price}" x:Name="detailSelectorBarItem" />
+                        <TextBlock Text="{x:Bind Stock}" x:Name="detailSelectorBarItem" />
+                        <TextBlock Text="{x:Bind MinimumStock}" x:Name="detailSelectorBarItem" />
+                        <TextBlock Text="{x:Bind Deliverer}" x:Name="detailSelectorBarItem" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

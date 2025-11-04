@@ -28,8 +28,8 @@ namespace BarrocIntens.Pages.Product
         {
             InitializeComponent();
             using (var db = new AppDbContext())
-            { 
-            
+            {
+                var products = db.Products.ToList();
             }
         }
     }
