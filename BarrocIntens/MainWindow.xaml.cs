@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using BarrocIntens.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,6 +27,10 @@ namespace BarrocIntens
         public MainWindow()
         {
             InitializeComponent();
+            using (var db = new AppDbContext())
+            {
+                db.Database.EnsureCreated();
+            }
             contentFrame.Navigate(typeof(Pages.Login.LoginPage));
         }
     }
