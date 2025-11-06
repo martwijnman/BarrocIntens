@@ -71,60 +71,59 @@ namespace BarrocIntens.Data
                     Type = "Controle",
                     Time = 30
                 });
+            modelBuilder.Entity<Customer>().HasData(
+    new Customer
+    {
+        Id = 1,
+        Name = "Jan de Vries",
+        Email = "jan.devries@example.com",
+        PhoneNumber = "0612345678",
+        City = "Amsterdam",
+        BkrStatus = false
+    },
+    new Customer
+    {
+        Id = 2,
+        Name = "Sophie van Dijk",
+        Email = "sophie.vandijk@example.com",
+        PhoneNumber = "0622334455",
+        City = "Rotterdam",
+        BkrStatus = true
+    },
+    new Customer
+    {
+        Id = 3,
+        Name = "Ali Yılmaz",
+        Email = "ali.yilmaz@example.com",
+        PhoneNumber = "0688776655",
+        City = "Utrecht",
+
+        BkrStatus = false
+    });
             modelBuilder.Entity<Bill>().HasData(
                 new Bill
                 {
                     Id = 1,
                     EmployeeId = 1,
-                    CostumerId = 1,
+                    CustomerId = 1,
                     TotalAmount = 250
                 },
                 new Bill
                 {
                     Id = 2,
                     EmployeeId = 2,
-                    CostumerId = 2,
+                    CustomerId = 2,
                     TotalAmount = 480
                 },
                 new Bill
                 {
                     Id = 3,
                     EmployeeId = 1,
-                    CostumerId = 3,
+                    CustomerId = 3,
                     TotalAmount = 320
                 });
 
-            modelBuilder.Entity<Customer>().HasData(
-                new Customer
-                {
-                    Id = 1,
-                    Name = "Jan de Vries",
-                    Email = "jan.devries@example.com",
-                    PhoneNumber = "0612345678",
-                    City = "Amsterdam",
-                    MalfunctionId = 1,
-                    BkrStatus = false
-                },
-                new Customer
-                {
-                    Id = 2,
-                    Name = "Sophie van Dijk",
-                    Email = "sophie.vandijk@example.com",
-                    PhoneNumber = "0622334455",
-                    City = "Rotterdam",
-                    MalfunctionId = 2,
-                    BkrStatus = true
-                },
-                new Customer
-                {
-                    Id = 3,
-                    Name = "Ali Yılmaz",
-                    Email = "ali.yilmaz@example.com",
-                    PhoneNumber = "0688776655",
-                    City = "Utrecht",
-                    MalfunctionId = 3,
-                    BkrStatus = false
-                });
+
             modelBuilder.Entity<Department>().HasData(
                 new Department
                 {
@@ -180,8 +179,6 @@ namespace BarrocIntens.Data
                 new Malfunction
                 {
                     Id = 1,
-                    CustomerId = 1,
-                    EmployeeId = 1,
                     Date = new DateTime(2025, 10, 21),
                     Description = "Klant meldt dat de airconditioning niet meer koelt.",
                     status = false,
@@ -191,8 +188,6 @@ namespace BarrocIntens.Data
                 new Malfunction
                 {
                     Id = 2,
-                    CustomerId = 2,
-                    EmployeeId = 2,
                     Date = new DateTime(2025, 10, 25),
                     Description = "Waterlekkage gemeld bij warmtepomp.",
                     status = true,
@@ -202,8 +197,6 @@ namespace BarrocIntens.Data
                 new Malfunction
                 {
                     Id = 3,
-                    CustomerId = 3,
-                    EmployeeId = 3,
                     Date = new DateTime(2025, 11, 2),
                     Description =
                       "Storing aan zonnepanelen – geen opbrengst geregistreerd.",
@@ -211,10 +204,9 @@ namespace BarrocIntens.Data
                     Action = "Monteur toegewezen voor diagnose.",
                     Urgency = "Hoog"
                 });
-            modelBuilder.Entity<Planning>()
-                .HasMany(p => p.Customers)
-                .WithMany()
-                .UsingEntity(j => j.ToTable("PlanningCustomers"));
+
+
+
 
             // Seeding data
             modelBuilder.Entity<Planning>().HasData(
@@ -222,27 +214,50 @@ namespace BarrocIntens.Data
                 {
                     Id = 1,
                     Date = new DateOnly(2025, 11, 10),
-                    Plan = "Installatie nieuwe zonnepanelen bij klant Jan de Vries"
+                    Plan = "Installatie nieuwe zonnepanelen bij klant Jan de Vries",
+                    Description = "Installatie nieuwe zonnepanelen bij klant Jan de Vries",
+                    Location = "Rotterdam",
+                    Status = "niet gedaan",
                 },
                 new Planning
                 {
                     Id = 2,
                     Date = new DateOnly(2025, 11, 11),
-                    Plan =
-                                   "Onderhoud warmtepompsystemen regio Rotterdam"
+                    Plan = "Onderhoud warmtepompsystemen regio Rotterdam",
+                    Description = "Installatie nieuwe zonnepanelen bij klant Jan de Vries",
+                    Location = "Rotterdam",
+                    Status = "niet gedaan",
                 },
                 new Planning
                 {
                     Id = 3,
                     Date = new DateOnly(2025, 11, 12),
-                    Plan = "Controle BKR-status en contractverlenging"
+                    Plan = "Controle BKR-status en contractverlenging",
+                    Description = "Installatie nieuwe zonnepanelen bij klant Jan de Vries",
+                    Location = "Rotterdam",
+                    Status = "niet gedaan",
                 });
 
-            // Many-to-many seeding (tussen Planning en Customer)
-            modelBuilder.Entity("PlanningCustomers")
-                .HasData(new { CustomersId = 1, PlanningsId = 1 },
-                         new { CustomersId = 2, PlanningsId = 2 },
-                         new { CustomersId = 3, PlanningsId = 3 });
+            modelBuilder.Entity<Planning>()
+    .HasMany(p => p.Customers)
+    .WithMany()
+    .UsingEntity<Dictionary<string, object>>(
+        "PlanningCustomers",
+        j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
+        j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
+        j =>
+        {
+            j.HasKey("PlanningId", "CustomerId");
+            j.ToTable("PlanningCustomers");
+
+            // ✅ Join table seeding
+            j.HasData(
+                new { CustomerId = 1, PlanningId = 1 },
+                new { CustomerId = 2, PlanningId = 2 },
+                new { CustomerId = 3, PlanningId = 3 }
+            );
+        });
+
 
             modelBuilder.Entity<Product>().HasData(
                 new Product

@@ -11,14 +11,6 @@ namespace BarrocIntens.Data
     {
         [Key]
         public int Id { get; set; }
-
-        [Required]
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
-
-        [Required]
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
         
         [Required(ErrorMessage = "Datum is verplicht")]
         public DateTime Date { get; set; }

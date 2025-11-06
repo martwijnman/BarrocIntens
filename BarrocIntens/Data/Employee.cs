@@ -25,14 +25,6 @@ namespace BarrocIntens.Data
         public string Password { get; set; }
 
 
-        [Required]
-        public int AppointmentId { get; set; }
-
-        [Required]
-        public Appointment Appointment { get; set; }
-
-        public List<Appointment> Appointments { get; set; }
-
         public List<Planning> tasks { get; set; }
 
         // CRUD operations for Planning
@@ -47,8 +39,7 @@ namespace BarrocIntens.Data
                 {
                     employee.Name = name;
                     employee.Email = email;
-                    employee.Password = password;
-                    employee.AppointmentId = appointmentId;
+                    employee.Password = password;;
                     // voeg lijsten nog toe
                     db.SaveChanges();
                 }

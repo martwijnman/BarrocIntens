@@ -17,7 +17,7 @@ namespace BarrocIntens.Data
         public Employee Employee { get; set; }
 
         [Required(ErrorMessage = "Voeg een klant toe")]
-        public int CostumerId { get; set; }
+        public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
         [Required(ErrorMessage = "Voeg een bedrag toe")]
@@ -34,7 +34,7 @@ namespace BarrocIntens.Data
                 if (bill != null)
                 {
                     bill.EmployeeId = employeeId;
-                    bill.CostumerId = costumerIdemail;
+                    bill.CustomerId = costumerIdemail;
                     bill.TotalAmount = totalAmount;
                     db.SaveChanges();
                 }

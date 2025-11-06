@@ -29,8 +29,6 @@ namespace BarrocIntens.Data
         public string City { get; set; }
 
         [Required(ErrorMessage = "Voer een monteur in")]
-        public int MalfunctionId { get; set; }
-        public Malfunction Malfunction { get; set; }
         // contractduur
         // financiele status
         public bool BkrStatus { get; set; } // nullable
@@ -48,7 +46,6 @@ namespace BarrocIntens.Data
                     customer.Email = email;
                     customer.PhoneNumber = phoneNumber;
                     customer.City = city;
-                    customer.MalfunctionId = malfunctionId;
                     customer.BkrStatus = bkrStatus;
                     db.SaveChanges();
                 }
