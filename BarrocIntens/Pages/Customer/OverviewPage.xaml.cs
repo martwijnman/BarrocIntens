@@ -32,9 +32,5 @@ namespace BarrocIntens.Pages.Customer
                 CostumerListView.ItemsSource = customers;
             }
      }
-        private void Costumer_Click()
-        {
-            Frame.Navigate(typeof(Pages.Customer.DetailPage));
-        }
     }
 }

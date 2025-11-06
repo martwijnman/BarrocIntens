@@ -8,7 +8,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <StackPanel 
+        Orientation="Horizontal"
+        >
+        <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
+                <NavigationViewItem Content="" Icon="" Tag=""/>
+            </NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame"/>
+        </NavigationView>
 
-    </Grid>
+    </StackPanel>
 </Page>

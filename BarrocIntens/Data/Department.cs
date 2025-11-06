@@ -16,8 +16,11 @@ namespace BarrocIntens.Data
         [MaxLength(180)]
         public string Name { get; set; }
 
+
         [Required]
         public string Description { get; set; }
+
+        public string? Icon { get; set; }
 
         // CRUD operations for Department
 

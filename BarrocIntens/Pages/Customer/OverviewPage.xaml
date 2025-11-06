@@ -12,7 +12,6 @@
     <Grid>
         <ListView x:Name="CostumerListView"
                   IsItemClickEnabled="True"
-                  ItemClick="Costumer_Click"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Customer">
