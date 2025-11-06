@@ -14,6 +14,10 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using FluentValidation;
+using FluentValidation.Results;
+using BarrocIntens.Data;
+using BarrocIntens.Data.Validation;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,41 +35,35 @@ namespace BarrocIntens.Pages.Login
         }
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            // login validation
-            if (string.IsNullOrWhiteSpace(namebox.Text) && string.IsNullOrWhiteSpace(passwordBox.Password))
+            var employee = new Employee
             {
-                errorText.Text = "Add your login details";
+                Name = namebox.Text,
+                Password = passwordBox.Password
+            };
+
+            var validator = new EmployeeValidator();
+            ValidationResult result = validator.Validate(employee);
+
+            if (!result.IsValid)
+            {
+                errorText.Text = result.Errors.First().ErrorMessage;
+                return;
             }
-            else if (string.IsNullOrWhiteSpace(namebox.Text))
+
+            using (var db = new Data.AppDbContext())
             {
-                errorText.Text = "Add your login details";
-            }
-            else if (string.IsNullOrWhiteSpace(passwordBox.Password))
-            {
-                errorText.Text = "Add your login details";
-            }
-            else
-            {
-                using (var db = new Data.AppDbContext())
+                var loginEmployee = db.Employees
+                    .FirstOrDefault(e => e.Name == employee.Name && e.Password == employee.Password);
+
+                if (loginEmployee != null)
                 {
-                    // login employee
-                    var loginEmployee = db.Employees
-    .FirstOrDefault(e => e.Name == namebox.Text && e.Password == passwordBox.Password);
-
-
-                    if (loginEmployee != null)
-                    {
-                        Frame.Navigate(typeof(DashboardPage));
-                    }
-                    else
-                    {
-                        errorText.Text = "Name or password is invalid.";
-                    }
-
+                    Frame.Navigate(typeof(DashboardPage));
+                }
+                else
+                {
+                    errorText.Text = "Name or password is invalid.";
                 }
             }
-
-
         }
     }
 }
