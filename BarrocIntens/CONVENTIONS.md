@@ -3,7 +3,6 @@
 # Project conventions
 ## General guidelines
 - Always use Laravel's built-in structures (Eloquent, Blade, Service Container, Farcades)
-- No spaghetti code: separate responsibilities (Controllers, Models, Services)
 - All code is required to be in english
 
 ## code languages & frameworks
@@ -24,10 +23,9 @@
 - constants: UPPER_CASE
 
 ## folders & files
-- controllers in `app/Http/Controllers/`
-- models in `app/models`
-- migrations in `YYYY_MM_DD_create_users_table.php`
-- views in `resources/views`, use subfolders per feature (`users/index.blade.php`)
+- models in `Data`
+- validations in 'Data/Validation'
+- Pages in 'Pages'
 
 ## CRUD Functions
 - tablenames: PascalCase
