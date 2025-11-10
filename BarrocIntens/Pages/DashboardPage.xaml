@@ -14,7 +14,6 @@
         <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
-                <NavigationViewItem Content="" Icon="" Tag=""/>
             </NavigationView.MenuItems>
             <Frame x:Name="ContentFrame"/>
         </NavigationView>

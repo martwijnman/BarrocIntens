@@ -16,7 +16,8 @@ namespace BarrocIntens.Data
         [MaxLength(280)]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Add your Email")]
+        [EmailAddress]
         [MaxLength(280)]
         public string Email { get; set; }
 

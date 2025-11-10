@@ -19,6 +19,8 @@
     <None Remove="Pages\Customer\OverviewPage.xaml" />
     <None Remove="Pages\DashboardPage.xaml" />
     <None Remove="Pages\Login\LoginPage.xaml" />
+    <None Remove="Pages\Planning\CalenderPage.xaml" />
+    <None Remove="Pages\Planning\CreatePage.xaml" />
     <None Remove="Pages\Product\OverviewPage.xaml" />
     
   </ItemGroup>
@@ -71,7 +73,16 @@
     <Folder Include="Images\" />
     <Folder Include="Pages\Malfunction\" />
     <Folder Include="Pages\Department\" />
-    <Folder Include="Pages\Planning\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Planning\CreatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Planning\CalenderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\DashboardPage.xaml">
@@ -110,5 +121,6 @@
     <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 </Project>

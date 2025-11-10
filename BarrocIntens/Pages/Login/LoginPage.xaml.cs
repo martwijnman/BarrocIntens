@@ -14,10 +14,10 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using FluentValidation;
-using FluentValidation.Results;
 using BarrocIntens.Data;
 using BarrocIntens.Data.Validation;
+using System.ComponentModel.DataAnnotations;
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,33 +35,36 @@ namespace BarrocIntens.Pages.Login
         }
         private void LoginClick(object sender, RoutedEventArgs e)
         {
+            
+
             var employee = new Employee
             {
-                Name = namebox.Text,
+                Email = emailbox.Text,
                 Password = passwordBox.Password
             };
 
-            var validator = new EmployeeValidator();
-            ValidationResult result = validator.Validate(employee);
+            var context = new ValidationContext(employee);
+            var results = new List<ValidationResult>();
 
-            if (!result.IsValid)
+            if (!Validator.TryValidateObject(employee, context, results, true))
             {
-                errorText.Text = result.Errors.First().ErrorMessage;
-                return;
+                var errors = new List<string>();
+                foreach (var validationResult in results)
+                {
+                    errors.Add(validationResult.ErrorMessage);
+                }
+                errorText.Text = string.Join(Environment.NewLine, errors);
             }
+
 
             using (var db = new Data.AppDbContext())
             {
                 var loginEmployee = db.Employees
-                    .FirstOrDefault(e => e.Name == employee.Name && e.Password == employee.Password);
+                    .FirstOrDefault(e => e.Email == employee.Email && e.Password == employee.Password);
 
                 if (loginEmployee != null)
                 {
                     Frame.Navigate(typeof(DashboardPage));
-                }
-                else
-                {
-                    errorText.Text = "Name or password is invalid.";
                 }
             }
         }

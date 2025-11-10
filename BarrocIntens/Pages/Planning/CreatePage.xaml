@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="BarrocIntens.Pages.Planning.CreatePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BarrocIntens.Pages.Planning"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollView>
+        <StackPanel>
+            <DatePicker x:Name="date" />
+            <TextBox x:Name="plan" />
+            <TextBox x:Name="location" />
+            <TextBox x:Name="description" />
+            <Button Click="CreateButton">
+                Save
+            </Button>
+        </StackPanel>
+    </ScrollView>
+</Page>
