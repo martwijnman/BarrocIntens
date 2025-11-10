@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="BarrocIntens.Pages.Customer.CreateCustomerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BarrocIntens.Pages.Customer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Padding="15" Spacing="15">
+        <TextBox x:Name="NameTextBox" 
+                 Header="Naam:"></TextBox>
+
+        <TextBox x:Name="EmailTextBox" 
+                 Header="E-mail:"></TextBox>
+
+        <TextBox x:Name="PhoneTextBox" 
+                 Header="Telefeloonnummer:"></TextBox>
+
+        <TextBox x:Name="CityTextBox" 
+                 Header="Stad:"></TextBox>
+
+        <CheckBox x:Name="BKRCheckBox">BKR keuring:</CheckBox>
+
+
+        <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>
+
+        <Button x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
+
+    </StackPanel>
+</Page>
