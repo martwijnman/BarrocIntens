@@ -160,6 +160,7 @@ namespace BarrocIntens.Data
                     Email = "peter.jansen@bedrijf.nl",
                     Password = "Welkom123"
                 },
+
                 new Employee
                 {
                     Id = 2,
@@ -173,7 +174,14 @@ namespace BarrocIntens.Data
                     Name = "Ahmed El Amrani",
                     Email = "ahmed.elamrani@bedrijf.nl",
                     Password = "Welkom123"
-                });
+                },
+                                new Employee
+                                {
+                                    Id = 4,
+                                    Name = "Root",
+                                    Email = "Root@root.nl",
+                                    Password = "Root"
+                                });
 
             modelBuilder.Entity<Malfunction>().HasData(
                 new Malfunction
