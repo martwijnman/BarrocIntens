@@ -69,8 +69,5 @@ public sealed partial class CalenderPage : Page
         await dialog.ShowAsync();
     }
 
-    private void GoBackButton_Click(object sender, RoutedEventArgs e)
-    {
-        this.Frame.GoBack();
-    }
+
 }

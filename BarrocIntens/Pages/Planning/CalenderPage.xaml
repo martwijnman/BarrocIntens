@@ -22,11 +22,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Padding="15"
-                    Grid.Column="0"
-                    Click="GoBackButton_Click">
-                Go back
-            </Button>
+
 
             <Button x:Name="addCalendarItemButton"
                     Padding="15"
@@ -34,7 +30,7 @@
                     Background="Gold"
                     Grid.Column="2"
                     Click="AddCalendarItemButton_Click">
-                Test Add Calendar Item
+                Add Calendar
             </Button>
         </Grid>
 

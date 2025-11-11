@@ -9,11 +9,13 @@
     mc:Ignorable="d">
 
     <ScrollView>
-        <StackPanel>
-            <DatePicker x:Name="date" />
-            <TextBox x:Name="plan" />
-            <TextBox x:Name="location" />
-            <TextBox x:Name="description" />
+        <StackPanel
+            Spacing="20"
+            >
+            <DatePicker x:Name="date" Header="Date"  />
+            <TextBox x:Name="PlanTextbox" Header="Plan" PlaceholderText="Plan" />
+            <TextBox x:Name="LocationTextbox" Header="Location" PlaceholderText="Location" />
+            <TextBox x:Name="DescriptionTextbox" Header="Description" PlaceholderText="Description" />
             <Button Click="CreateButton">
                 Save
             </Button>

@@ -29,7 +29,17 @@ namespace BarrocIntens.Pages.Planning
         }
         private void CreateButton(object sender, RoutedEventArgs e)
         {
-
+            using (var db = new Data.AppDbContext())
+            {
+                var planning = db.Plannings.Add(new Data.Planning
+                {
+                    //Date = date,
+                    Plan = PlanTextbox.Text,
+                    Location = LocationTextbox.Text,
+                    Description = DescriptionTextbox.Text,
+                }); 
+            }
+            Frame.Navigate(typeof(CalenderPage));
         }
     }
 }
