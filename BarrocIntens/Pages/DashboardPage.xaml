@@ -9,11 +9,9 @@
     mc:Ignorable="d">
 
     <ScrollView>
-        <StackPanel 
-        Orientation="Horizontal"
-        >
+        <StackPanel Orientation="Horizontal">
             <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed"
-            SelectionChanged="NavigationView_SelectionChanged">
+                        SelectionChanged="NavigationView_SelectionChanged">
                 <NavigationView.MenuItems>
                     <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
                     <NavigationViewItem Content="Customers" Icon="Contact" Tag="Customer.CreateCustomerPage"/>
@@ -22,19 +20,22 @@
                 <Frame x:Name="ContentFrame"/>
             </NavigationView>
 
-            <StackPanel Margin="288 ">
+            <StackPanel Margin="288">
                 <TextBlock Text="Hallo {x:Bind Name}"
-                    FontSize="30"
-                    FontWeight="SemiBold"
-                    Margin="0,0,0,20"/>
+                       FontSize="30"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,20"/>
 
                 <!-- Tegels -->
                 <StackPanel Orientation="Horizontal" Spacing="10">
+
                     <!-- Dashboard tegel -->
                     <Button Width="150" Height="150"
                         BorderBrush="LightGray"
                         BorderThickness="1"
-                        Background="Transparent">
+                        Background="Transparent"
+                        Tag="DashboardPage"
+                        Click="Tile_Click">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="📊" FontSize="48" HorizontalAlignment="Center"/>
                             <TextBlock Text="Dashboard" FontSize="16" HorizontalAlignment="Center"/>
@@ -45,15 +46,31 @@
                     <Button Width="150" Height="150"
                         BorderBrush="LightGray"
                         BorderThickness="1"
-                        Background="Transparent">
+                        Background="Transparent"
+                        Tag="Customer.CreateCustomerPage"
+                        Click="Tile_Click">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="👤" FontSize="48" HorizontalAlignment="Center"/>
                             <TextBlock Text="Customer" FontSize="16" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Button>
+
+                    <!-- Planning tegel -->
+                    <Button Width="150" Height="150"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Background="Transparent"
+                        Tag="Planning.CalenderPage"
+                        Click="Tile_Click">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="🗓️" FontSize="48" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Planning" FontSize="16" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
                 </StackPanel>
             </StackPanel>
-
         </StackPanel>
     </ScrollView>
+
 </Page>

@@ -32,22 +32,34 @@ namespace BarrocIntens.Pages
         {
             if (args.SelectedItem is NavigationViewItem item)
             {
-                string tag = item.Tag.ToString();
+                NavigateToPage(item.Tag?.ToString());
+            }
+        }
 
-                // Navigate based on the tag
-                switch (tag)
-                {
-                    case "DashboardPage":
-                        ContentFrame.Navigate(typeof(DashboardPage));
-                        break;
-                    case "Customer.CreateCustomerPage":
-                        ContentFrame.Navigate(typeof(Customers.CreateCustomerPage));
-                        break;
-                    case "Planning.CalenderPage":
-                        ContentFrame.Navigate(typeof(Planning.CalenderPage));
-                        break;
-                }
+        private void Tile_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                NavigateToPage(button.Tag?.ToString());
+            }
+        }
+
+        private void NavigateToPage(string tag)
+        {
+            switch (tag)
+            {
+                case "DashboardPage":
+                    ContentFrame.Navigate(typeof(DashboardPage));
+                    break;
+                case "Customer.CreateCustomerPage":
+                    ContentFrame.Navigate(typeof(Customers.CreateCustomerPage));
+                    break;
+                case "Planning.CalenderPage":
+                    ContentFrame.Navigate(typeof(Planning.CalenderPage));
+                    break;
             }
         }
     }
+
 }
+
