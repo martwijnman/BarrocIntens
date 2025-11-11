@@ -75,6 +75,11 @@
     <Folder Include="Pages\Department\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Pages\Planning\CalenderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Pages\Planning\CreatePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

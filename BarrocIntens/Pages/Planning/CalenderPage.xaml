@@ -6,9 +6,72 @@
     xmlns:local="using:BarrocIntens.Pages.Planning"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button Padding="15"
+                    Grid.Column="0"
+                    Click="GoBackButton_Click">
+                Go back
+            </Button>
+
+            <Button x:Name="addCalendarItemButton"
+                    Padding="15"
+                    Foreground="Black"
+                    Background="Gold"
+                    Grid.Column="2"
+                    Click="AddCalendarItemButton_Click">
+                Test Add Calendar Item
+            </Button>
+        </Grid>
+
+        <CalendarView x:Name="calendarView"
+                      Grid.Row="1"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      CalendarItemBorderThickness="1"
+                      CalendarItemCornerRadius="0"
+                      HorizontalDayItemAlignment="Center"
+                      VerticalDayItemAlignment="Top"
+                      CalendarViewDayItemChanging="CalendarView_CalendarViewDayItemChanging">
+            <CalendarView.CalendarViewDayItemStyle>
+                <Style TargetType="CalendarViewDayItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <!-- Omdat we niet vanuit C# bij de ListView kunnen (omdat het in een datatemplate zit)
+                                    Benaderen we de data via de DataContext, met behulp van {Binding} die daar naar verwijst -->
+                                <ListView ItemsSource="{Binding}"
+                                          IsItemClickEnabled="True"
+                                          ItemClick="DayItemListView_ItemClick">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Planning">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind Plan}"
+                                                           FontWeight="Bold" />
+                                                <TextBlock Text="{x:Bind Location}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </CalendarView.CalendarViewDayItemStyle>
+        </CalendarView>
     </Grid>
 </Page>
