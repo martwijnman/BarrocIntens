@@ -37,5 +37,4 @@ public sealed partial class OverviewPage : Page
             AppointmentListView.ItemsSource = appointments;
         }
     }
-
 }

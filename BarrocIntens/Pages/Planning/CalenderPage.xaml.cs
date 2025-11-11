@@ -27,4 +27,58 @@ public sealed partial class CalenderPage : Page
     {
         InitializeComponent();
     }
+    private void AddCalendarItemButton_Click(object sender, RoutedEventArgs e)
+    {
+        //var newCalendarItem = new CalendarItem()
+        //{
+            //Subject = "New Calendar Item",
+            //StartTime = DateTime.Now,
+            //EndTime = DateTime.Now.AddHours(1),
+            //Location = "New Location",
+            //Details = "New Details"
+        //};
+
+        //AllCalendarItems.Add(newCalendarItem);
+
+        // Er blijkt geen nette manier om de CalendarView te 'refreshen', zodat de 
+        // 'CalendarView_CalendarViewDayItemChanging' event opnieuw wordt
+        // aangeroepen. Deze workaround forceert toch dat de calender ververst:
+        //calendarView.MinDate = calendarView.MinDate.AddMilliseconds(1);
+        //calendarView.SetDisplayDate(DateTime.Now);
+    }
+
+    // Gebruikte bron: https://stackoverflow.com/a/75269157
+    private void CalendarView_CalendarViewDayItemChanging(CalendarView sender, CalendarViewDayItemChangingEventArgs args)
+    {
+        var calendarItemDate = args.Item.Date;
+        //var relevantCalendarItems = AllCalendarItems.Where(item => item.StartTime.Date == calendarItemDate.Date);
+
+        // De DataContext is vanuit de xaml te benaderen met {Binding}
+        //args.Item.DataContext = relevantCalendarItems;
+
+        //if (relevantCalendarItems.Count() == 0)
+        //{
+            //args.Item.IsBlackout = true;
+        //}
+    }
+
+    private async void DayItemListView_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        //var clickedCalendarItem = ()e.ClickedItem;
+
+        var dialog = new ContentDialog()
+        {
+            //Title = clickedCalendarItem.Subject,
+            //Content = $"Start: {clickedCalendarItem.StartTime}\nEnd: {clickedCalendarItem.EndTime}\nLocation: {clickedCalendarItem.Location}\nDetails: {clickedCalendarItem.Details}",
+            //CloseButtonText = "Close",
+            //XamlRoot = this.XamlRoot,
+        };
+
+        await dialog.ShowAsync();
+    }
+
+    private void GoBackButton_Click(object sender, RoutedEventArgs e)
+    {
+        this.Frame.GoBack();
+    }
 }

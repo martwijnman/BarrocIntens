@@ -2,7 +2,7 @@
 
 # Project conventions
 ## General guidelines
-- Always use Laravel's built-in structures (Eloquent, Blade, Service Container, Farcades)
+- Always use WinUI built-in structures
 - All code is required to be in english
 
 ## code languages & frameworks
@@ -14,11 +14,9 @@
 - WinUI: 3
 - C#: 12
 - MySQL: 8
-- Apache: 2.4 || Nginx 1.24
 
 ## code style
-- models, functions: camelCase
-- tabels and lists: plural
+- models, functions: PascalCase
 - classnames: PascalCase
 - constants: UPPER_CASE
 
@@ -29,26 +27,20 @@
 
 ## CRUD Functions
 - tablenames: PascalCase
-- RESTful methods: `index`, `show`, `create`, `store`, `update`, `destroy`
-
+- RESTful methods
 
 ## validation
 - validations belong in the ViewModel
-- use properties with INotifyDataErrorInfo or DataAnnotations
 - use DataConverters forsimple format checks like numbers or dates
 
 ## database
 - database: mysql version 8.0
 
 ## file- and mapstructure
-- `/Views` -> only xaml files has to be inside this
-- `/ViewModels` -> only for dataconnection with view and model
+- `/Pages` -> only xaml files has to be inside this
+- `/Data` -> only for backend functions, models and validations
 - `/Services` -> only for datastore, API-calls or calculations
 - `/Assets` -> for example image, icons and fonts
-
-## branches
-- `main` → stabele production
-- `dev` → developarea
 
 ## XAML template
 - use data to XAML in `{x:Bind var}`
@@ -56,8 +48,6 @@
 
 ## commands
 - no click-events in code-behind
-- use `RelayCommand` or `ICommand` implementations
-- namegiving: `SaveCommand`, `DeleteCommand`, `LoadDataCommand` 
 
 ## Layouts (Reusable UI)
 - Great reuseble UI-structures for example footers be in`/Views/Layouts`
