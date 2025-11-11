@@ -34,14 +34,18 @@ namespace BarrocIntens.Pages
             {
                 string tag = item.Tag.ToString();
 
-                // Navigate based on the tag
                 switch (tag)
                 {
                     case "DashboardPage":
-                        ContentFrame.Navigate(typeof(DashboardPage));
+                        // Home: clear frame content
+                        if (ContentFrame.Content != null)
+                            ContentFrame.Content = null;
                         break;
+
                     case "Customer.CreateCustomerPage":
-                        ContentFrame.Navigate(typeof(Customers.CreateCustomerPage));
+                        // Navigate to customer page only if not already there
+                        if (ContentFrame.Content == null || !(ContentFrame.Content is Customers.CreateCustomerPage))
+                            ContentFrame.Navigate(typeof(Customers.CreateCustomerPage));
                         break;
                     case "Planning.CalenderPage":
                         ContentFrame.Navigate(typeof(Planning.CalenderPage));
@@ -51,3 +55,4 @@ namespace BarrocIntens.Pages
         }
     }
 }
+
