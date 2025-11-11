@@ -8,18 +8,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    
     <StackPanel 
         Orientation="Horizontal"
         >
         <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
-                <NavigationViewItem Content="Customer" Icon="Home" Tag="Customer.OverviewPage"/>
+                <NavigationViewItem Content="Customer" Icon="People" Tag="Customer.OverviewPage"/>
             </NavigationView.MenuItems>
 
-            <StackPanel Margin="50">
+            <StackPanel Margin="288">
                 <TextBlock Text="Hallo {x:Bind Name}"
-                       FontSize="24"
+                       FontSize="30"
                        FontWeight="SemiBold"
                        Margin="0,0,0,20"/>
 
