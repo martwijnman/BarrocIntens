@@ -8,46 +8,48 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel 
-        Orientation="Horizontal"
-        >
-        <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed">
-            <NavigationView.MenuItems>
-                <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
-                <NavigationViewItem Content="Customer" Icon="Home" Tag="Customer.OverviewPage"/>
-            </NavigationView.MenuItems>
+    <StackPanel
+    Orientation="Horizontal">
+    <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed"
+                SelectionChanged="NavigationView_SelectionChanged">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
+            <NavigationViewItem Content="Customers" Icon="Contact" Tag="Customer.CreateCustomerPage"/>
+        </NavigationView.MenuItems>
+        <Frame x:Name="ContentFrame"/>
+    </NavigationView>
 
-            <StackPanel Margin="50">
-                <TextBlock Text="Hallo {x:Bind Name}"
+    <StackPanel Margin="50">
+        <TextBlock Text="Hallo {x:Bind Name}"
                        FontSize="24"
                        FontWeight="SemiBold"
                        Margin="0,0,0,20"/>
 
-                <!-- Tegels -->
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <!-- Dashboard tegel -->
-                    <Button Width="150" Height="150"
+        <!-- Tegels -->
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <!-- Dashboard tegel -->
+            <Button Width="150" Height="150"
                         BorderBrush="LightGray"
                         BorderThickness="1"
                         Background="Transparent">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="📊" FontSize="48" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Dashboard" FontSize="16" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
-                    <!-- Customer tegel -->
-                    <Button Width="150" Height="150"
-                        BorderBrush="LightGray"
-                        BorderThickness="1"
-                        Background="Transparent">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="👤" FontSize="48" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Customer" FontSize="16" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="📊" FontSize="48" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Dashboard" FontSize="16" HorizontalAlignment="Center"/>
                 </StackPanel>
-            </StackPanel>
-        </NavigationView>
+            </Button>
+
+            <!-- Customer tegel -->
+            <Button Width="150" Height="150"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Background="Transparent">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="👤" FontSize="48" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Customer" FontSize="16" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+
     </StackPanel>
 </Page>

@@ -15,8 +15,8 @@
   <ItemGroup>
     <None Remove="Pages\Appointments\OverviewPage.xaml" />
     <None Remove="Pages\Bill\OverviewPage.xaml" />
-    <None Remove="Pages\Customer\DetailPage.xaml" />
-    <None Remove="Pages\Customer\OverviewPage.xaml" />
+    <None Remove="Pages\Customers\DetailPage.xaml" />
+    <None Remove="Pages\Customers\OverviewPage.xaml" />
     <None Remove="Pages\DashboardPage.xaml" />
     <None Remove="Pages\Login\LoginPage.xaml" />
     <None Remove="Pages\Planning\CalenderPage.xaml" />

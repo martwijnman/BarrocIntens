@@ -27,5 +27,24 @@ namespace BarrocIntens.Pages
         {
             InitializeComponent();
         }
+
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.SelectedItem is NavigationViewItem item)
+            {
+                string tag = item.Tag.ToString();
+
+                // Navigate based on the tag
+                switch (tag)
+                {
+                    case "DashboardPage":
+                        ContentFrame.Navigate(typeof(DashboardPage));
+                        break;
+                    case "Customer.CreateCustomerPage":
+                        ContentFrame.Navigate(typeof(Customers.CreateCustomerPage));
+                        break;
+                }
+            }
+        }
     }
 }
