@@ -33,7 +33,7 @@ namespace BarrocIntens.Pages.Planning
             {
                 var planning = db.Plannings.Add(new Data.Planning
                 {
-                    //Date = date,
+                    //Date = DateOnly.FromDateTime(date.SelectedDate ?? DateTime.Now),
                     Plan = PlanTextbox.Text,
                     Location = LocationTextbox.Text,
                     Description = DescriptionTextbox.Text,
