@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.EntityFrameworkCore;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,22 +30,13 @@ public sealed partial class CalenderPage : Page
     }
     private void AddCalendarItemButton_Click(object sender, RoutedEventArgs e)
     {
-        //var newCalendarItem = new CalendarItem()
-        //{
-            //Subject = "New Calendar Item",
-            //StartTime = DateTime.Now,
-            //EndTime = DateTime.Now.AddHours(1),
-            //Location = "New Location",
-            //Details = "New Details"
-        //};
+        Frame.Navigate(typeof(Pages.Planning.CreatePage));
 
-        //AllCalendarItems.Add(newCalendarItem);
-
-        // Er blijkt geen nette manier om de CalendarView te 'refreshen', zodat de 
-        // 'CalendarView_CalendarViewDayItemChanging' event opnieuw wordt
-        // aangeroepen. Deze workaround forceert toch dat de calender ververst:
-        //calendarView.MinDate = calendarView.MinDate.AddMilliseconds(1);
-        //calendarView.SetDisplayDate(DateTime.Now);
+            // Er blijkt geen nette manier om de CalendarView te 'refreshen', zodat de 
+            // 'CalendarView_CalendarViewDayItemChanging' event opnieuw wordt
+            // aangeroepen. Deze workaround forceert toch dat de calender ververst:
+            //calendarView.MinDate = calendarView.MinDate.AddMilliseconds(1);
+            //calendarView.SetDisplayDate(DateTime.Now);
     }
 
     // Gebruikte bron: https://stackoverflow.com/a/75269157

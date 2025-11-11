@@ -43,6 +43,9 @@ namespace BarrocIntens.Pages
                     case "Customer.CreateCustomerPage":
                         ContentFrame.Navigate(typeof(Customers.CreateCustomerPage));
                         break;
+                    case "Planning.CalenderPage":
+                        ContentFrame.Navigate(typeof(Planning.CalenderPage));
+                        break;
                 }
             }
         }
