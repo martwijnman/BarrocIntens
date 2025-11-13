@@ -22,7 +22,7 @@
                 <Frame x:Name="ContentFrame"/>
             </NavigationView>
 
-            <StackPanel Margin="288 ">
+            <StackPanel Margin="10">
                 <TextBlock Text="Hallo {x:Bind Name}"
                     FontSize="30"
                     FontWeight="SemiBold"

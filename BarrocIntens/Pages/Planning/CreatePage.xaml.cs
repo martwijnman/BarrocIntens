@@ -1,3 +1,4 @@
+using BarrocIntens.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -7,6 +8,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -37,9 +39,22 @@ namespace BarrocIntens.Pages.Planning
                     Plan = PlanTextbox.Text,
                     Location = LocationTextbox.Text,
                     Description = DescriptionTextbox.Text,
-                }); 
+                });
+
+                var context = new ValidationContext(planning);
+                var results = new List<ValidationResult>();
+
+                if (!Validator.TryValidateObject(planning, context, results, true))
+                {
+                    var errors = new List<string>();
+                    foreach (var validationResult in results)
+                    {
+                        errors.Add(validationResult.ErrorMessage);
+                    }
+                    errorText.Text = string.Join(Environment.NewLine, errors);
+
+                }
             }
-            Frame.Navigate(typeof(CalenderPage));
         }
     }
 }

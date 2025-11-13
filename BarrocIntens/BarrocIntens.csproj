@@ -21,6 +21,7 @@
     <None Remove="Pages\Login\LoginPage.xaml" />
     <None Remove="Pages\Planning\CalenderPage.xaml" />
     <None Remove="Pages\Planning\CreatePage.xaml" />
+    <None Remove="Pages\Planning\DetailPage.xaml" />
     <None Remove="Pages\Product\OverviewPage.xaml" />
     
   </ItemGroup>
@@ -73,6 +74,11 @@
     <Folder Include="Images\" />
     <Folder Include="Pages\Malfunction\" />
     <Folder Include="Pages\Department\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Planning\DetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Planning\CalenderPage.xaml">
