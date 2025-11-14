@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollView>
+    <ScrollView  Width="1400">
         <StackPanel
             Spacing="20"
             >

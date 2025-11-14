@@ -22,11 +22,12 @@ namespace BarrocIntens.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DashboardPage : Page
+    public sealed partial class DashboardWindow : Page
     {
-        public DashboardPage()
+        public DashboardWindow()
         {
             InitializeComponent();
+            dashboardFrame.Navigate(typeof(MainPage));
         }
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -39,13 +40,13 @@ namespace BarrocIntens.Pages
                 switch (tag)
                 {
                     case "DashboardPage":
-                        ContentFrame.Navigate(typeof(DashboardPage));
+                        dashboardFrame.Navigate(typeof(MainPage));
                         break;
                     case "Customer.CreateCustomerPage":
-                        ContentFrame.Navigate(typeof(Customers.CreateCustomerPage));
+                        dashboardFrame.Navigate(typeof(Customers.CreateCustomerPage));
                         break;
                     case "Planning.CalenderPage":
-                        ContentFrame.Navigate(typeof(Planning.CalenderPage));
+                        dashboardFrame.Navigate(typeof(Planning.CalenderPage));
                         break;
                 }
             }

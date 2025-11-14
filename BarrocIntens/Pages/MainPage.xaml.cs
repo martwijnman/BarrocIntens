@@ -16,30 +16,16 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace BarrocIntens.Pages.Planning
+namespace BarrocIntens.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DetailPage : Page
+    public sealed partial class MainPage : Page
     {
-        public DetailPage()
+        public MainPage()
         {
             InitializeComponent();
-        }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            var db = new Data.AppDbContext();
-            var PlanningId = (int)e.Parameter;
-            var selectedPlan = db.Plannings.FirstOrDefault(p => p.Id == PlanningId);
-            Plan.Text = selectedPlan.Plan;
-            //Date.Text = selectedPlan.Date;
-            Status.Text = selectedPlan.Status;
-        }
-        private void Back(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
         }
     }
 }

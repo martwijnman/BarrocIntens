@@ -64,7 +64,7 @@ namespace BarrocIntens.Pages.Login
 
                 if (loginEmployee != null)
                 {
-                    Frame.Navigate(typeof(DashboardPage));
+                    Frame.Navigate(typeof(DashboardWindow));
                 }
             }
         }

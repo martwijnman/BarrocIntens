@@ -8,8 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <StackPanel>
         <Button Click="Back">Ga terug</Button>
         <TextBlock x:Name="Plan" />
-    </Grid>
+        <TextBlock x:Name="Date" />.
+        <TextBlock x:Name="Status" />
+    </StackPanel>
 </Page>

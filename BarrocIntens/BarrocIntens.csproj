@@ -17,7 +17,6 @@
     <None Remove="Pages\Bill\OverviewPage.xaml" />
     <None Remove="Pages\Customers\DetailPage.xaml" />
     <None Remove="Pages\Customers\OverviewPage.xaml" />
-    <None Remove="Pages\DashboardPage.xaml" />
     <None Remove="Pages\Login\LoginPage.xaml" />
     <None Remove="Pages\Planning\CalenderPage.xaml" />
     <None Remove="Pages\Planning\CreatePage.xaml" />
@@ -76,6 +75,11 @@
     <Folder Include="Pages\Department\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Pages\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Pages\Planning\DetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,7 +100,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\DashboardPage.xaml">
+    <Page Update="Pages\DashboardWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
