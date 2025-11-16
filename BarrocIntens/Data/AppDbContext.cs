@@ -246,25 +246,25 @@ namespace BarrocIntens.Data
                     Status = "niet gedaan",
                 });
 
-            modelBuilder.Entity<Planning>()
-    .HasMany(p => p.Customers)
-    .WithMany()
-    .UsingEntity<Dictionary<string, object>>(
-        "PlanningCustomers",
-        j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
-        j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
-        j =>
-        {
-            j.HasKey("PlanningId", "CustomerId");
-            j.ToTable("PlanningCustomers");
+            //modelBuilder.Entity<Planning>()
+    //.HasMany(p => p.Customers)
+    //.WithMany()
+    //.UsingEntity<Dictionary<string, object>>(
+    //    "PlanningCustomers",
+    //    j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
+    //    j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
+    //    j =>
+        //{
+        //    j.HasKey("PlanningId", "CustomerId");
+        //    j.ToTable("PlanningCustomers");
 
-            // ✅ Join table seeding
-            j.HasData(
-                new { CustomerId = 1, PlanningId = 1 },
-                new { CustomerId = 2, PlanningId = 2 },
-                new { CustomerId = 3, PlanningId = 3 }
-            );
-        });
+        //    // ✅ Join table seeding
+        //    j.HasData(
+        //        new { CustomerId = 1, PlanningId = 1 },
+        //        new { CustomerId = 2, PlanningId = 2 },
+        //        new { CustomerId = 3, PlanningId = 3 }
+        //    );
+        //});
 
 
             modelBuilder.Entity<Product>().HasData(

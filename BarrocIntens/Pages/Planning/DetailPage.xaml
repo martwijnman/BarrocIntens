@@ -10,8 +10,9 @@
 
     <StackPanel>
         <Button Click="Back">Ga terug</Button>
-        <TextBlock x:Name="Plan" />
-        <TextBlock x:Name="Date" />.
+        <Button Click="GoUpdate">Edit</Button>
+            <TextBlock x:Name="Plan" />
+        <TextBlock x:Name="Date" />
         <TextBlock x:Name="Status" />
     </StackPanel>
 </Page>

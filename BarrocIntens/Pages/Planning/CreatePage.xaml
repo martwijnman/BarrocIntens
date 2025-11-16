@@ -16,6 +16,7 @@
             <TextBox x:Name="PlanTextbox" Header="Plan" PlaceholderText="Plan" />
             <TextBox x:Name="LocationTextbox" Header="Location" PlaceholderText="Location" />
             <TextBox x:Name="DescriptionTextbox" Header="Description" PlaceholderText="Description" />
+            <TextBox x:Name="StatusTextbox" Header="Status" PlaceholderText="Status" />
             <TextBlock x:Name="errorText" />
             <Button Click="CreateButton">
                 Save

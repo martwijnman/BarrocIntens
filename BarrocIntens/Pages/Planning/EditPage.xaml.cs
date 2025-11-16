@@ -1,4 +1,3 @@
-using BarrocIntens.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -14,6 +13,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,24 +23,37 @@ namespace BarrocIntens.Pages.Planning
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CreatePage : Page
+    public sealed partial class EditPage : Page
     {
-        public CreatePage()
+        public EditPage()
         {
             InitializeComponent();
         }
-        private void CreateButton(object sender, RoutedEventArgs e)
+        public int PlanningId;
+        public string PlanToEdit;
+        public DateOnly DateToEdit;
+        public string StatusToEdit;
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var db = new Data.AppDbContext();
+            PlanningId = (int)e.Parameter;
+            var selectedPlan = db.Plannings.FirstOrDefault(p => p.Id == PlanningId);
+
+            // houdige data plaatsen in de formulier
+            date.Date = new DateTimeOffset(selectedPlan.Date.ToDateTime(TimeOnly.MinValue));
+            PlanTextbox.Text = selectedPlan.Plan;
+            LocationTextbox.Text = selectedPlan.Location;
+            DescriptionTextbox.Text = selectedPlan.Description;
+            StatusTextbox.Text = selectedPlan.Status;
+            
+        }
+        private void UpdateButton(object sender, RoutedEventArgs e)
         {
             using (var db = new Data.AppDbContext())
             {
-                var planning = db.Plannings.Add(new Data.Planning
-                {
-                    Date = DateOnly.FromDateTime((date.SelectedDate?.DateTime) ?? DateTime.Now),
-                    Plan = PlanTextbox.Text,
-                    Location = LocationTextbox.Text,
-                    Description = DescriptionTextbox.Text,
-                    Status = StatusTextbox.Text
-                });
+                var planning = db.Plannings.FirstOrDefault(p => p.Id == PlanningId);
+                planning.Update(planning.Id, DateOnly.FromDateTime(date.Date.DateTime), PlanTextbox.Text, LocationTextbox.Text, DescriptionTextbox.Text, StatusTextbox.Text);
 
                 var context = new ValidationContext(planning);
                 var results = new List<ValidationResult>();
@@ -53,7 +66,6 @@ namespace BarrocIntens.Pages.Planning
                         errors.Add(validationResult.ErrorMessage);
                     }
                     errorText.Text = string.Join(Environment.NewLine, errors);
-
                 }
                 if (Validator.TryValidateObject(planning, context, results, true))
                 {
@@ -62,5 +74,13 @@ namespace BarrocIntens.Pages.Planning
                 }
             }
         }
-    }
+        private void DeleteButton(object sender, RoutedEventArgs e)
+        {
+            using (var db = new Data.AppDbContext())
+            {
+                db.Plannings.FirstOrDefault(p => p.Id == PlanningId).Delete(PlanningId);
+                Frame.Navigate(typeof(Pages.Planning.CalenderPage));
+            }
+        }
+        }
 }

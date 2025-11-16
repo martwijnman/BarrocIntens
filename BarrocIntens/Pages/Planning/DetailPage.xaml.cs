@@ -27,11 +27,12 @@ namespace BarrocIntens.Pages.Planning
         {
             InitializeComponent();
         }
+        public int PlanningId;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var db = new Data.AppDbContext();
-            var PlanningId = (int)e.Parameter;
+            PlanningId = (int)e.Parameter;
             var selectedPlan = db.Plannings.FirstOrDefault(p => p.Id == PlanningId);
             Plan.Text = selectedPlan.Plan;
             //Date.Text = selectedPlan.Date;
@@ -40,6 +41,10 @@ namespace BarrocIntens.Pages.Planning
         private void Back(object sender, RoutedEventArgs e)
         {
             Frame.GoBack();
+        }
+        private void GoUpdate(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(EditPage), PlanningId);
         }
     }
 }
