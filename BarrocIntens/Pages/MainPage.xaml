@@ -18,14 +18,15 @@
 
             <!-- Tegels -->
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <!-- Dashboard tegel -->
+                <!-- Planning tegel -->
                 <Button Width="150" Height="150"
              BorderBrush="LightGray"
              BorderThickness="1"
-             Background="Transparent">
+             Background="Transparent"
+             Click="PlanningClick">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock Text="📊" FontSize="48" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Dashboard" FontSize="16" HorizontalAlignment="Center"/>
+                        <TextBlock Text="📅" FontSize="48" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Planning" FontSize="16" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
@@ -33,7 +34,9 @@
                 <Button Width="150" Height="150"
              BorderBrush="LightGray"
              BorderThickness="1"
-             Background="Transparent">
+             Background="Transparent"
+             Click="linkdiewerkt"
+                        >
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="👤" FontSize="48" HorizontalAlignment="Center"/>
                         <TextBlock Text="Customer" FontSize="16" HorizontalAlignment="Center"/>

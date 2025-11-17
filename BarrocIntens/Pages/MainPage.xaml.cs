@@ -27,5 +27,14 @@ namespace BarrocIntens.Pages
         {
             InitializeComponent();
         }
+        private void linkdiewerkt(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.Customers.CreateCustomerPage));
+        }
+
+        private void PlanningClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.Planning.CalenderPage));
+        }
     }
 }
