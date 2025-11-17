@@ -10,6 +10,7 @@
 
     <Grid>
         <ScrollView  Width="1400">
+        
             <StackPanel
             Spacing="20"
             >
@@ -17,7 +18,15 @@
                 <TextBox x:Name="PlanTextbox" Header="Plan" />
                 <TextBox x:Name="LocationTextbox" Header="Location"  />
                 <TextBox x:Name="DescriptionTextbox" Header="Description" />
-                <TextBox x:Name="StatusTextbox" Header="Status" />
+                
+                <ComboBox x:Name="StatusCheckbox"
+                  Header="Status"
+                  PlaceholderText="Status selecteren"
+                  Width="200">
+                    <x:String>Gedaan</x:String>
+                    <x:String>Niet Gedaan</x:String>
+                </ComboBox>
+                
                 <TextBlock x:Name="errorText" />
                 <StackPanel
                     Orientation="Horizontal">
@@ -28,7 +37,6 @@
                         Delete
                     </Button>
                 </StackPanel>
-
             </StackPanel>
         </ScrollView>
     </Grid>

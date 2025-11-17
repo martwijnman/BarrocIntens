@@ -19,6 +19,7 @@ namespace BarrocIntens.Data
         public DbSet<Malfunction> Malfunctions { get; set; }
         public DbSet<Planning> Plannings { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<CostumerPlanning> CostumerPlannings { get; set; }
 
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)

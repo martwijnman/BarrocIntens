@@ -29,18 +29,27 @@ namespace BarrocIntens.Pages.Planning
         {
             InitializeComponent();
         }
+
+        // lists of workers and customersS
+        private List<int> SelectedCustomerIds = new();
+        private List<int> SelectedEmployeeIds = new();
+
         private void CreateButton(object sender, RoutedEventArgs e)
         {
             using (var db = new Data.AppDbContext())
             {
-                var planning = db.Plannings.Add(new Data.Planning
+                var planning = new Data.Planning
                 {
                     Date = DateOnly.FromDateTime((date.SelectedDate?.DateTime) ?? DateTime.Now),
                     Plan = PlanTextbox.Text,
                     Location = LocationTextbox.Text,
                     Description = DescriptionTextbox.Text,
-                    Status = StatusTextbox.Text
-                });
+                    Status = StatusCheckbox.SelectedItem?.ToString()
+                };
+                db.Plannings.Add(planning);
+
+
+
 
                 var context = new ValidationContext(planning);
                 var results = new List<ValidationResult>();
@@ -55,12 +64,71 @@ namespace BarrocIntens.Pages.Planning
                     errorText.Text = string.Join(Environment.NewLine, errors);
 
                 }
+
                 if (Validator.TryValidateObject(planning, context, results, true))
                 {
                     db.SaveChanges();
+                    // add soon the planning connection between customer and employee
+                    foreach (int SelectedCustomerId in SelectedCustomerIds)
+                    {
+                        // making invidual customers for the planning
+                        db.CostumerPlannings.Add(new CostumerPlanning
+                        {
+                            CustomerId = SelectedCustomerId,
+                            PlanningId = planning.Id,
+                        });
+                        db.SaveChanges();
+                    }
                     Frame.Navigate(typeof(Pages.Planning.CalenderPage));
                 }
             }
+        }
+
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            using var db = new Data.AppDbContext();
+            var customers = db.Customers.ToList();
+
+            foreach (var customer in customers)
+            {
+                var btn = new ToggleButton
+                {
+                    Content = customer.Name,
+                    Tag = customer.Id,
+                    Margin = new Thickness(4, 0, 4, 0)
+                };
+
+                btn.Click += ToggleCustomer;
+
+                CitizenSelector.Children.Add(btn);
+            }
+        }
+
+
+        private void ToggleCustomer(object sender, RoutedEventArgs e)
+        {
+            
+            using (var db = new AppDbContext())
+            {
+                // make the connectiontable
+                // 1: list
+                var btn = (ToggleButton)sender;
+                var id = (int)btn.Tag;
+                if (btn.IsChecked == true)
+                {
+                    if (!SelectedCustomerIds.Contains(id))
+                        SelectedCustomerIds.Add(id);
+                }
+                else
+                {
+                    SelectedCustomerIds.Remove(id);
+                }
+            }
+
+
         }
     }
 }

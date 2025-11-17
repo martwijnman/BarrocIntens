@@ -45,15 +45,14 @@ namespace BarrocIntens.Pages.Planning
             PlanTextbox.Text = selectedPlan.Plan;
             LocationTextbox.Text = selectedPlan.Location;
             DescriptionTextbox.Text = selectedPlan.Description;
-            StatusTextbox.Text = selectedPlan.Status;
-            
+            StatusCheckbox.SelectedItem = selectedPlan.Status;
         }
         private void UpdateButton(object sender, RoutedEventArgs e)
         {
             using (var db = new Data.AppDbContext())
             {
                 var planning = db.Plannings.FirstOrDefault(p => p.Id == PlanningId);
-                planning.Update(planning.Id, DateOnly.FromDateTime(date.Date.DateTime), PlanTextbox.Text, LocationTextbox.Text, DescriptionTextbox.Text, StatusTextbox.Text);
+                planning.Update(planning.Id, DateOnly.FromDateTime(date.Date.DateTime), PlanTextbox.Text, LocationTextbox.Text, DescriptionTextbox.Text, StatusCheckbox.SelectedItem?.ToString());
 
                 var context = new ValidationContext(planning);
                 var results = new List<ValidationResult>();

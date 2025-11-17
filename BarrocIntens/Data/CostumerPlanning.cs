@@ -17,7 +17,7 @@ namespace BarrocIntens.Data
         public Customer Customer { get; set; }
 
         [Required]
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public int PlanningId { get; set; }
+        public Planning Planning { get; set; }
     }
 }

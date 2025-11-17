@@ -1,3 +1,4 @@
+using BarrocIntens.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,11 +26,18 @@ namespace BarrocIntens.Pages
     /// </summary>
     public sealed partial class DashboardWindow : Page
     {
+        public int EmployeeId;
         public DashboardWindow()
         {
             InitializeComponent();
-            dashboardFrame.Navigate(typeof(MainPage));
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            int EmployeeId = (int)e.Parameter;
+            dashboardFrame.Navigate(typeof(MainPage), EmployeeId);
+        }
+
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {

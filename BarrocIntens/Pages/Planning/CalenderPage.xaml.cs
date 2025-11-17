@@ -41,8 +41,10 @@ public sealed partial class CalenderPage : Page
         var calendarItemDate = args.Item.Date.Date;
         using (var db = new AppDbContext())
         {
+            string status = StatusCheckbox.SelectedItem?.ToString();
             var relevantCalendarItems = db.Plannings
                 .Where(item => item.Date == DateOnly.FromDateTime(calendarItemDate))
+                .Where(p => status == null || p.Status == status)
                 .ToList();
 
             args.Item.DataContext = relevantCalendarItems;

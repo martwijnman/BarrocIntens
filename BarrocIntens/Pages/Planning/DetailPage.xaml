@@ -9,10 +9,14 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <Button Click="Back">Ga terug</Button>
-        <Button Click="GoUpdate">Edit</Button>
-            <TextBlock x:Name="Plan" />
-        <TextBlock x:Name="Date" />
-        <TextBlock x:Name="Status" />
+        <TextBlock x:Name="Plan" Margin="10" />
+        <TextBlock x:Name="Date" Margin="10" />
+        <TextBlock x:Name="Status" Margin="10" />
+        <TextBlock x:Name="Customers" Margin="10" />
+        <StackPanel
+            Orientation="Horizontal">
+            <Button Click="GoUpdate" Margin="10">Edit</Button>
+            <Button Click="Back" Margin="10">Ga terug</Button>
+        </StackPanel>
     </StackPanel>
 </Page>
