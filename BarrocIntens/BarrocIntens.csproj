@@ -13,11 +13,26 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Pages\NewFolder1\**" />
+    <Compile Remove="Pages\NewFolder2\**" />
+    <Compile Remove="Pages\NewFolder\**" />
+    <EmbeddedResource Remove="Pages\NewFolder1\**" />
+    <EmbeddedResource Remove="Pages\NewFolder2\**" />
+    <EmbeddedResource Remove="Pages\NewFolder\**" />
+    <None Remove="Pages\NewFolder1\**" />
+    <None Remove="Pages\NewFolder2\**" />
+    <None Remove="Pages\NewFolder\**" />
+    <Page Remove="Pages\NewFolder1\**" />
+    <Page Remove="Pages\NewFolder2\**" />
+    <Page Remove="Pages\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Pages\Appointments\OverviewPage.xaml" />
     <None Remove="Pages\Bill\OverviewPage.xaml" />
     <None Remove="Pages\Customers\DetailPage.xaml" />
     <None Remove="Pages\Customers\OverviewPage.xaml" />
     <None Remove="Pages\DashboardPage.xaml" />
+    <None Remove="Pages\EmployeesCreation\employeesCreate.xaml" />
     <None Remove="Pages\Login\LoginPage.xaml" />
     <None Remove="Pages\Planning\CalenderPage.xaml" />
     <None Remove="Pages\Planning\CreatePage.xaml" />
@@ -128,4 +143,18 @@
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <ItemGroup>
+    <PRIResource Remove="Pages\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Remove="Pages\NewFolder1\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Remove="Pages\NewFolder2\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\EmployeesCreation\employeesCreate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 </Project>

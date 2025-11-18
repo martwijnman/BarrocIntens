@@ -158,7 +158,13 @@ namespace BarrocIntens.Data
                     Id = 1,
                     Name = "Peter Jansen",
                     Email = "peter.jansen@bedrijf.nl",
-                    Password = "Welkom123"
+                    PhoneNumber = "0612345678",
+                    City = "Breda",
+                    Password = "Welkom123",
+                    Department = "Sales"
+                    
+                    
+
                 },
 
                 new Employee
@@ -166,22 +172,32 @@ namespace BarrocIntens.Data
                     Id = 2,
                     Name = "Lisa Vermeer",
                     Email = "lisa.vermeer@bedrijf.nl",
-                    Password = "Welkom123"
+                    PhoneNumber = "0612285678",
+                    City = "Breda",
+                    Password = "Welkom123",
+                    Department = "Sales"
                 },
                 new Employee
                 {
                     Id = 3,
                     Name = "Ahmed El Amrani",
                     Email = "ahmed.elamrani@bedrijf.nl",
-                    Password = "Welkom123"
+                    PhoneNumber = "0612287128",
+                    City = "Breda",
+                    Password = "Welkom123",
+                    Department = "Sales"
                 },
-                                new Employee
-                                {
-                                    Id = 4,
-                                    Name = "Root",
-                                    Email = "Root@root.nl",
-                                    Password = "Root"
-                                });
+
+                new Employee
+                {
+                    Id = 4,
+                    Name = "Root",
+                    Email = "Root@root.nl",
+                    PhoneNumber = "0675287128",
+                    City = "Breda",
+                    Password = "Root",
+                    Department = "Sales"
+                });
 
             modelBuilder.Entity<Malfunction>().HasData(
                 new Malfunction

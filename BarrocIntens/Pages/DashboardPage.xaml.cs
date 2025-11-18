@@ -50,6 +50,9 @@ namespace BarrocIntens.Pages
                     case "Planning.CalenderPage":
                         ContentFrame.Navigate(typeof(Planning.CalenderPage));
                         break;
+                    case "EmployeesCreation.employeesCreate":
+                        ContentFrame.Navigate(typeof(EmployeesCreation.employeesCreate));
+                        break;
                 }
             }
         }

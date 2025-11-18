@@ -18,6 +18,7 @@
                     <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
                     <NavigationViewItem Content="Customers" Icon="Contact" Tag="Customer.CreateCustomerPage"/>
                     <NavigationViewItem Content="Planning" Icon="Calendar" Tag="Planning.CalenderPage"/>
+                    <NavigationViewItem Content="Employee Creation" Icon="Calendar" Tag="EmployeesCreation.employeesCreate"/>
                 </NavigationView.MenuItems>
                 <Frame x:Name="ContentFrame"/>
             </NavigationView>
