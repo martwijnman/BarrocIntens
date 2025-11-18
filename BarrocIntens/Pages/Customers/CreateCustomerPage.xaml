@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Padding="15" Spacing="15">
+    <StackPanel Padding="80" Spacing="15">
         <TextBox x:Name="NameTextBox" 
                  Header="Naam:"></TextBox>
 
