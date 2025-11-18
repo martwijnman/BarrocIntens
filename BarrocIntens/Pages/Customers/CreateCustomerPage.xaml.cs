@@ -43,44 +43,46 @@ namespace BarrocIntens.Pages.Customers
             if (string.IsNullOrWhiteSpace(NameTextBox.Text))
             {
                 ErrorTextBlock.Text = "Naam mag niet leeg zijn";
-            }
-
-            if (IsValidEmail(EmailTextBox.Text))
-            {
                 return;
             }
-            else
+
+            if (!IsValidEmail(EmailTextBox.Text))
             {
                 ErrorTextBlock.Text = "Voer een geldig e-mail adres in.";
-            }
-
-            if (IsValidPhone(PhoneTextBox.Text))
-            {
                 return;
             }
-            else
+
+            if (!IsValidPhone(PhoneTextBox.Text))
             {
                 ErrorTextBlock.Text = "Voer een geldig telefoonnummer in.";
-            }     
+                return;
+            }   
 
             if (string.IsNullOrWhiteSpace(CityTextBox.Text))
             {
                 ErrorTextBlock.Text = "Voer een geldige stadsnaam in.";
+                return;
             }
 
             if (BKRCheckBox.IsChecked == false)
             {
                 ErrorTextBlock.Text = "BKR keuring moet voldaan zijn.";
+                return;
             }
 
-            var myCustomer = new BarrocIntens.Data.Customer()
+            else
             {
-                Name = NameTextBox.Text,
-                Email = EmailTextBox.Text,
-                PhoneNumber = PhoneTextBox.Text,
-                City = CityTextBox.Text,
-                BkrStatus = BKRCheckBox.IsChecked == true
-            };
+                ErrorTextBlock.Text = "";
+            }
+
+                var myCustomer = new BarrocIntens.Data.Customer()
+                {
+                    Name = NameTextBox.Text,
+                    Email = EmailTextBox.Text,
+                    PhoneNumber = PhoneTextBox.Text,
+                    City = CityTextBox.Text,
+                    BkrStatus = BKRCheckBox.IsChecked == true
+                };
 
             using (var dbContext = new AppDbContext())
             {
