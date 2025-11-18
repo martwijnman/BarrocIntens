@@ -64,7 +64,8 @@ namespace BarrocIntens.Pages.Login
 
                 if (loginEmployee != null)
                 {
-                    Frame.Navigate(typeof(DashboardPage));
+                    int employeeId = loginEmployee.Id;
+                    Frame.Navigate(typeof(DashboardWindow), employeeId);
                 }
             }
         }

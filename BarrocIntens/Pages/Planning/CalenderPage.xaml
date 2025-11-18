@@ -9,7 +9,7 @@
     xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
-    <Grid Margin="15">
+    <Grid Margin="15"  Width="1400">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -23,7 +23,6 @@
             </Grid.ColumnDefinitions>
 
 
-
             <Button x:Name="addCalendarItemButton"
                     Padding="15"
                     Foreground="Black"
@@ -32,6 +31,16 @@
                     Click="AddCalendarItemButton_Click">
                 Add Calendar
             </Button>
+            
+            <ComboBox x:Name="StatusCheckbox"
+                  Header="Status"
+                  PlaceholderText="Status selecteren"
+                  Margin="10"
+                  SelectionChanged="FilterIfFinished"
+                  Width="200">
+                <x:String>Gedaan</x:String>
+                <x:String>Niet Gedaan</x:String>
+            </ComboBox>
         </Grid>
 
         <CalendarView x:Name="calendarView"
@@ -56,9 +65,7 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:Planning">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{x:Bind Plan}"
-                                                           FontWeight="Bold" />
-                                                <TextBlock Text="{x:Bind Location}" />
+                                                <TextBlock Text="{x:Bind Plan}" FontWeight="Bold" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>

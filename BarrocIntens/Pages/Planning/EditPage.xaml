@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="BarrocIntens.Pages.Planning.EditPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BarrocIntens.Pages.Planning"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollView  Width="1400">
+        
+            <StackPanel
+            Spacing="20"
+            >
+                <DatePicker x:Name="date" Header="Date"  />
+                <TextBox x:Name="PlanTextbox" Header="Plan" />
+                <TextBox x:Name="LocationTextbox" Header="Location"  />
+                <TextBox x:Name="DescriptionTextbox" Header="Description" />
+                
+                <ComboBox x:Name="StatusCheckbox"
+                  Header="Status"
+                  PlaceholderText="Status selecteren"
+                  Width="200">
+                    <x:String>Gedaan</x:String>
+                    <x:String>Niet Gedaan</x:String>
+                </ComboBox>
+                
+                <TextBlock x:Name="errorText" />
+                <StackPanel
+                    Orientation="Horizontal">
+                    <Button Click="UpdateButton">
+                        Save
+                    </Button>
+                    <Button Click="DeleteButton">
+                        Delete
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </ScrollView>
+    </Grid>
+</Page>

@@ -48,6 +48,7 @@
 
 ## commands
 - no click-events in code-behind
+- commands are allowed in dutch
 
 ## Layouts (Reusable UI)
 - Great reuseble UI-structures for example footers be in`/Views/Layouts`
