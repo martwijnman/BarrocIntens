@@ -36,5 +36,10 @@ namespace BarrocIntens.Pages
         {
             Frame.Navigate(typeof(Pages.Planning.CalenderPage));
         }
+
+        private void EmployeeClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.Planning.CalenderPage));
+        }
     }
 }
