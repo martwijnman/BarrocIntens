@@ -50,7 +50,7 @@ namespace BarrocIntens.Pages.Planning
 
 
 
-
+                // making a validation
                 var context = new ValidationContext(planning);
                 var results = new List<ValidationResult>();
 

@@ -279,7 +279,7 @@ namespace BarrocIntens.Data
                     MinimumStock = 10,
                     Deliverer = "SolarTech BV",
                     NotificationOutOfStock = false,
-                    Image = "zonnepaneel_400w.jpg"
+                    Image = "logo.png"
                 },
                 new Product
                 {
@@ -291,7 +291,7 @@ namespace BarrocIntens.Data
                     MinimumStock = 5,
                     Deliverer = "GreenEnergy Supply",
                     NotificationOutOfStock = false,
-                    Image = "warmtepomp_ecoheat.jpg"
+                    Image = "logo.png"
                 },
                 new Product
                 {
@@ -303,7 +303,7 @@ namespace BarrocIntens.Data
                     MinimumStock = 8,
                     Deliverer = "SmartHome Solutions",
                     NotificationOutOfStock = false,
-                    Image = "thermostaat_comfortplus.jpg"
+                    Image = "logo.png"
                 },
                 new Product
                 {
@@ -315,7 +315,7 @@ namespace BarrocIntens.Data
                     MinimumStock = 3,
                     Deliverer = "EnergyPro NV",
                     NotificationOutOfStock = true,
-                    Image = "omvormer_solarlink_5kw.jpg"
+                    Image = "logo.png"
                 });
         }
     }

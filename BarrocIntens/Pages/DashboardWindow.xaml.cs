@@ -57,6 +57,9 @@ namespace BarrocIntens.Pages
                     case "Planning.CalenderPage":
                         dashboardFrame.Navigate(typeof(Planning.CalenderPage));
                         break;
+                    case "Product.OverviewPage":
+                        dashboardFrame.Navigate(typeof(Product.OverviewPage));
+                        break;
                 }
             }
         }

@@ -32,6 +32,7 @@
                 Add Calendar
             </Button>
             
+            
             <ComboBox x:Name="StatusCheckbox"
                   Header="Status"
                   PlaceholderText="Status selecteren"

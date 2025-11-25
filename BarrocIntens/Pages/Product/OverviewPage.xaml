@@ -9,23 +9,102 @@
     xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
-    <Grid>
-        <ListView x:Name="ProductListView"
-                  IsItemClickEnabled="True"
-                  ItemClick="ProductClick"
-                  >
+    <StackPanel Orientation="Vertical">
+
+        <!-- Filters -->
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <ComboBox x:Name="StockCheckbox"
+                  PlaceholderText="Type selecteren"
+                  Width="200"
+                  Margin="0,0,10,0">
+                <x:String>Op voorraad</x:String>
+                <x:String>Niet op voorraad</x:String>
+            </ComboBox>
+
+            <TextBox x:Name="ProductSearchTextbox"
+                 PlaceholderText="Zoek product..."
+                 Width="300"/>
+        </StackPanel>
+
+
+        <!-- Product Grid -->
+        <ListView ItemsSource="{Binding}"
+              IsItemClickEnabled="True"
+              SelectionMode="None"
+              x:Name="ProductView"
+              Margin="20">
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal"
+                               MaximumRowsOrColumns="4"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Product">
-                    <StackPanel>
-                        <TextBlock Text="{x:Bind Name }" />
-                        <TextBlock Text="{x:Bind Category}" />
-                        <TextBlock Text="{x:Bind Price}" />
-                        <TextBlock Text="{x:Bind Stock}" />
-                        <TextBlock Text="{x:Bind MinimumStock}" />
-                        <TextBlock Text="{x:Bind Deliverer}" />
-                    </StackPanel>
+                    <Grid Width="220" Height="310">
+                        <Border Background="Black"
+                            CornerRadius="12"
+                            BorderThickness="1"
+                            BorderBrush="Black">
+                            <StackPanel Spacing="8" Padding="12">
+
+                                <Image Source="{x:Bind ImagePath}"
+                                   Height="140"
+                                   Stretch="UniformToFill"/>
+
+                                <TextBlock Text="{x:Bind Name}"
+                                       FontSize="18"
+                                       FontWeight="SemiBold"
+                                       Foreground="White"
+                                       TextWrapping="Wrap"
+                                       MaxLines="2"/>
+
+                                <TextBlock Text="{x:Bind Price}"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="Yellow"/>
+
+                                <Border Background="#222"
+                                    Padding="4,2"
+                                    CornerRadius="6"
+                                    HorizontalAlignment="Left">
+                                    <TextBlock Text="{x:Bind Stock}"
+                                           FontSize="12"
+                                           Foreground="White"/>
+                                </Border>
+
+                                <Button Content="Detail"
+                                    HorizontalAlignment="Left"
+                                    Width="100"
+                                    Background="Yellow"
+                                    Foreground="Black"
+                                    Click="ProductClick"
+                                    CornerRadius="6"/>
+                                <Button Content="+"
+                                    HorizontalAlignment="Left"
+                                    Width="50"
+                                    Background="Yellow"
+                                    Foreground="Black"
+                                    CornerRadius="6"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+
         </ListView>
-    </Grid>
+    </StackPanel>
+
+
 </Page>

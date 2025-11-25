@@ -1,5 +1,3 @@
-using BarrocIntens.Data;
-using BarrocIntens.Pages.Customer;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,21 +21,11 @@ namespace BarrocIntens.Pages.Product
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class OverviewPage : Page
+    public sealed partial class DetailPage : Page
     {
-        public OverviewPage()
+        public DetailPage()
         {
             InitializeComponent();
-            using (var db = new AppDbContext())
-            {
-                var products = db.Products.ToList();
-                ProductView.ItemsSource = products;
-            }
-        }
-        private void ProductClick(object sender, ItemClickEventArgs e)
-        {
-            var selectedProduct = (Data.Product)e.ClickedItem;
-            Frame.Navigate(typeof(DetailPage), selectedProduct);
         }
     }
 }
