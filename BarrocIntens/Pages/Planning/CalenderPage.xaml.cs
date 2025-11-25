@@ -59,5 +59,13 @@ public sealed partial class CalenderPage : Page
         int clickedCalendarItemId = clickedCalendarItem.Id;
         Frame.Navigate(typeof(Pages.Planning.DetailPage), clickedCalendarItemId);
     }
-    
+
+    private void FilterIfFinished(object sender, SelectionChangedEventArgs e)
+    {
+        // Forceer refresh van de CalendarView,
+        // zodat CalendarViewDayItemChanging opnieuw wordt uitgevoerd
+        calendarView.InvalidateMeasure();
+        calendarView.UpdateLayout();
+    }
+
 }

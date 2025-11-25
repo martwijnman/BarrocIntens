@@ -16,7 +16,7 @@
             SelectionChanged="NavigationView_SelectionChanged">
                 <NavigationView.MenuItems>
                     <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
-                    <NavigationViewItem Content="Customers" Icon="Contact" Tag="Customer.CreateCustomerPage"/>
+                    <NavigationViewItem Content="Klanten" Icon="Contact" Tag="Customer.CreateCustomerPage"/>
                     <NavigationViewItem Content="Planning" Icon="Calendar" Tag="Planning.CalenderPage"/>
                 </NavigationView.MenuItems>
                 <Frame x:Name="dashboardFrame"/>
