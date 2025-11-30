@@ -24,6 +24,7 @@
             <TextBox x:Name="ProductSearchTextbox"
                  PlaceholderText="Zoek product..."
                  Width="300"/>
+            <Button Content="Order Products" Click="GoToOrder"  />
         </StackPanel>
 
 
@@ -52,7 +53,7 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Product">
-                    <Grid Width="220" Height="310">
+                    <Grid Width="220" Height="500">
                         <Border Background="Black"
                             CornerRadius="12"
                             BorderThickness="1"
@@ -75,6 +76,16 @@
                                        FontWeight="Bold"
                                        Foreground="Yellow"/>
 
+                                <TextBlock x:Name="TimesSelected"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="Yellow">
+                                    <!--<TextBlock.RenderTransform>
+                                        <ScaleTransform x:Name="PopScale" ScaleX="1" ScaleY="1"/>
+                                    </TextBlock.RenderTransform>-->
+                                </TextBlock>
+
+
                                 <Border Background="#222"
                                     Padding="4,2"
                                     CornerRadius="6"
@@ -91,12 +102,22 @@
                                     Foreground="Black"
                                     Click="ProductClick"
                                     CornerRadius="6"/>
-                                <Button Content="+"
-                                    HorizontalAlignment="Left"
+                                
+                                <Button Content="+" 
+                                    HorizontalAlignment="Right"
                                     Width="50"
                                     Background="Yellow"
                                     Foreground="Black"
-                                    CornerRadius="6"/>
+                                    CornerRadius="6"
+                                    Click="PlusClick"/>
+                                
+                                <Button Content="-" 
+                                    Width="50"
+                                    Background="Yellow"
+                                    Foreground="Black"
+                                    CornerRadius="6"
+                                    Click="MinClick"/>
+                                
                             </StackPanel>
                         </Border>
                     </Grid>
