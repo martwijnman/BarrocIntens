@@ -88,7 +88,7 @@ public sealed partial class OrderPage : Page
         double yPoint = 40;
 
         // Titel
-        gfx.DrawString("Factuur", titleFont, XBrushes.Black, new XRect(0, yPoint, page.Width, 40), XStringFormats.TopCenter);
+        gfx.DrawString("Order", titleFont, XBrushes.Black, new XRect(0, yPoint, page.Width, 40), XStringFormats.TopCenter);
         yPoint += 60;
 
         // Tabel headers

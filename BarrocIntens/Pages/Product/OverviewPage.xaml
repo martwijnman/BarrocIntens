@@ -11,6 +11,7 @@
 
     <StackPanel Orientation="Vertical">
 
+        <!--TODO: Make the filters work-->
         <!-- Filters -->
         <StackPanel Orientation="Horizontal" Margin="10">
             <ComboBox x:Name="StockCheckbox"
