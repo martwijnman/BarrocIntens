@@ -6,6 +6,7 @@
     xmlns:local="using:BarrocIntens.Pages.Product"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
     mc:Ignorable="d">
 
     <StackPanel>
@@ -20,7 +21,11 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
+        <ComboBox x:Name="CustomerCheckbox"
+      Header="Customer"
+      PlaceholderText="Status selecteren"
+      Width="200">
+        </ComboBox>
         <Button Content="Order maken" Click="MakeOrder" />
 
     </StackPanel>

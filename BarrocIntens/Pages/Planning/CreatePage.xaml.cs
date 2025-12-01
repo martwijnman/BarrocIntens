@@ -108,7 +108,7 @@ namespace BarrocIntens.Pages.Planning
         }
 
 
-        private void ToggleCustomer(object sender, RoutedEventArgs e)
+        public void ToggleCustomer(object sender, RoutedEventArgs e)
         {
             
             using (var db = new AppDbContext())

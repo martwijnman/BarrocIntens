@@ -20,6 +20,9 @@ namespace BarrocIntens.Data
         public DbSet<Planning> Plannings { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<CostumerPlanning> CostumerPlannings { get; set; }
+        public DbSet<Quote> Quotes { get; set; }
+        public DbSet<QuoteItem> QuoteItems { get; set; }
+
 
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)

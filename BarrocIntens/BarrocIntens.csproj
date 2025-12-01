@@ -17,6 +17,7 @@
     <None Remove="Pages\Bill\OverviewPage.xaml" />
     <None Remove="Pages\Customers\DetailPage.xaml" />
     <None Remove="Pages\Customers\OverviewPage.xaml" />
+    <None Remove="Pages\Contracts\OverviewPage.xaml" />
     <None Remove="Pages\Login\LoginPage.xaml" />
     <None Remove="Pages\Malfunction\CalenderPage.xaml" />
     <None Remove="Pages\Planning\CalenderPage.xaml" />
@@ -78,6 +79,11 @@
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="Pages\Department\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Finance\OverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Product\OrderPage.xaml">

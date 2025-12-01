@@ -20,7 +20,7 @@ using Windows.ApplicationModel.Store;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-
+using BarrocIntens.Pages.Planning;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -35,8 +35,38 @@ public sealed partial class OrderPage : Page
     {
         InitializeComponent();
         System.Diagnostics.Debug.WriteLine("WALLET COUNT: " + wallet.Count);
-    }
+        using var db = new Data.AppDbContext();
+        var customers = db.Customers.ToList();
+        CustomerCheckbox.Items.Clear();
 
+        foreach (var customer in customers)
+        {
+            CustomerCheckbox.Items.Add(customer.Name);
+        }
+    }
+    private List<int> SelectedCustomerIds = new();
+    public void ToggleCustomer(object sender, RoutedEventArgs e)
+    {
+
+        using (var db = new AppDbContext())
+        {
+            // make the connectiontable
+            // 1: list
+            var btn = (ToggleButton)sender;
+            var id = (int)btn.Tag;
+            if (btn.IsChecked == true)
+            {
+                if (!SelectedCustomerIds.Contains(id))
+                    SelectedCustomerIds.Add(id);
+            }
+            else
+            {
+                SelectedCustomerIds.Remove(id);
+            }
+        }
+
+
+    }
     private Dictionary<Data.Product, int> wallet = new Dictionary<Data.Product, int>();
 
     private void RefreshWallet()
@@ -67,6 +97,42 @@ public sealed partial class OrderPage : Page
         // Database kan je nog gebruiken indien nodig
         var db = new Data.AppDbContext();
     }
+    private void SaveQuote()
+    {
+        if (wallet.Count == 0)
+            return;
+
+        var db = new AppDbContext();
+
+        string selectedName = CustomerCheckbox.SelectedItem as string;
+
+        var quote = new Quote
+        {
+            Name = $"Offerte {DateTime.Now:yyyyMMdd-HHmm}",
+            Items = new List<QuoteItem>(),
+            CustomerId = db.Customers.FirstOrDefault(c => c.Name == selectedName).Id
+        };
+
+        foreach (var kvp in wallet)
+        {
+            var product = kvp.Key;
+            var aantal = kvp.Value;
+
+            quote.Items.Add(new QuoteItem
+            {
+                ProductId = product.Id,
+                Aantal = aantal,
+            });
+
+            // stock verlagen
+            if (product.Stock >= aantal)
+                product.Stock -= aantal;
+        }
+
+        db.Quotes.Add(quote);
+        db.SaveChanges();
+    }
+
     private void GenerateOrder()
     {
         // source: Itslearning
@@ -74,7 +140,7 @@ public sealed partial class OrderPage : Page
             return; // niets om te genereren
 
         PdfDocument document = new PdfDocument();
-        document.Info.Title = "Factuur";
+        document.Info.Title = "Offerte";
 
         // Nieuwe pagina
         PdfPage page = document.AddPage();
@@ -104,17 +170,17 @@ public sealed partial class OrderPage : Page
 
             gfx.DrawString(product.Name, bodyFont, XBrushes.Black, 40, yPoint);
             gfx.DrawString(aantal.ToString(), bodyFont, XBrushes.Black, 250, yPoint);
-            gfx.DrawString($"€{product.Price * aantal:F2}", bodyFont, XBrushes.Black, 350, yPoint);
+            //gfx.DrawString($"€{product.Price * aantal:F2}", bodyFont, XBrushes.Black, 350, yPoint);
             yPoint += 20;
         }
 
         // Totale prijs
         double total = wallet.Sum(x => x.Key.Price * x.Value);
         yPoint += 20;
-        gfx.DrawString($"Totaal: €{total:F2}", headerFont, XBrushes.Black, 40, yPoint);
+        //gfx.DrawString($"Totaal: €{total:F2}", headerFont, XBrushes.Black, 40, yPoint);
 
         // Opslaan
-        string filePath = Path.Combine(Path.GetTempPath(), "order.pdf");
+        string filePath = Path.Combine(Path.GetTempPath(), "offerte.pdf");
         document.Save(filePath);
         Console.WriteLine($"PDF opgeslagen: {filePath}");
     }
@@ -153,6 +219,6 @@ public sealed partial class OrderPage : Page
             }
         
         GenerateOrder();
-
+        SaveQuote();
     }
 }
