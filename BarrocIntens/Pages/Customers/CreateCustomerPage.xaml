@@ -8,8 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="TextControlHeaderForeground" Color="Black"/>
+    </Page.Resources>
+
     <StackPanel Padding="80" Spacing="15">
-        <TextBox x:Name="NameTextBox" 
+        <TextBox x:Name="NameTextBox"
                  Header="Naam:"></TextBox>
 
         <TextBox x:Name="EmailTextBox" 
@@ -21,12 +25,12 @@
         <TextBox x:Name="CityTextBox" 
                  Header="Stad:"></TextBox>
 
-        <CheckBox x:Name="BKRCheckBox">BKR keuring:</CheckBox>
+        <CheckBox Foreground="Black" x:Name="BKRCheckBox">BKR keuring:</CheckBox>
 
 
         <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>
 
-        <Button x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
+        <Button Foreground="Black" x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
 
     </StackPanel>
 </Page>

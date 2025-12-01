@@ -8,12 +8,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
+    </Page.Resources>
+    
     <ScrollView>
         <StackPanel 
         Orientation="Horizontal"
         >
             <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed"
-            SelectionChanged="NavigationView_SelectionChanged">
+            SelectionChanged="NavigationView_SelectionChanged"
+                            Background="Yellow">
                 <NavigationView.MenuItems>
                     <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
                     <NavigationViewItem Content="Klanten" Icon="Contact" Tag="Customer.CreateCustomerPage"/>

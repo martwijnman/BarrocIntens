@@ -9,6 +9,10 @@
     xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
+    </Page.Resources>
+
     <Grid>
         <ListView x:Name="CostumerListView"
                   IsItemClickEnabled="True"

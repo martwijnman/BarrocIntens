@@ -63,7 +63,7 @@ namespace BarrocIntens.Pages
 
         private void linkdiewerkt(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Pages.Customers.CreateCustomerPage));
+            Frame.Navigate(typeof(Pages.Customer.OverviewPage));
         }
 
         private void EmployeeClick(object sender, RoutedEventArgs e)

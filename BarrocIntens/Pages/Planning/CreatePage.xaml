@@ -8,6 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
+    </Page.Resources>
+
     <ScrollView  Width="1400">
         <StackPanel
             Spacing="20"

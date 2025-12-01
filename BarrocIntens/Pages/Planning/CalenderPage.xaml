@@ -9,6 +9,7 @@
     xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
+
     <Grid Margin="15"  Width="1400">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
