@@ -61,13 +61,13 @@ namespace BarrocIntens.Pages
                         dashboardFrame.Navigate(typeof(Product.OverviewPage));
                         break;
                     case "EmployeesCreation.employeesCreate":
-                        ContentFrame.Navigate(typeof(EmployeesCreation.employeesCreate));
+                        dashboardFrame.Navigate(typeof(EmployeesCreation.employeesCreate));
                         break;
                     case "EmployeesCreation.employeesView":
-                        ContentFrame.Navigate(typeof(EmployeesCreation.employeesView));
+                        dashboardFrame.Navigate(typeof(EmployeesCreation.employeesView));
                         break;
                     case "Customers.CustomerView":
-                        ContentFrame.Navigate(typeof(Customers.CustomerView));
+                        dashboardFrame.Navigate(typeof(Customers.CustomerView));
                         break;
                 }
             }

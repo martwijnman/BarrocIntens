@@ -31,12 +31,57 @@ namespace BarrocIntens.Pages.Product
             using (var db = new AppDbContext())
             {
                 var products = db.Products.ToList();
+                ProductView.ItemsSource = products;
             }
         }
-        //private void ProductClick(object sender, ItemClickEventArgs e)
-        //{
-        //    var selectedProduct = (Data.Product)e.ClickedItem;
-        //    Frame.Navigate(typeof(DetailPage), selectedProduct);
-        //}
+
+        private Dictionary<Data.Product, int> wallet = new();
+
+        private int timesSelected = 0;
+        private void PlusClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var product = (Data.Product)button.DataContext;
+
+            if (product.Stock <= 0)
+                return;
+
+            product.Stock--;
+
+            if (wallet.ContainsKey(product))
+                wallet[product]++;
+            else
+                wallet[product] = 1;
+        }
+
+
+
+
+        private void MinClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var product = (Data.Product)button.DataContext;
+
+            if (!wallet.ContainsKey(product))
+                return;
+
+            wallet[product]--;
+            product.Stock++;
+
+            if (wallet[product] <= 0)
+                wallet.Remove(product);
+        }
+
+        private void GoToOrder(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(OrderPage), wallet);
+        }
+        private void ProductClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var product = (Data.Product)button.DataContext;
+
+            Frame.Navigate(typeof(DetailPage), product);
+        }
     }
 }

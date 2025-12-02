@@ -22,6 +22,7 @@
                 <NavigationView.MenuItems>
                     <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
                     <NavigationViewItem Content="Klanten" Icon="Contact" Tag="Customer.CreateCustomerPage"/>
+                    <NavigationViewItem Content="Medewerkers" Icon="Contact" Tag="EmployeesCreation.employeesCreate"/>
                     <NavigationViewItem Content="Planning" Icon="Calendar" Tag="Planning.CalenderPage"/>
                     <NavigationViewItem Content="Verkoop" Icon="Shop" Tag="Product.OverviewPage"/>
                 </NavigationView.MenuItems>
