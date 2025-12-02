@@ -84,6 +84,8 @@ namespace BarrocIntens.Pages.Customers
                     BkrStatus = BKRCheckBox.IsChecked == true
                 };
 
+            CheckTextBlock.Text = "Klant succesvol opgeslagen";
+
             using (var dbContext = new AppDbContext())
             {
                 dbContext.Customers.Add(myCustomer);

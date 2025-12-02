@@ -26,6 +26,8 @@
 
         <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>
 
+        <TextBlock x:Name="CheckTextBlock" Foreground="green"></TextBlock>
+
         <Button x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
 
     </StackPanel>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="BarrocIntens.Pages.Customers.CustomerDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BarrocIntens.Pages.Customers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel>
+            <Button x:Name="backButton"
+     Click="backButton_Click">Terug naar Overzicht</Button>
+            <TextBlock x:Name="CustomerNameTextBlock"/>
+            <TextBlock x:Name="CustomerEmailTextBlock"/>
+            <TextBlock x:Name="CustomerPhoneTextBlock"/>
+            <TextBlock x:Name="CustomerCityTextBlock"/>
+            <TextBlock x:Name="CustomerBkrStatusTextBlock"/>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -58,6 +58,12 @@ public sealed partial class employeesCreate : Page
             return;
         }
 
+        if (string.IsNullOrWhiteSpace(employeeEmailTextBox.Text))
+        {
+            ErrorTextBlock.Text = "Email mag niet leeg zijn";
+            return;
+        }
+
         if (string.IsNullOrWhiteSpace(generatePasswordBox.Password))
         {
             ErrorTextBlock.Text = "Voer een geldig adres in.";
@@ -98,7 +104,7 @@ public sealed partial class employeesCreate : Page
         var myEmployee = new BarrocIntens.Data.Employee()
         {
             Name = employeeNameTextBox.Text,
-            Email = passwordVisibleBox.Text, // <-- your email textbox
+            Email = employeeEmailTextBox.Text, // <-- your email textbox
             Password = hashedPassword,         // <-- hashed password
             PhoneNumber = employeePhoneTextBox.Text,
             City = employeeCityTextBox.Text,
@@ -118,7 +124,7 @@ public sealed partial class employeesCreate : Page
         passwordVisible = false;
 
         // Optional: show a success message
-        ErrorTextBlock.Text = "Medewerker succesvol opgeslagen!";
+        CheckTextBlock.Text = "Medewerker succesvol opgeslagen!";
 
         using (var dbContext = new AppDbContext())
         {

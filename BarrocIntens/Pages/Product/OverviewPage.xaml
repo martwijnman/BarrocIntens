@@ -11,9 +11,10 @@
 
     <Grid>
         <ListView x:Name="ProductListView"
-                  IsItemClickEnabled="True"
-                  ItemClick="ProductClick"
                   >
+            <!--IsItemClickEnabled="True"
+                  ItemClick="ProductClick"-->
+                  
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Product">
                     <StackPanel>

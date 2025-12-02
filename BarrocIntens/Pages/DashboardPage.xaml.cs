@@ -42,7 +42,7 @@ namespace BarrocIntens.Pages
                             ContentFrame.Content = null;
                         break;
 
-                    case "Customer.CreateCustomerPage":
+                    case "Customers.CreateCustomerPage":
                         // Navigate to customer page only if not already there
                         if (ContentFrame.Content == null || !(ContentFrame.Content is Customers.CreateCustomerPage))
                             ContentFrame.Navigate(typeof(Customers.CreateCustomerPage));
@@ -52,6 +52,12 @@ namespace BarrocIntens.Pages
                         break;
                     case "EmployeesCreation.employeesCreate":
                         ContentFrame.Navigate(typeof(EmployeesCreation.employeesCreate));
+                        break;
+                    case "EmployeesCreation.employeesView":
+                        ContentFrame.Navigate(typeof(EmployeesCreation.employeesView));
+                        break;
+                    case "Customers.CustomerView":
+                        ContentFrame.Navigate(typeof(Customers.CustomerView));
                         break;
                 }
             }

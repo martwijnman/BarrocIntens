@@ -29,10 +29,12 @@
   <ItemGroup>
     <None Remove="Pages\Appointments\OverviewPage.xaml" />
     <None Remove="Pages\Bill\OverviewPage.xaml" />
-    <None Remove="Pages\Customers\DetailPage.xaml" />
-    <None Remove="Pages\Customers\OverviewPage.xaml" />
+    <None Remove="Pages\Customers\CustomerDetailPage.xaml" />
+    <None Remove="Pages\Customers\CustomerView.xaml" />
     <None Remove="Pages\DashboardPage.xaml" />
     <None Remove="Pages\EmployeesCreation\employeesCreate.xaml" />
+    <None Remove="Pages\EmployeesCreation\employeesDetailPage.xaml" />
+    <None Remove="Pages\EmployeesCreation\employeesView.xaml" />
     <None Remove="Pages\Login\LoginPage.xaml" />
     <None Remove="Pages\Planning\CalenderPage.xaml" />
     <None Remove="Pages\Planning\CreatePage.xaml" />
@@ -63,6 +65,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="FluentValidation" Version="12.1.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
@@ -119,12 +122,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Page Update="Pages\Customer\OverviewPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-
-  </ItemGroup>
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
@@ -151,6 +148,26 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Remove="Pages\NewFolder2\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Customers\CustomerDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Customers\CustomerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\EmployeesCreation\EmployeesDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\EmployeesCreation\employeesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\EmployeesCreation\employeesCreate.xaml">

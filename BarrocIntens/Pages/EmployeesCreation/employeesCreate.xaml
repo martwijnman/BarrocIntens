@@ -11,6 +11,8 @@
     <StackPanel Padding="15" Spacing="15">
         <TextBox x:Name="employeeNameTextBox" 
              Header="Naam:"></TextBox>
+        <TextBox x:Name="employeeEmailTextBox" 
+        Header="Email:"></TextBox>
 
         <PasswordBox x:Name="generatePasswordBox" Width="200" PlaceholderText="Generate password"
         PasswordChanged="PasswordHiddenBox_PasswordChanged"/>
@@ -46,6 +48,8 @@
 
 
         <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>
+
+        <TextBlock x:Name="CheckTextBlock" Foreground="Green"></TextBlock>
 
         <Button x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
 

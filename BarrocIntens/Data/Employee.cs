@@ -28,7 +28,7 @@ namespace BarrocIntens.Data
         public string PhoneNumber { get; set; }
 
         public string City { get; set; }
-        public List<Planning> tasks { get; set; }
+        public List<Planning> Tasks { get; set; }
 
         public string Department { get; set; }
 

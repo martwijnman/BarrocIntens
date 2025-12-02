@@ -1,5 +1,5 @@
 using BarrocIntens.Data;
-using BarrocIntens.Pages.Customer;
+using BarrocIntens.Pages.Product;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -33,10 +33,10 @@ namespace BarrocIntens.Pages.Product
                 var products = db.Products.ToList();
             }
         }
-        private void ProductClick(object sender, ItemClickEventArgs e)
-        {
-            var selectedProduct = (Data.Product)e.ClickedItem;
-            Frame.Navigate(typeof(DetailPage), selectedProduct);
-        }
+        //private void ProductClick(object sender, ItemClickEventArgs e)
+        //{
+        //    var selectedProduct = (Data.Product)e.ClickedItem;
+        //    Frame.Navigate(typeof(DetailPage), selectedProduct);
+        //}
     }
 }
