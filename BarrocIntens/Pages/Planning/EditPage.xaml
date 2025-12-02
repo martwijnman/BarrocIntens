@@ -20,6 +20,7 @@
                 <TextBox x:Name="DescriptionTextbox" Header="Description" />
                 
                 <ComboBox x:Name="StatusCheckbox"
+                          Background="Black"
                   Header="Status"
                   PlaceholderText="Status selecteren"
                   Width="200">

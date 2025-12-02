@@ -14,7 +14,8 @@
         <TextBlock x:Name="Status" Margin="10" />
         <TextBlock x:Name="Customers" Margin="10" />
         <StackPanel
-            Orientation="Horizontal">
+            Orientation="Horizontal"
+            Background="Black">
             <Button Click="GoUpdate" Margin="10">Edit</Button>
             <Button Click="Back" Margin="10">Ga terug</Button>
         </StackPanel>
