@@ -15,6 +15,7 @@
     <ScrollView  Width="1400">
         <StackPanel
             Spacing="20"
+            Background="Black"
             >
             <DatePicker x:Name="date" Header="Date"  />
             <TextBox x:Name="PlanTextbox" Header="Plan" PlaceholderText="Plan" />
@@ -23,7 +24,8 @@
             <ComboBox x:Name="StatusCheckbox"
                   Header="Status"
                   PlaceholderText="Status selecteren"
-                  Width="200">
+                  Width="200"
+                      Background="Black">
                 <x:String>Gedaan</x:String>
                 <x:String>Niet Gedaan</x:String>
             </ComboBox>

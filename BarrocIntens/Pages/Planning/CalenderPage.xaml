@@ -10,60 +10,63 @@
     mc:Ignorable="d">
 
 
-    <Grid Margin="15"  Width="1400">
+    <Grid Margin="15" Width="1400">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <!-- TOP BAR — maak deze zwart -->
+        <Grid Grid.Row="0" Background="Black" Padding="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-
-            <Button x:Name="addCalendarItemButton"
-                    Padding="15"
-                    Foreground="Black"
-                    Background="Gold"
-                    Grid.Column="2"
-                    Click="AddCalendarItemButton_Click">
-                Add Calendar
-            </Button>
-            
-            <!--TODO: make the filter of the status work-->
+            <!-- COMBOBOX in de middelste kolom zodat hij zichtbaar en bereikbaar is -->
             <ComboBox x:Name="StatusCheckbox"
+                  Grid.Column="1"
                   Header="Status"
                   PlaceholderText="Status selecteren"
-                  Margin="10"
-                  SelectionChanged="FilterIfFinished"
-                  Width="200">
+                  Width="200"
+                  Margin="10,0"
+                  Foreground="White"
+                  Background="Black"
+                  SelectionChanged="FilterIfFinished">
                 <x:String>Gedaan</x:String>
                 <x:String>Niet Gedaan</x:String>
             </ComboBox>
+
+            <!-- Rechterknop -->
+            <Button x:Name="addCalendarItemButton"
+                Padding="10"
+                Foreground="White"
+                Background="Black"
+                Grid.Column="2"
+                Click="AddCalendarItemButton_Click">
+                Add Calendar
+            </Button>
         </Grid>
 
+        <!-- CalendarView blijft zoals voorheen -->
         <CalendarView x:Name="calendarView"
-                      Grid.Row="1"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      CalendarItemBorderThickness="1"
-                      CalendarItemCornerRadius="0"
-                      HorizontalDayItemAlignment="Center"
-                      VerticalDayItemAlignment="Top"
-                      CalendarViewDayItemChanging="CalendarView_CalendarViewDayItemChanging">
+                  Grid.Row="1"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  CalendarItemBorderThickness="1"
+                  CalendarItemCornerRadius="0"
+                  HorizontalDayItemAlignment="Center"
+                  VerticalDayItemAlignment="Top"
+                  CalendarViewDayItemChanging="CalendarView_CalendarViewDayItemChanging">
             <CalendarView.CalendarViewDayItemStyle>
                 <Style TargetType="CalendarViewDayItem">
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <!-- Omdat we niet vanuit C# bij de ListView kunnen (omdat het in een datatemplate zit)
-                                    Benaderen we de data via de DataContext, met behulp van {Binding} die daar naar verwijst -->
                                 <ListView ItemsSource="{Binding}"
-                                          IsItemClickEnabled="True"
-                                          ItemClick="DayItemListView_ItemClick">
+                                      IsItemClickEnabled="True"
+                                      ItemClick="DayItemListView_ItemClick">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:Planning">
                                             <StackPanel Orientation="Horizontal">
