@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -19,9 +20,9 @@ namespace BarrocIntens.Data
         [Required(ErrorMessage ="Voer een gebeurtenis in")]
         public string Plan { get; set; }
 
-        [Required]
+        //[Required]
         // betrokken personen
-        public List<Customer> Customers { get; set; }
+        //public List<Customer> Customers { get; set; }
         
         // koppel tabel maken?
         //public int EmployeeId { get; set; }

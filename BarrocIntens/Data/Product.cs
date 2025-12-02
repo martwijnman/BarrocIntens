@@ -36,6 +36,7 @@ namespace BarrocIntens.Data
 
         [Required]
         public string Image { get; set; }
+        public string ImagePath => $"ms-appx:///Assets/{Image}";
         // CRUD operations for Planning
 
         // Update

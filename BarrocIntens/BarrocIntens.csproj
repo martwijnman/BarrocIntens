@@ -35,9 +35,16 @@
     <None Remove="Pages\EmployeesCreation\employeesCreate.xaml" />
     <None Remove="Pages\EmployeesCreation\employeesDetailPage.xaml" />
     <None Remove="Pages\EmployeesCreation\employeesView.xaml" />
+    <None Remove="Pages\Customers\DetailPage.xaml" />
+    <None Remove="Pages\Customers\OverviewPage.xaml" />
+    <None Remove="Pages\Contracts\OverviewPage.xaml" />
     <None Remove="Pages\Login\LoginPage.xaml" />
+    <None Remove="Pages\Malfunction\CalenderPage.xaml" />
     <None Remove="Pages\Planning\CalenderPage.xaml" />
     <None Remove="Pages\Planning\CreatePage.xaml" />
+    <None Remove="Pages\Planning\DetailPage.xaml" />
+    <None Remove="Pages\Planning\EditPage.xaml" />
+    <None Remove="Pages\Product\OrderPage.xaml" />
     <None Remove="Pages\Product\OverviewPage.xaml" />
     
   </ItemGroup>
@@ -66,10 +73,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="CSharpMarkup.WinUI.LiveChartsCore.SkiaSharpView" Version="3.1.2" />
     <PackageReference Include="FluentValidation" Version="12.1.0" />
+    <PackageReference Include="LiveCharts.Core" Version="0.9.8" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="PDFsharp-GDI" Version="6.2.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup>
@@ -89,8 +99,37 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
-    <Folder Include="Pages\Malfunction\" />
     <Folder Include="Pages\Department\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Finance\OverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Product\OrderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Malfunction\CalenderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Planning\EditPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Planning\DetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Planning\CalenderPage.xaml">
@@ -108,7 +147,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\DashboardPage.xaml">
+    <Page Update="Pages\DashboardWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

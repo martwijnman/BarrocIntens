@@ -19,6 +19,10 @@ namespace BarrocIntens.Data
         public DbSet<Malfunction> Malfunctions { get; set; }
         public DbSet<Planning> Plannings { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<CostumerPlanning> CostumerPlannings { get; set; }
+        public DbSet<Quote> Quotes { get; set; }
+        public DbSet<QuoteItem> QuoteItems { get; set; }
+
 
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
@@ -262,25 +266,25 @@ namespace BarrocIntens.Data
                     Status = "niet gedaan",
                 });
 
-            modelBuilder.Entity<Planning>()
-    .HasMany(p => p.Customers)
-    .WithMany()
-    .UsingEntity<Dictionary<string, object>>(
-        "PlanningCustomers",
-        j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
-        j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
-        j =>
-        {
-            j.HasKey("PlanningId", "CustomerId");
-            j.ToTable("PlanningCustomers");
+            //modelBuilder.Entity<Planning>()
+    //.HasMany(p => p.Customers)
+    //.WithMany()
+    //.UsingEntity<Dictionary<string, object>>(
+    //    "PlanningCustomers",
+    //    j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
+    //    j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
+    //    j =>
+        //{
+        //    j.HasKey("PlanningId", "CustomerId");
+        //    j.ToTable("PlanningCustomers");
 
-            // ✅ Join table seeding
-            j.HasData(
-                new { CustomerId = 1, PlanningId = 1 },
-                new { CustomerId = 2, PlanningId = 2 },
-                new { CustomerId = 3, PlanningId = 3 }
-            );
-        });
+        //    // ✅ Join table seeding
+        //    j.HasData(
+        //        new { CustomerId = 1, PlanningId = 1 },
+        //        new { CustomerId = 2, PlanningId = 2 },
+        //        new { CustomerId = 3, PlanningId = 3 }
+        //    );
+        //});
 
 
             modelBuilder.Entity<Product>().HasData(
@@ -294,7 +298,7 @@ namespace BarrocIntens.Data
                     MinimumStock = 10,
                     Deliverer = "SolarTech BV",
                     NotificationOutOfStock = false,
-                    Image = "zonnepaneel_400w.jpg"
+                    Image = "logo.png"
                 },
                 new Product
                 {
@@ -306,7 +310,7 @@ namespace BarrocIntens.Data
                     MinimumStock = 5,
                     Deliverer = "GreenEnergy Supply",
                     NotificationOutOfStock = false,
-                    Image = "warmtepomp_ecoheat.jpg"
+                    Image = "logo.png"
                 },
                 new Product
                 {
@@ -318,7 +322,7 @@ namespace BarrocIntens.Data
                     MinimumStock = 8,
                     Deliverer = "SmartHome Solutions",
                     NotificationOutOfStock = false,
-                    Image = "thermostaat_comfortplus.jpg"
+                    Image = "logo.png"
                 },
                 new Product
                 {
@@ -330,7 +334,7 @@ namespace BarrocIntens.Data
                     MinimumStock = 3,
                     Deliverer = "EnergyPro NV",
                     NotificationOutOfStock = true,
-                    Image = "omvormer_solarlink_5kw.jpg"
+                    Image = "logo.png"
                 });
         }
     }

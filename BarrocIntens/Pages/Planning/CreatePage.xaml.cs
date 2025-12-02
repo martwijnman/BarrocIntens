@@ -1,3 +1,4 @@
+using BarrocIntens.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -7,6 +8,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -27,19 +29,106 @@ namespace BarrocIntens.Pages.Planning
         {
             InitializeComponent();
         }
+
+        // lists of workers and customersS
+        private List<int> SelectedCustomerIds = new();
+        private List<int> SelectedEmployeeIds = new();
+
         private void CreateButton(object sender, RoutedEventArgs e)
         {
             using (var db = new Data.AppDbContext())
             {
-                var planning = db.Plannings.Add(new Data.Planning
+                var planning = new Data.Planning
                 {
-                    //Date = date,
+                    Date = DateOnly.FromDateTime((date.SelectedDate?.DateTime) ?? DateTime.Now),
                     Plan = PlanTextbox.Text,
                     Location = LocationTextbox.Text,
                     Description = DescriptionTextbox.Text,
-                }); 
+                    Status = StatusCheckbox.SelectedItem?.ToString()
+                };
+                db.Plannings.Add(planning);
+
+
+
+                // making a validation
+                var context = new ValidationContext(planning);
+                var results = new List<ValidationResult>();
+
+                if (!Validator.TryValidateObject(planning, context, results, true))
+                {
+                    var errors = new List<string>();
+                    foreach (var validationResult in results)
+                    {
+                        errors.Add(validationResult.ErrorMessage);
+                    }
+                    errorText.Text = string.Join(Environment.NewLine, errors);
+
+                }
+
+                if (Validator.TryValidateObject(planning, context, results, true))
+                {
+                    db.SaveChanges();
+                    // add soon the planning connection between customer and employee
+                    foreach (int SelectedCustomerId in SelectedCustomerIds)
+                    {
+                        // making invidual customers for the planning
+                        db.CostumerPlannings.Add(new CostumerPlanning
+                        {
+                            CustomerId = SelectedCustomerId,
+                            PlanningId = planning.Id,
+                        });
+                        db.SaveChanges();
+                    }
+                    Frame.Navigate(typeof(Pages.Planning.CalenderPage));
+                }
             }
-            Frame.Navigate(typeof(CalenderPage));
+        }
+
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            using var db = new Data.AppDbContext();
+            var customers = db.Customers.ToList();
+
+            foreach (var customer in customers)
+            {
+                var btn = new ToggleButton
+                {
+                    Content = customer.Name,
+                    Tag = customer.Id,
+                    Margin = new Thickness(4, 0, 4, 0)
+                };
+
+                btn.Click += ToggleCustomer;
+
+                CitizenSelector.Children.Add(btn);
+            }
+        }
+
+
+        public void ToggleCustomer(object sender, RoutedEventArgs e)
+        {
+            
+            using (var db = new AppDbContext())
+            {
+                // make the connectiontable
+                // 1: list
+                var btn = (ToggleButton)sender;
+                var id = (int)btn.Tag;
+                if (btn.IsChecked == true)
+                {
+                    if (!SelectedCustomerIds.Contains(id))
+                        SelectedCustomerIds.Add(id);
+                }
+                else
+                {
+                    SelectedCustomerIds.Remove(id);
+                }
+            }
+
+
         }
     }
 }

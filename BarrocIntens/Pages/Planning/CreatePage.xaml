@@ -8,7 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollView>
+    <Page.Resources>
+        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
+    </Page.Resources>
+
+    <ScrollView  Width="1400">
         <StackPanel
             Spacing="20"
             >
@@ -16,6 +20,18 @@
             <TextBox x:Name="PlanTextbox" Header="Plan" PlaceholderText="Plan" />
             <TextBox x:Name="LocationTextbox" Header="Location" PlaceholderText="Location" />
             <TextBox x:Name="DescriptionTextbox" Header="Description" PlaceholderText="Description" />
+            <ComboBox x:Name="StatusCheckbox"
+                  Header="Status"
+                  PlaceholderText="Status selecteren"
+                  Width="200">
+                <x:String>Gedaan</x:String>
+                <x:String>Niet Gedaan</x:String>
+            </ComboBox>
+
+            <StackPanel x:Name="CitizenSelector" Orientation="Horizontal" Spacing="8">
+            </StackPanel>
+
+            <TextBlock x:Name="errorText" />
             <Button Click="CreateButton">
                 Save
             </Button>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="BarrocIntens.Pages.DashboardWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BarrocIntens.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
+    </Page.Resources>
+    
+    <ScrollView>
+        <StackPanel 
+        Orientation="Horizontal"
+        >
+            <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed"
+            SelectionChanged="NavigationView_SelectionChanged"
+                            Background="Yellow">
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
+                    <NavigationViewItem Content="Klanten" Icon="Contact" Tag="Customer.CreateCustomerPage"/>
+                    <NavigationViewItem Content="Planning" Icon="Calendar" Tag="Planning.CalenderPage"/>
+                    <NavigationViewItem Content="Verkoop" Icon="Shop" Tag="Product.OverviewPage"/>
+                </NavigationView.MenuItems>
+                <Frame x:Name="dashboardFrame"/>
+            </NavigationView>
+
+           
+
+        </StackPanel>
+    </ScrollView>
+</Page>
