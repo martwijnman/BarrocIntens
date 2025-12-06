@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
@@ -31,12 +32,7 @@ namespace BarrocIntens.Pages
         {
             InitializeComponent();
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            int EmployeeId = (int)e.Parameter;
-            dashboardFrame.Navigate(typeof(MainPage), EmployeeId);
-        }
+
 
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -68,6 +64,9 @@ namespace BarrocIntens.Pages
                         break;
                     case "Customers.CustomerView":
                         dashboardFrame.Navigate(typeof(Customers.CustomerView));
+                        break;
+                    case "Contracts.OverviewPage":
+                        dashboardFrame.Navigate(typeof(Contracts.OverviewPage));
                         break;
                 }
             }

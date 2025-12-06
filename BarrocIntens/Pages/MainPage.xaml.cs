@@ -1,6 +1,8 @@
+using BarrocIntens.Data;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -29,32 +31,75 @@ namespace BarrocIntens.Pages
     public sealed partial class MainPage : Page
     {
         public ISeries[] SalesSeries { get; set; }
+        public Axis[] XAxes { get; set; }
 
         public MainPage()
         {
             this.InitializeComponent();
 
             // --- CHART DATA ---
+            var db = new AppDbContext();
+
+            var groupedData = db.QuoteItems
+                .Include(q => q.Product)
+                .GroupBy(q => q.Product.Name)
+                .Select(g => new
+                {
+                    ProductName = g.Key,
+                    TotaalAantal = g.Sum(x => x.Total)
+                })
+                .ToList();
+
+            string[] productLabels = groupedData
+                .Select(x => x.ProductName)
+                .ToArray();
+
+            int[] aantallen = groupedData
+                .Select(x => x.TotaalAantal)
+                .ToArray();
+
+            // =============================
+            // CHART
+            // =============================
             SalesSeries = new ISeries[]
             {
-                new LineSeries<int>
+                new ColumnSeries<int>
                 {
-                    Values = new int[]
-                    {
-                        60,110,70,100,75,90,80,100,70,80,120,80
-                    },
+                    Values = aantallen,
 
-                    Stroke = new SolidColorPaint(new SKColor(255, 255, 0)),
-                    Fill = null,
+                    Fill = new SolidColorPaint(SKColors.Yellow),
+                    Stroke = new SolidColorPaint(SKColors.Black),
 
-                    LineSmoothness = 0.7,
-                    GeometrySize = 10,
-                    GeometryStroke = null,
-                    GeometryFill = new SolidColorPaint(new SKColor(255, 255, 0))
+                    DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
+                    DataLabelsSize = 14,
+                    DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+
+                    // GEEN INDEX, GEEN GEDOE
+                    DataLabelsFormatter = p => p.Coordinate.PrimaryValue.ToString()
                 }
             };
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Labels = productLabels,
+                    LabelsRotation = 30
+                }
+            };
+
+            DataContext = this;
+            //var LoggedInEmployee = db.Employees.FirstOrDefault(e => e.Id == EmployeeId);
+            //Greeting.Text = $"Hello {LoggedInEmployee.Name}";
+        
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            //EmployeeId = (int)e.Parameter;
+            
+        }
         // --- JOUW NAVIGATIE ---  
         private void PlanningClick(object sender, RoutedEventArgs e)
         {
