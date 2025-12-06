@@ -14,6 +14,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -29,6 +30,7 @@ public sealed partial class CalenderPage : Page
     public CalenderPage()
     {
         InitializeComponent();
+
     }
     private void AddCalendarItemButton_Click(object sender, RoutedEventArgs e)
     {
@@ -60,12 +62,28 @@ public sealed partial class CalenderPage : Page
         Frame.Navigate(typeof(Pages.Planning.DetailPage), clickedCalendarItemId);
     }
 
-    private void FilterIfFinished(object sender, SelectionChangedEventArgs e)
+    private void Status_Filter(object sender, object e)
     {
         // Forceer refresh van de CalendarView,
         // zodat CalendarViewDayItemChanging opnieuw wordt uitgevoerd
-        calendarView.InvalidateMeasure();
-        calendarView.UpdateLayout();
+        var db = new AppDbContext();
+        var query = db.Products.AsQueryable();
+        if (StatusCheckbox.SelectedValue as string == "Gedaan")
+        {
+            var planningIds = db.Plannings
+                            .Where(p => p.Status == "Gedaan")
+                            .Select(p => p.Id);
+            query = query.Where(p => planningIds.Contains(p.Id));
+        }
+        if (StatusCheckbox.SelectedValue as string == "Niet Gedaan")
+        {
+            var planningIds = db.Plannings
+                            .Where(p => p.Status == "Niet Gedaan")
+                            .Select(p => p.Id);
+            query = query.Where(p => planningIds.Contains(p.Id));
+        }
+        //calendarView.InvalidateMeasure();
+        //calendarView.UpdateLayout();
     }
 
 }

@@ -25,7 +25,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- COMBOBOX in de middelste kolom zodat hij zichtbaar en bereikbaar is -->
-            <ComboBox x:Name="StatusCheckbox"
+            <StackPanel>
+                <ComboBox x:Name="StatusCheckbox"
                   Grid.Column="1"
                   Header="Status"
                   PlaceholderText="Status selecteren"
@@ -33,10 +34,12 @@
                   Margin="10,0"
                   Foreground="White"
                   Background="Black"
-                  SelectionChanged="FilterIfFinished">
-                <x:String>Gedaan</x:String>
-                <x:String>Niet Gedaan</x:String>
-            </ComboBox>
+                  SelectionChanged="Status_Filter">
+                    <x:String>Gedaan</x:String>
+                    <x:String>Niet Gedaan</x:String>
+                </ComboBox>
+            </StackPanel>
+
 
             <!-- Rechterknop -->
             <Button x:Name="addCalendarItemButton"
