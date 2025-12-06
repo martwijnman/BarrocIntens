@@ -18,5 +18,8 @@ namespace BarrocIntens.Data
 
         [Required]
         public double TotalPrice { get; set; }
+
+        public DateOnly StartDate = DateOnly.FromDateTime(DateTime.Now).AddDays(5);
+        public DateOnly EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(370);
     }
 }

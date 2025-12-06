@@ -246,6 +246,7 @@ public sealed partial class OverviewPage : Page
         // TOTALEN -------------------------------------------------------
         gfx.DrawString("Totaalbedrag:", boldFont, XBrushes.Black, 20, y);
         gfx.DrawString($"€{totalPrice:F2}", boldFont, XBrushes.Black, 150, y);
+        gfx.DrawString($"Van {DateOnly.FromDateTime(DateTime.Now).AddDays(5)} tot {DateOnly.FromDateTime(DateTime.Now).AddDays(370)}", boldFont, XBrushes.Gray, 5, y);
 
         y += 40;
 
