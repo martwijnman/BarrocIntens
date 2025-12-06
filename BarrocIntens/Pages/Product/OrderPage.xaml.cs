@@ -108,7 +108,7 @@ public sealed partial class OrderPage : Page
 
         var quote = new Quote
         {
-            Name = $"Offerte {DateTime.Now:yyyyMMdd-HHmm}",
+            //Name = $"Offerte {DateTime.Now:yyyyMMdd-HHmm}",
             Items = new List<QuoteItem>(),
             CustomerId = db.Customers.FirstOrDefault(c => c.Name == selectedName).Id
         };
@@ -121,7 +121,7 @@ public sealed partial class OrderPage : Page
             quote.Items.Add(new QuoteItem
             {
                 ProductId = product.Id,
-                Aantal = aantal,
+                Total = aantal,
             });
 
             // stock verlagen
@@ -131,6 +131,7 @@ public sealed partial class OrderPage : Page
 
         db.Quotes.Add(quote);
         db.SaveChanges();
+        Frame.Navigate(typeof(Pages.Product.OverviewPage));
     }
 
     private void GenerateOrder()
@@ -160,7 +161,6 @@ public sealed partial class OrderPage : Page
         // Tabel headers
         gfx.DrawString("Product", headerFont, XBrushes.Black, 40, yPoint);
         gfx.DrawString("Aantal", headerFont, XBrushes.Black, 250, yPoint);
-        gfx.DrawString("Prijs", headerFont, XBrushes.Black, 350, yPoint);
         yPoint += 25;
         
         foreach (var kvp in wallet)

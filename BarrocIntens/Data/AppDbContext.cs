@@ -22,6 +22,7 @@ namespace BarrocIntens.Data
         public DbSet<CostumerPlanning> CostumerPlannings { get; set; }
         public DbSet<Quote> Quotes { get; set; }
         public DbSet<QuoteItem> QuoteItems { get; set; }
+        public DbSet<Facture> Factures { get; set; }
 
 
         protected override void OnConfiguring(
@@ -291,48 +292,48 @@ namespace BarrocIntens.Data
                 new Product
                 {
                     Id = 1,
-                    Name = "Zonnepaneel Premium 400W",
-                    Category = "Zonnepanelen",
+                    Name = "Wizzmie Coffee Machine",
+                    Category = "IceCoffee",
                     Price = 249.99,
                     Stock = 50,
                     MinimumStock = 10,
-                    Deliverer = "SolarTech BV",
+                    Deliverer = "Wizzmie",
                     NotificationOutOfStock = false,
                     Image = "logo.png"
                 },
                 new Product
                 {
                     Id = 2,
-                    Name = "Warmtepomp EcoHeat 3000",
+                    Name = "Amazon Coffee machine",
                     Category = "Verwarming",
                     Price = 1299.00,
                     Stock = 15,
                     MinimumStock = 5,
-                    Deliverer = "GreenEnergy Supply",
+                    Deliverer = "IceAndWarm",
                     NotificationOutOfStock = false,
                     Image = "logo.png"
                 },
                 new Product
                 {
                     Id = 3,
-                    Name = "Slimme thermostaat ComfortPlus",
-                    Category = "Smart Home",
+                    Name = "Arah Kopi",
+                    Category = "AllTypes",
                     Price = 199.99,
                     Stock = 25,
                     MinimumStock = 8,
-                    Deliverer = "SmartHome Solutions",
+                    Deliverer = "Arah",
                     NotificationOutOfStock = false,
                     Image = "logo.png"
                 },
                 new Product
                 {
                     Id = 4,
-                    Name = "Omvormer SolarLink 5kW",
-                    Category = "Zonnepanelen",
+                    Name = "Pawon Luwak Machine",
+                    Category = "Warm",
                     Price = 899.00,
                     Stock = 5,
                     MinimumStock = 3,
-                    Deliverer = "EnergyPro NV",
+                    Deliverer = "Pawon Luwak Coffee",
                     NotificationOutOfStock = true,
                     Image = "logo.png"
                 });

@@ -17,11 +17,13 @@
             <ComboBox x:Name="StockCheckbox"
                   PlaceholderText="Type selecteren"
                   Width="200"
-                  Margin="0,0,10,0">
+                  Margin="0,0,10,0"
+                  SelectionChanged="Filter_Changed">
                 <x:String>Op voorraad</x:String>
                 <x:String>Niet op voorraad</x:String>
             </ComboBox>
-
+            <NumberBox x:Name="PriceFilter"
+                ValueChanged="Filter_Changed"/>
             <TextBox x:Name="ProductSearchTextbox"
                  PlaceholderText="Zoek product..."
                  Width="300"/>

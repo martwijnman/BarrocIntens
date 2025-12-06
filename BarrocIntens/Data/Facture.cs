@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 
 namespace BarrocIntens.Data
 {
-    class QuoteItem
+    internal class Facture
     {
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public int QuoteId { get; set; }
         public Quote Quote { get; set; }
 
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
-
-        public int Total { get; set; }
+        [Required]
+        public double TotalPrice { get; set; }
     }
 }

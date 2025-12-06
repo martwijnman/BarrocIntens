@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,13 +26,19 @@ namespace BarrocIntens.Pages.Product
     /// </summary>
     public sealed partial class OverviewPage : Page
     {
+        private List<Data.Product> AllProducts;
         public OverviewPage()
         {
             InitializeComponent();
             using (var db = new AppDbContext())
             {
+                AllProducts = db.Products
+                .OrderBy(p => p.Name)
+                .ToList();
+
                 var products = db.Products.ToList();
                 ProductView.ItemsSource = products;
+                //FilterComboBox.ItemsSource = db.Genres.OrderBy(g => g.Name).ToList();
             }
         }
 
@@ -72,9 +79,28 @@ namespace BarrocIntens.Pages.Product
                 wallet.Remove(product);
         }
 
+        private async void WalletError()
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "Melding",
+                Content = "U heeft nog geen producten geselecteerd",
+                CloseButtonText = "OK",
+                XamlRoot = this.XamlRoot
+            };
+
+            await dialog.ShowAsync();
+        }
         private void GoToOrder(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(OrderPage), wallet);
+            if (wallet.Count > 0)
+            {
+                Frame.Navigate(typeof(OrderPage), wallet);
+            }
+            else
+            {
+                WalletError();
+            }
         }
         private void ProductClick(object sender, RoutedEventArgs e)
         {
@@ -82,6 +108,44 @@ namespace BarrocIntens.Pages.Product
             var product = (Data.Product)button.DataContext;
 
             Frame.Navigate(typeof(DetailPage), product);
+        }
+        private void Filter_Changed(object sender, object e)
+        {
+            using (var db = new AppDbContext())
+            {
+                var query = db.Products.AsQueryable();
+
+
+                if (ProductSearchTextbox.Text != "")
+                {
+                    string search = ProductSearchTextbox.Text;
+                    query = query.Where(g => g.Name.Contains(search));
+                }
+
+                if (StockCheckbox.SelectedValue as string == "Op voorraad")
+                {
+                    var productIds = db.Products
+                                    .Where(p => p.Stock >= 1)
+                                    .Select(p => p.Id);
+                    query = query.Where(p => productIds.Contains(p.Id));
+                }
+                if (StockCheckbox.SelectedValue as string == "Niet op voorraad")
+                {
+                    var productIds = db.Products
+                                    .Where(p => p.Stock == 0)
+                                    .Select(p => p.Id);
+                    query = query.Where(p => productIds.Contains(p.Id));
+                }
+
+
+                if (PriceFilter.Value > 0)
+                {
+                    query = query.Where(p => p.Price >= PriceFilter.Value);
+                }
+               
+
+                ProductView.ItemsSource = query.ToList();
+            }
         }
     }
 }

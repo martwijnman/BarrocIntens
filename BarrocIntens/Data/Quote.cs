@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,6 @@ namespace BarrocIntens.Data
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         
@@ -24,5 +24,10 @@ namespace BarrocIntens.Data
         {
             get; set;
         }
+        [AllowNull]
+        public bool IsAccepted { get; set; }
+        public bool IsRejected { get; set; }
+
+        //public Facture Facture { get; set;  }
     }
 }
