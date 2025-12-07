@@ -33,7 +33,6 @@ namespace BarrocIntens.Pages.Contracts;
 /// </summary>
 public sealed partial class OverviewPage : Page
 {
-    //private Data.Quote selectedQuote;
     public OverviewPage()
     {
         InitializeComponent();
@@ -42,6 +41,7 @@ public sealed partial class OverviewPage : Page
             QuoteListView.ItemsSource = db.Quotes
                 .Include(q => q.Customer)
                 .Include(q => q.Items)
+                .Where(q => q.IsAccepted == false || q.IsRejected == false)
                 .ToList();
         }
     }
@@ -52,7 +52,7 @@ public sealed partial class OverviewPage : Page
         {
             quote.IsAccepted = true;
             MakePDFFacture(quote);
-            SendEmail(quote);
+            SendEmail(quote); // pas dit aan om email te sturen. uncomment: smtp.Send(mail);
             SaveFacture(quote);
         }
     }
@@ -62,7 +62,7 @@ public sealed partial class OverviewPage : Page
         if (sender is Button btn && btn.DataContext is Quote quote)
         {
             quote.IsRejected = true;
-            SendEmail(quote);
+            SendEmail(quote); // pas dit aan om email te sturen. uncomment: smtp.Send(mail);
         }
     }
 
@@ -105,6 +105,7 @@ public sealed partial class OverviewPage : Page
             SmtpClient smtp = new SmtpClient("smtp.example.com", 587);
             smtp.Credentials = new NetworkCredential("username", "password");
             smtp.EnableSsl = true;
+            //smtp.Send(mail);
 
         }
         else if(quote.IsAccepted == false && quote.IsRejected == true)
@@ -129,6 +130,7 @@ public sealed partial class OverviewPage : Page
             SmtpClient smtp = new SmtpClient("smtp.example.com", 587);
             smtp.Credentials = new NetworkCredential("username", "password");
             smtp.EnableSsl = true;
+            //smtp.Send(mail);
         }
     }
     private void SaveFacture(Quote quote)
@@ -153,6 +155,14 @@ public sealed partial class OverviewPage : Page
         });
         Frame.Navigate(typeof(Pages.Contracts.OverviewPage));
     }
+
+
+
+
+
+
+
+
     // pdf produceren
     private void MakePDFFacture(Quote quote)
     {
@@ -194,7 +204,7 @@ public sealed partial class OverviewPage : Page
 
         y += 50;
 
-        // KLANT INFO ---------------------------------------------------
+        // BARROCINTENS INFO ---------------------------------------------------
         gfx.DrawString("Bedrijfsgegevens.", boldFont, XBrushes.Black, 20, y);
         y += 20;
         gfx.DrawString("Naam: BarrocIntens B.V.", normalFont, XBrushes.Black, 20, y);
@@ -246,6 +256,7 @@ public sealed partial class OverviewPage : Page
         // TOTALEN -------------------------------------------------------
         gfx.DrawString("Totaalbedrag:", boldFont, XBrushes.Black, 20, y);
         gfx.DrawString($"€{totalPrice:F2}", boldFont, XBrushes.Black, 150, y);
+        y += 10;
         gfx.DrawString($"Van {DateOnly.FromDateTime(DateTime.Now).AddDays(5)} tot {DateOnly.FromDateTime(DateTime.Now).AddDays(370)}", boldFont, XBrushes.Gray, 5, y);
 
         y += 40;

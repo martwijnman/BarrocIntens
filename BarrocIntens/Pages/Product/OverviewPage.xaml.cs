@@ -1,4 +1,4 @@
-using BarrocIntens.Data;
+﻿using BarrocIntens.Data;
 using BarrocIntens.Pages.Product;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,9 +25,11 @@ namespace BarrocIntens.Pages.Product
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    
     public sealed partial class OverviewPage : Page
     {
         private List<Data.Product> AllProducts;
+
         public OverviewPage()
         {
             InitializeComponent();
@@ -40,6 +43,7 @@ namespace BarrocIntens.Pages.Product
                 ProductView.ItemsSource = products;
                 //FilterComboBox.ItemsSource = db.Genres.OrderBy(g => g.Name).ToList();
             }
+            //ShowStockEmpty(this.XamlRoot);
         }
 
         private Dictionary<Data.Product, int> wallet = new();
@@ -147,5 +151,35 @@ namespace BarrocIntens.Pages.Product
                 ProductView.ItemsSource = query.ToList();
             }
         }
+        private async void ShowStockEmpty(Microsoft.UI.Xaml.XamlRoot root)
+        {
+            var db = new AppDbContext();
+
+            var products = db.Products
+                .Where(p => p.Stock < p.MinimumStock)
+                .ToList();
+
+            if (!products.Any())
+                return;
+
+            string content = "⚠ Producten met te lage voorraad:\n\n";
+
+            foreach (var product in products)
+            {
+                content += $"• {product.Name} → bestel {product.MinimumStock - product.Stock} stuks\n";
+            }
+
+            var dialog = new ContentDialog
+            {
+                Title = "Voorraad waarschuwing",
+                Content = content,
+                CloseButtonText = "Sluiten",
+                XamlRoot = this.XamlRoot
+            };
+
+            await dialog.ShowAsync();
+        }
+
+
     }
 }

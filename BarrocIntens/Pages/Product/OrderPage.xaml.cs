@@ -108,29 +108,35 @@ public sealed partial class OrderPage : Page
 
         var quote = new Quote
         {
-            //Name = $"Offerte {DateTime.Now:yyyyMMdd-HHmm}",
             Items = new List<QuoteItem>(),
-            CustomerId = db.Customers.FirstOrDefault(c => c.Name == selectedName).Id
+            CustomerId = db.Customers.FirstOrDefault(c => c.Name == selectedName).Id,
+            IsAccepted = false,
+            IsRejected = false,
         };
 
-        foreach (var kvp in wallet)
-        {
+        foreach(var kvp in wallet)
+{
             var product = kvp.Key;
             var aantal = kvp.Value;
 
+            var dbProduct = db.Products.FirstOrDefault(p => p.Id == product.Id);
+
+            if (dbProduct == null)
+                continue;
+
             quote.Items.Add(new QuoteItem
             {
-                ProductId = product.Id,
-                Total = aantal,
+                ProductId = dbProduct.Id,
+                Total = aantal
             });
 
-            // stock verlagen
-            if (product.Stock >= aantal)
-                product.Stock -= aantal;
+            dbProduct.Stock -= aantal;
         }
 
         db.Quotes.Add(quote);
         db.SaveChanges();
+
+
         Frame.Navigate(typeof(Pages.Product.OverviewPage));
     }
 

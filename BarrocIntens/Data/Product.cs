@@ -23,6 +23,7 @@ namespace BarrocIntens.Data
         public double Price { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Stock moet minimaal 1 zijn")]
         public int Stock { get; set; }
 
         [Required]
