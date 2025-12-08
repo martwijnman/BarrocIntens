@@ -93,18 +93,13 @@ namespace BarrocIntens.Pages
             //Greeting.Text = $"Hello {LoggedInEmployee.Name}";
         
         }
-
-<<<<<<< Updated upstream
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             //EmployeeId = (int)e.Parameter;
             
         }
-        // --- JOUW NAVIGATIE ---  
-=======
-        // navigatie
->>>>>>> Stashed changes
+
         private void PlanningClick(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Pages.Planning.CalenderPage));
