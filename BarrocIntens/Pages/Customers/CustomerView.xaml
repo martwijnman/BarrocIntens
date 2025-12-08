@@ -35,6 +35,10 @@
                  <Run>)</Run>
                         </TextBlock>
                         <TextBlock Text="{x:Bind Email}" />
+                        <Button x:Name="UpdateButton" Click="UpdateButton_Click">
+                            <FontIcon FontFamily="Segoe Fluent Icons" FontWeight="Bold" Glyph="&#xE104;" />
+                        </Button>
+                        <TextBlock x:Name="ErrorTextBlock"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
