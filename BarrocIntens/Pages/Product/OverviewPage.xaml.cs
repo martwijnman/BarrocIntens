@@ -14,8 +14,11 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -41,14 +44,21 @@ namespace BarrocIntens.Pages.Product
 
                 var products = db.Products.ToList();
                 ProductView.ItemsSource = products;
-                //FilterComboBox.ItemsSource = db.Genres.OrderBy(g => g.Name).ToList();
             }
-            //ShowStockEmpty(this.XamlRoot);
+            this.Loaded += OverviewPage_Loaded;
+
+
         }
 
         private Dictionary<Data.Product, int> wallet = new();
 
         private int timesSelected = 0;
+
+        private void OverviewPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Errors("emptystock");
+        }
+
         private void PlusClick(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
@@ -63,8 +73,8 @@ namespace BarrocIntens.Pages.Product
                 wallet[product]++;
             else
                 wallet[product] = 1;
+            
         }
-
 
 
 
@@ -83,18 +93,57 @@ namespace BarrocIntens.Pages.Product
                 wallet.Remove(product);
         }
 
-        private async void WalletError()
+
+
+
+        private async Task Errors(string type)
         {
+            
+
+            string error = "";
+
+
+            if (type == "emptywallet")
+            {
+                error = "U heeft nog geen producten geselecteerd";
+            }
+            else if (type == "emptystock")
+            {
+                using var db = new AppDbContext();
+
+                var products = db.Products
+                    .Where(p => p.NotificationOutOfStock == true)
+                    .ToList();
+
+                if (!products.Any())
+                    return;
+
+                error = "⚠ Producten met te lage voorraad:\n\n";
+
+                foreach (var product in products)
+                {
+                    int buy = product.MinimumStock - product.Stock;
+                    error += $"• {product.Name} → bestel {buy} stuks\n";
+                    Console.WriteLine(error);
+                }
+            }
+
+
             var dialog = new ContentDialog
             {
-                Title = "Melding",
-                Content = "U heeft nog geen producten geselecteerd",
-                CloseButtonText = "OK",
+                Title = "Waarschuwing",
+                Content = error,
+                CloseButtonText = "Sluiten",
                 XamlRoot = this.XamlRoot
             };
-
+            if (this.XamlRoot == null || string.IsNullOrWhiteSpace(error))
+                return;
             await dialog.ShowAsync();
+
         }
+
+
+
         private void GoToOrder(object sender, RoutedEventArgs e)
         {
             if (wallet.Count > 0)
@@ -103,9 +152,10 @@ namespace BarrocIntens.Pages.Product
             }
             else
             {
-                WalletError();
+                Errors("emptywallet");
             }
         }
+
         private void ProductClick(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
@@ -113,6 +163,7 @@ namespace BarrocIntens.Pages.Product
 
             Frame.Navigate(typeof(DetailPage), product);
         }
+
         private void Filter_Changed(object sender, object e)
         {
             using (var db = new AppDbContext())
@@ -151,34 +202,7 @@ namespace BarrocIntens.Pages.Product
                 ProductView.ItemsSource = query.ToList();
             }
         }
-        private async void ShowStockEmpty(Microsoft.UI.Xaml.XamlRoot root)
-        {
-            var db = new AppDbContext();
-
-            var products = db.Products
-                .Where(p => p.Stock < p.MinimumStock)
-                .ToList();
-
-            if (!products.Any())
-                return;
-
-            string content = "⚠ Producten met te lage voorraad:\n\n";
-
-            foreach (var product in products)
-            {
-                content += $"• {product.Name} → bestel {product.MinimumStock - product.Stock} stuks\n";
-            }
-
-            var dialog = new ContentDialog
-            {
-                Title = "Voorraad waarschuwing",
-                Content = content,
-                CloseButtonText = "Sluiten",
-                XamlRoot = this.XamlRoot
-            };
-
-            await dialog.ShowAsync();
-        }
+        
 
 
     }

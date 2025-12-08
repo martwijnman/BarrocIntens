@@ -44,7 +44,9 @@ public sealed partial class OrderPage : Page
             CustomerCheckbox.Items.Add(customer.Name);
         }
     }
+
     private List<int> SelectedCustomerIds = new();
+    private Dictionary<Data.Product, int> wallet = new Dictionary<Data.Product, int>();
     public void ToggleCustomer(object sender, RoutedEventArgs e)
     {
 
@@ -67,7 +69,7 @@ public sealed partial class OrderPage : Page
 
 
     }
-    private Dictionary<Data.Product, int> wallet = new Dictionary<Data.Product, int>();
+
 
     private void RefreshWallet()
     {
@@ -131,6 +133,10 @@ public sealed partial class OrderPage : Page
             });
 
             dbProduct.Stock -= aantal;
+            if (dbProduct.Stock <= dbProduct.MinimumStock)
+            {
+                dbProduct.NotificationOutOfStock = true;
+            }
         }
 
         db.Quotes.Add(quote);
@@ -200,29 +206,24 @@ public sealed partial class OrderPage : Page
         bool found = false;
         var products = db.Products.ToList();
 
-        foreach (var product in products)
-        {
-            foreach (var kvp in wallet.ToList())
-            {
-                var existingProduct = kvp.Key;
-                if (existingProduct.Id == product.Id)
-                {
-                    wallet[existingProduct] += 1;
-                    found = true;
-                    break;
-                }
-            }
+        //foreach (var product in products)
+        //{
+        //    foreach (var kvp in wallet.ToList())
+        //    {
+        //        var existingProduct = kvp.Key;
+        //        if (existingProduct.Id == product.Id)
+        //        {
+        //            wallet[existingProduct] += 1;
+        //            found = true;
+        //            break;
+        //        }
+        //    }
 
-            if (!found)
-            {
-                wallet[product] = 1;
-            }
-
-            if (product.Stock > 0)
-            {
-                product.Stock -= 1;
-            }
-            }
+        //    if (!found)
+        //    {
+        //        wallet[product] = 1;
+        //    }
+        //    }
         
         GenerateOrder();
         SaveQuote();

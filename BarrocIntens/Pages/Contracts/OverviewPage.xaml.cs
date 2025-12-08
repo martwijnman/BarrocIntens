@@ -160,9 +160,6 @@ public sealed partial class OverviewPage : Page
 
 
 
-
-
-
     // pdf produceren
     private void MakePDFFacture(Quote quote)
     {
