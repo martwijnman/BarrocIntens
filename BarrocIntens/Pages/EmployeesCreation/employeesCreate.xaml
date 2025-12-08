@@ -9,11 +9,14 @@
     mc:Ignorable="d">
 
     <StackPanel Padding="15" Spacing="15">
+        <TextBlock Foreground="Black">Naam:</TextBlock>
         <TextBox x:Name="employeeNameTextBox" 
-             Header="Naam:"></TextBox>
+             ></TextBox>
+        <TextBlock Foreground="Black">E-mail:</TextBlock>
         <TextBox x:Name="employeeEmailTextBox" 
-        Header="Email:"></TextBox>
+        ></TextBox>
 
+        <TextBlock Foreground="Black">Wachtwoord:</TextBlock>
         <PasswordBox x:Name="generatePasswordBox" Width="200" PlaceholderText="Generate password"
         PasswordChanged="PasswordHiddenBox_PasswordChanged"/>
         
@@ -31,14 +34,17 @@
             Click="TogglePasswordVisibility_Click"
             Content="👁"
         />
-
+        <TextBlock Foreground="Black">Telefoonnummer:</TextBlock>
         <TextBox x:Name="employeePhoneTextBox" 
-             Header="Telefeloonnummer:"></TextBox>
+            ></TextBox>
 
+        <TextBlock Foreground="Black">Stad:</TextBlock>
         <TextBox x:Name="employeeCityTextBox" 
-             Header="Stad:"></TextBox>
+             ></TextBox>
 
-        <ComboBox RelativePanel.AlignVerticalCenterWithPanel="True" x:Name="employeeDepartmentComboBox" Header="Afdeling">
+        
+        <TextBlock Foreground="Black">Afdeling:</TextBlock>
+        <ComboBox RelativePanel.AlignVerticalCenterWithPanel="True" x:Name="employeeDepartmentComboBox">
             <ComboBoxItem>Sales</ComboBoxItem>
             <ComboBoxItem>Purchasing</ComboBoxItem>
             <ComboBoxItem>Maintenance</ComboBoxItem>
