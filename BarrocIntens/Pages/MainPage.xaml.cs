@@ -94,6 +94,7 @@ namespace BarrocIntens.Pages
         
         }
 
+<<<<<<< Updated upstream
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -101,6 +102,9 @@ namespace BarrocIntens.Pages
             
         }
         // --- JOUW NAVIGATIE ---  
+=======
+        // navigatie
+>>>>>>> Stashed changes
         private void PlanningClick(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Pages.Planning.CalenderPage));
@@ -114,6 +118,11 @@ namespace BarrocIntens.Pages
         private void EmployeeClick(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Pages.EmployeesCreation.employeesView));
+        }
+
+        private void ProductClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.Product.OverviewPage));
         }
     }
 

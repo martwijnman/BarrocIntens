@@ -90,6 +90,22 @@
                 </StackPanel>
             </Button>
 
+            <!-- Products -->
+            <Button Grid.Row="1" Grid.Column="0"
+                VerticalAlignment="Top"
+                Width="150" Height="150"
+                Margin="10"
+                CornerRadius="16"
+                Background="#2D2D2D"
+                Foreground="White"
+                Click="ProductClick">   
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock FontFamily="Segoe Fluent Icons"
+               Text="&#xE7BF;" FontSize="50"/>
+                    <TextBlock Text="Verkoop" FontSize="17" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Button>
+
             <lvc:CartesianChart
             Width="600"
             Grid.Row="1" 
