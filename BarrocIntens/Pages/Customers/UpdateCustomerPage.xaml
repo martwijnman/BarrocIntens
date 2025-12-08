@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="BarrocIntens.Pages.Customers.CreateCustomerPage"
+    x:Class="BarrocIntens.Pages.Customers.UpdateCustomerPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BarrocIntens.Pages.Customers"
@@ -14,16 +14,16 @@
 
     <StackPanel Padding="80" Spacing="15">
         <TextBox x:Name="NameTextBox"
-                 Header="Naam:"></TextBox>
+             Header="Naam:"></TextBox>
 
         <TextBox x:Name="EmailTextBox" 
-                 Header="E-mail:"></TextBox>
+             Header="E-mail:"></TextBox>
 
         <TextBox x:Name="PhoneTextBox" 
-                 Header="Telefeloonnummer:"></TextBox>
+             Header="Telefeloonnummer:"></TextBox>
 
         <TextBox x:Name="CityTextBox" 
-                 Header="Stad:"></TextBox>
+             Header="Stad:"></TextBox>
 
         <CheckBox Foreground="Black" x:Name="BKRCheckBox">BKR keuring:</CheckBox>
 
@@ -31,7 +31,7 @@
         <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>
 
         <TextBlock x:Name="CheckTextBlock" Foreground="green"></TextBlock>
-
+        <Button x:Name="DeleteBox" Click="DeleteBox_Click">Delete</Button>
         <Button Foreground="Black" x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
 
     </StackPanel>

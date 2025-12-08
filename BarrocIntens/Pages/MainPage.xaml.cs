@@ -93,14 +93,13 @@ namespace BarrocIntens.Pages
             //Greeting.Text = $"Hello {LoggedInEmployee.Name}";
         
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             //EmployeeId = (int)e.Parameter;
             
         }
-        // --- JOUW NAVIGATIE ---  
+
         private void PlanningClick(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Pages.Planning.CalenderPage));
@@ -114,6 +113,11 @@ namespace BarrocIntens.Pages
         private void EmployeeClick(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Pages.EmployeesCreation.employeesView));
+        }
+
+        private void ProductClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.Product.OverviewPage));
         }
     }
 

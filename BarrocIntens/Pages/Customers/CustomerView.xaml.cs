@@ -55,5 +55,19 @@ namespace BarrocIntens.Pages.Customers
             var customer = (BarrocIntens.Data.Customer)c.ClickedItem;
             Frame.Navigate(typeof(Customers.CustomerDetailPage), customer.Id);
         }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var selectedCustomer = (Customer)button.DataContext;
+
+            if (selectedCustomer == null)
+            {
+                // This should never happen now
+                return;
+            }
+
+            Frame.Navigate(typeof(UpdateCustomerPage), selectedCustomer);
+        }
     }
 }

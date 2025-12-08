@@ -42,6 +42,9 @@
                         <TextBlock Text="{x:Bind PhoneNumber}" />
                         <TextBlock Text="{x:Bind City}" />
                         <TextBlock Text="{x:Bind Department}" />
+                        <Button x:Name="UpdateButton" Click="UpdateButton_Click">
+                            <FontIcon FontFamily="Segoe Fluent Icons" FontWeight="Bold" Glyph="&#xE104;" />
+                        </Button>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

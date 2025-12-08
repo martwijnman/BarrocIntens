@@ -1,4 +1,5 @@
 using BarrocIntens.Data;
+using BarrocIntens.Pages.Customers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -60,6 +61,20 @@ namespace BarrocIntens.Pages.EmployeesCreation
         {
             var employee = (Employee)e.ClickedItem;
             Frame.Navigate(typeof(EmployeesDetailPage), employee.Id);
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var selectedEmployee = (Employee)button.DataContext;
+
+            if (selectedEmployee == null)
+            {
+                // This should never happen now
+                return;
+            }
+
+            Frame.Navigate(typeof(EmployeesUpdatePage), selectedEmployee);
         }
     }
 }

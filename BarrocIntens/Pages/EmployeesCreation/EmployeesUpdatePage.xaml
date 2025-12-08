@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="BarrocIntens.Pages.EmployeesCreation.employeesCreate"
+    x:Class="BarrocIntens.Pages.EmployeesCreation.EmployeesUpdatePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BarrocIntens.Pages.EmployeesCreation"
@@ -9,42 +9,39 @@
     mc:Ignorable="d">
 
     <StackPanel Padding="15" Spacing="15">
-        <TextBlock Foreground="Black">Naam:</TextBlock>
         <TextBox x:Name="employeeNameTextBox" 
-             ></TextBox>
-        <TextBlock Foreground="Black">E-mail:</TextBlock>
+         Header="Naam:"></TextBox>
         <TextBox x:Name="employeeEmailTextBox" 
-        ></TextBox>
+    Header="Email:"></TextBox>
 
-        <TextBlock Foreground="Black">Wachtwoord:</TextBlock>
         <PasswordBox x:Name="generatePasswordBox" Width="200" PlaceholderText="Generate password"
-        PasswordChanged="PasswordHiddenBox_PasswordChanged"/>
-        
+    PasswordChanged="PasswordHiddenBox_PasswordChanged"/>
+
         <Button Content="Generate" Click="GeneratePassword_Click"/>
 
         <TextBox
-            x:Name="passwordVisibleBox"
-            Width="200"
-            Visibility="Collapsed"
-            TextChanged="PasswordVisibleBox_TextChanged"
-        />
+        x:Name="passwordVisibleBox"
+        Width="200"
+        Visibility="Collapsed"
+        TextChanged="PasswordVisibleBox_TextChanged"
+    />
 
         <Button
-            x:Name="togglePasswordButton"
-            Click="TogglePasswordVisibility_Click"
-            Content="👁"
-        />
-        <TextBlock Foreground="Black">Telefoonnummer:</TextBlock>
+        x:Name="togglePasswordButton"
+        Click="TogglePasswordVisibility_Click"
+        Content="👁"
+    />
+
         <TextBox x:Name="employeePhoneTextBox" 
-            ></TextBox>
+         Header="Telefeloonnummer:"></TextBox>
 
-        <TextBlock Foreground="Black">Stad:</TextBlock>
         <TextBox x:Name="employeeCityTextBox" 
-             ></TextBox>
-
-        
-        <TextBlock Foreground="Black">Afdeling:</TextBlock>
-        <ComboBox RelativePanel.AlignVerticalCenterWithPanel="True" x:Name="employeeDepartmentComboBox">
+         Header="Stad:"></TextBox>
+            <ComboBox RelativePanel.AlignVerticalCenterWithPanel="True"
+              x:Name="employeeDepartmentComboBox"
+              Header="Afdeling"
+              DisplayMemberPath="Name"
+              SelectedValuePath="Id" >
             <ComboBoxItem>Sales</ComboBoxItem>
             <ComboBoxItem>Purchasing</ComboBoxItem>
             <ComboBoxItem>Maintenance</ComboBoxItem>
@@ -56,6 +53,8 @@
         <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>
 
         <TextBlock x:Name="CheckTextBlock" Foreground="Green"></TextBlock>
+
+        <Button x:Name="DeleteButton" Click="DeleteButton_Click">Verwijderen</Button>
 
         <Button x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
 

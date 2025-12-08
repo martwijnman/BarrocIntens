@@ -31,8 +31,10 @@
     <None Remove="Pages\Bill\OverviewPage.xaml" />
     <None Remove="Pages\Customers\CustomerDetailPage.xaml" />
     <None Remove="Pages\Customers\CustomerView.xaml" />
+    <None Remove="Pages\Customers\UpdateCustomerPage.xaml" />
     <None Remove="Pages\EmployeesCreation\employeesCreate.xaml" />
     <None Remove="Pages\EmployeesCreation\employeesDetailPage.xaml" />
+    <None Remove="Pages\EmployeesCreation\EmployeesUpdatePage.xaml" />
     <None Remove="Pages\EmployeesCreation\employeesView.xaml" />
     <None Remove="Pages\Customers\DetailPage.xaml" />
     <None Remove="Pages\Contracts\OverviewPage.xaml" />
@@ -185,6 +187,16 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Remove="Pages\NewFolder2\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\EmployeesCreation\EmployeesUpdatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Customers\UpdateCustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Customers\CustomerDetailPage.xaml">
