@@ -334,7 +334,7 @@ namespace BarrocIntens.Data
                     Stock = 5,
                     MinimumStock = 3,
                     Deliverer = "Pawon Luwak Coffee",
-                    NotificationOutOfStock = true,
+                    NotificationOutOfStock = false,
                     Image = "logo.png"
                 });
         }
