@@ -36,7 +36,7 @@
                     <Run>(#</Run>
                     <Run Text="{x:Bind Id}" />
                     <Run Text="{x:Bind Name}" />
-                    <Run>)</Run>
+                    <Run>)</Run>-
                         </TextBlock>
                         <TextBlock Text="{x:Bind Email}" />
                         <TextBlock Text="{x:Bind PhoneNumber}" />
