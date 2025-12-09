@@ -197,6 +197,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Contracts\OverviewFacturePage.xaml">
+		<Generator>MSBuild:Compile</Generator>
+	</Page>
+</ItemGroup>
+<ItemGroup>
     <Page Update="Pages\Technicians\TechniciansViewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
