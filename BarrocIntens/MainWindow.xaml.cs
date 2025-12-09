@@ -32,7 +32,7 @@ namespace BarrocIntens
             {
                 db.Database.EnsureCreated();
             }
-            contentFrame.Navigate(typeof(Pages.Technicians.TechniciansViewPage));
+            contentFrame.Navigate(typeof(Pages.Login.LoginPage));
         }
     }
 }
