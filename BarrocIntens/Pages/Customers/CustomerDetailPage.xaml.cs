@@ -28,16 +28,9 @@ namespace BarrocIntens.Pages.Customers
         private int customerId;
         public CustomerDetailPage()
         {
-            using (var db = new Data.AppDbContext())
-            {
+            
                 InitializeComponent();
 
-                FactureListView.ItemsSource = db.Factures
-                    .Include(f => f.Quote)
-                    .ThenInclude(q => q.Customer)
-                    .Where(f => f.Quote.CustomerId == customerId)
-                    .ToList();
-            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -81,6 +74,13 @@ namespace BarrocIntens.Pages.Customers
             CustomerPhoneTextBlock.Text = $"Telefoon: {customer.PhoneNumber}";
             CustomerCityTextBlock.Text = $"Stad: {customer.City}";
             CustomerBkrStatusTextBlock.Text = $"BKR status: {customer.BkrStatus}";
+
+            FactureListView.ItemsSource = db.Factures
+                .Include(f => f.Quote)
+                .ThenInclude(q => q.Customer)
+                .Where(f => f.Quote.CustomerId == customerId)
+                .ToList();
+            
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)

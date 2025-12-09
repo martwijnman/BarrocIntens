@@ -9,7 +9,7 @@
     xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
-    <Grid>
+    <StackPanel>
         <StackPanel>
             <Button x:Name="backButton"
      Click="backButton_Click">Terug naar Overzicht</Button>
@@ -26,13 +26,12 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Facture">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Quote.Customer.Name}"/>
+                        <TextBlock Text="{Binding Id}"/>
                         <TextBlock Text="{Binding PayCheck}" />
 
-                        <Button Click="Button_Click">Details</Button>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </Grid>
+    </StackPanel>
 </Page>
