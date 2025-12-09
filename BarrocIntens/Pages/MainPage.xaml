@@ -85,7 +85,7 @@
                 Click="EmployeeClick">
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock FontFamily="Segoe Fluent Icons"
-                           Text="&#xE13D;" FontSize="50"/>
+                           Text="&#xE125;" FontSize="50"/>
                     <TextBlock Text="Werknemer" FontSize="17" Margin="0,10,0,0"/>
                 </StackPanel>
             </Button>
@@ -98,7 +98,7 @@
                 CornerRadius="16"
                 Background="#2D2D2D"
                 Foreground="White"
-                Click="ProductClick">   
+                Click="ProductClick">
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock FontFamily="Segoe Fluent Icons"
                Text="&#xE7BF;" FontSize="50"/>
@@ -106,7 +106,41 @@
                 </StackPanel>
             </Button>
 
+            <!-- Contracts -->
+            <Button Grid.Row="1" Grid.Column="1"
+                    VerticalAlignment="Top"
+            Width="150" Height="150"
+            Margin="10"
+            CornerRadius="16"
+            Background="#2D2D2D"
+            Foreground="White"
+            Click="ContractClick">  
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock FontFamily="Segoe Fluent Icons"
+               Text="&#xE8A5;" FontSize="50"/>
+                    <TextBlock Text="Contracts" FontSize="17" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Row="1" Grid.Column="2"
+                VerticalAlignment="Top"
+                Width="150" Height="150"
+                Margin="10"
+                CornerRadius="16"
+                Background="#2D2D2D"
+                Foreground="White"
+                Click="MonteurClick">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock FontFamily="Segoe Fluent Icons"
+                Text="&#xE822;" FontSize="50"/>
+                    <TextBlock Text="Monteurs" FontSize="17" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Button>
+
+
             <lvc:CartesianChart
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
             Width="600"
             Grid.Row="1" 
             Grid.Column="3"

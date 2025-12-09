@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
@@ -47,6 +47,7 @@
     <None Remove="Pages\Planning\EditPage.xaml" />
     <None Remove="Pages\Product\OrderPage.xaml" />
     <None Remove="Pages\Product\OverviewPage.xaml" />
+    <None Remove="Pages\Technicians\TechniciansViewPage.xaml" />
     
   </ItemGroup>
 
@@ -196,6 +197,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Contracts\OverviewFacturePage.xaml">
+    <Page Update="Pages\Technicians\TechniciansViewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

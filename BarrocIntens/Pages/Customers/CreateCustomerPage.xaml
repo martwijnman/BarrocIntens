@@ -11,7 +11,7 @@
     <Page.Resources>
         <SolidColorBrush x:Key="TextControlHeaderForeground" Color="Black"/>
     </Page.Resources>
-
+    
     <StackPanel Padding="80" Spacing="15">
         <TextBox x:Name="NameTextBox"
                  Header="Naam:"></TextBox>
