@@ -113,8 +113,7 @@
             Margin="10"
             CornerRadius="16"
             Background="#2D2D2D"
-            Foreground="White"
-            Click="ContractClick">  
+            Foreground="White">
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock FontFamily="Segoe Fluent Icons"
                Text="&#xE8A5;" FontSize="50"/>
