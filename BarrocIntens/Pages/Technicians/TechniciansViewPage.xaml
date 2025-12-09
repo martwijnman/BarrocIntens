@@ -47,5 +47,14 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+
+        <ListView x:Name="ToolkitListView">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
     </Grid>
 </Page>
