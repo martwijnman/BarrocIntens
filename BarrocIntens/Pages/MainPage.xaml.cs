@@ -119,6 +119,16 @@ namespace BarrocIntens.Pages
         {
             Frame.Navigate(typeof(Pages.Product.OverviewPage));
         }
+
+        private void ContractClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.Contracts.OverviewPage));
+        }
+
+        private void MonteurClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.Technicians.TechniciansViewPage));
+        }
     }
 
 }

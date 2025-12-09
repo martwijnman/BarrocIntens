@@ -10,6 +10,15 @@
 
     <Page.Resources>
         <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
+
+        <!-- On hover -->
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Black"/>
+
+        <!-- On pressed -->
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="Gray"/>
+
+        <!-- Also override selection if needed -->
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="Gray"/>
     </Page.Resources>
      
     <ScrollView>
