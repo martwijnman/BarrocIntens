@@ -6,6 +6,7 @@
     xmlns:local="using:BarrocIntens.Pages.Customers"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
     <Grid>
@@ -18,5 +19,20 @@
             <TextBlock x:Name="CustomerCityTextBlock"/>
             <TextBlock x:Name="CustomerBkrStatusTextBlock"/>
         </StackPanel>
+        <TextBlock Text="Licenties" />
+        <ListView x:Name="FactureListView"
+           IsItemClickEnabled="True"
+           >
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:Facture">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Quote.Customer.Name}"/>
+                        <TextBlock Text="{Binding PayCheck}" />
+
+                        <Button Click="Button_Click">Details</Button>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

@@ -1,4 +1,5 @@
 using BarrocIntens.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -27,8 +28,15 @@ namespace BarrocIntens.Pages.Customers
         private int customerId;
         public CustomerDetailPage()
         {
+            using (var db = new Data.AppDbContext())
             {
                 InitializeComponent();
+
+                FactureListView.ItemsSource = db.Factures
+                    .Include(f => f.Quote)
+                    .ThenInclude(q => q.Customer)
+                    .Where(f => f.Quote.CustomerId == customerId)
+                    .ToList();
             }
         }
 

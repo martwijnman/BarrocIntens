@@ -30,7 +30,6 @@
     <None Remove="Pages\Appointments\OverviewPage.xaml" />
     <None Remove="Pages\Bill\OverviewPage.xaml" />
     <None Remove="Pages\Contracts\OverviewFacturePage.xaml" />
-    <None Remove="Pages\Contracts\TableFacturePage.xaml" />
     <None Remove="Pages\Customers\CustomerDetailPage.xaml" />
     <None Remove="Pages\Customers\CustomerView.xaml" />
     <None Remove="Pages\Customers\UpdateCustomerPage.xaml" />
@@ -47,7 +46,6 @@
     <None Remove="Pages\Planning\EditPage.xaml" />
     <None Remove="Pages\Product\OrderPage.xaml" />
     <None Remove="Pages\Product\OverviewPage.xaml" />
-    <None Remove="Pages\Technicians\TechniciansViewPage.xaml" />
     
   </ItemGroup>
 
@@ -191,13 +189,12 @@
     <PRIResource Remove="Pages\NewFolder2\**" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\Contracts\TableFacturePage.xaml">
+    <Page Update="Pages\Contracts\TableContractsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Contracts\OverviewFacturePage.xaml">
-    <Page Update="Pages\Technicians\TechniciansViewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

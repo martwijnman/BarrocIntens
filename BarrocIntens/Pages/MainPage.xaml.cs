@@ -122,7 +122,7 @@ namespace BarrocIntens.Pages
 
         private void ContractClick(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Pages.Contracts.OverviewPage));
+            Frame.Navigate(typeof(Pages.Contracts.TableContractsPage));
         }
 
         private void MonteurClick(object sender, RoutedEventArgs e)
