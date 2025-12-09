@@ -31,9 +31,9 @@ namespace BarrocIntens.Pages.Contracts;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class OverviewPage : Page
+public sealed partial class OverviewQuotePage : Page
 {
-    public OverviewPage()
+    public OverviewQuotePage()
     {
         InitializeComponent();
         using (var db = new Data.AppDbContext())
@@ -151,9 +151,11 @@ public sealed partial class OverviewPage : Page
         db.Factures.Add(new Facture
         {
             QuoteId = quote.Id,
-            TotalPrice = price
+            TotalPrice = price,
+            IsPaid = false,
         });
-        Frame.Navigate(typeof(Pages.Contracts.OverviewPage));
+        db.SaveChanges();
+        Frame.Navigate(typeof(Pages.Contracts.OverviewQuotePage));
     }
 
 

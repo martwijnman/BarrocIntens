@@ -21,6 +21,10 @@ namespace BarrocIntens.Data
         public double TotalPrice { get; set; }
 
         public bool IsPaid { get; set; }
+        public string PayCheck
+        {
+            get { return IsPaid ? "✅" : "❌"; }
+        }
 
         public DateOnly StartDate = DateOnly.FromDateTime(DateTime.Now).AddDays(5);
         public DateOnly EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(370);

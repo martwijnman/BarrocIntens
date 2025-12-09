@@ -1,4 +1,4 @@
-using BarrocIntens.Data;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -13,26 +13,36 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Graphics.Imaging;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace BarrocIntens
+namespace BarrocIntens.Pages.Contracts
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class OverviewFacturePage : Page
     {
-        public MainWindow()
+        public OverviewFacturePage()
         {
             InitializeComponent();
-            using (var db = new AppDbContext())
+            using (var db = new Data.AppDbContext())
             {
-                db.Database.EnsureCreated();
+                var factures = db.Factures
+                    .Include(q => q.Quote)
+                    .ThenInclude(c => c.Customer)
+                    .ToList();
+
+
+                
+                FactureListView.ItemsSource = factures;
             }
-            contentFrame.Navigate(typeof(Pages.Login.LoginPage));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
