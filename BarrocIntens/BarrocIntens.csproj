@@ -46,6 +46,7 @@
     <None Remove="Pages\Planning\EditPage.xaml" />
     <None Remove="Pages\Product\OrderPage.xaml" />
     <None Remove="Pages\Product\OverviewPage.xaml" />
+    <None Remove="Pages\Technicians\TechniciansViewPage.xaml" />
     
   </ItemGroup>
 
@@ -187,6 +188,11 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Remove="Pages\NewFolder2\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Technicians\TechniciansViewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\EmployeesCreation\EmployeesUpdatePage.xaml">

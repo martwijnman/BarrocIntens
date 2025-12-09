@@ -30,10 +30,9 @@ namespace BarrocIntens
             InitializeComponent();
             using (var db = new AppDbContext())
             {
-                db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
             }
-            contentFrame.Navigate(typeof(Pages.Login.LoginPage));
+            contentFrame.Navigate(typeof(Pages.Technicians.TechniciansViewPage));
         }
     }
 }
