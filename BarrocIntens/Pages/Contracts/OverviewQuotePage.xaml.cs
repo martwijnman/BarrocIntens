@@ -38,11 +38,27 @@ public sealed partial class OverviewQuotePage : Page
         InitializeComponent();
         using (var db = new Data.AppDbContext())
         {
-            QuoteListView.ItemsSource = db.Quotes
+            var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            if (settings.Values["Role"] == "Owner")
+            {
+                QuoteListView.ItemsSource = db.Quotes
                 .Include(q => q.Customer)
                 .Include(q => q.Items)
                 .Where(q => q.IsAccepted == false && q.IsRejected == false)
                 .ToList();
+            }
+            else
+            {
+                QuoteListView.ItemsSource = db.Quotes
+                .Include(q => q.Customer)
+                .Include(q => q.Items)
+                .ThenInclude(i => i.Product)
+                .Where(q => !q.IsAccepted && !q.IsRejected)
+                .AsEnumerable()
+                .Where(q => q.Items.Sum(item => item.Total * item.Product.Price) <= 5000)
+                .ToList();
+            }
+            
         }
     }
 

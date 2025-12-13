@@ -184,6 +184,11 @@
     <PRIResource Remove="Pages\NewFolder2\**" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Pages\Settings\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Pages\Contracts\TableContractsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

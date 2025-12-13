@@ -65,8 +65,10 @@ namespace BarrocIntens.Pages.Login
             Data.Employee.SetLoggedInEmployee(user);
             var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
             settings.Values["IsLoggedIn"] = true;
+            settings.Values["Name"] = user.Name;
             settings.Values["EmployeeId"] = user.Id;
-
+            settings.Values["Role"] = user.Department;
+            settings.Values["Password"] = password;
             Frame.Navigate(typeof(DashboardWindow), user.Id);
 
         }

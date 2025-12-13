@@ -44,7 +44,7 @@
                 <RowDefinition Height="*"/>
                 <!-- Chart -->
             </Grid.RowDefinitions>
-
+            <TextBlock x:Name="greetingText" />
             <!-- PLANNING -->
             <Button Grid.Row="0" Grid.Column="0"
                 Width="150" Height="150"
