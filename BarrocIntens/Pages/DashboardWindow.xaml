@@ -34,6 +34,7 @@
                     <NavigationViewItem Content="Medewerkers" Icon="Contact" Tag="EmployeesCreation.employeesCreate"/>
                     <NavigationViewItem Content="Planning" Icon="Calendar" Tag="Planning.CalenderPage"/>
                     <NavigationViewItem Content="Verkoop" Icon="Shop" Tag="Product.OverviewPage"/>
+                    <NavigationViewItem Content="Contracts" Icon="Mail" Tag="Contracts.OverviewPage"/>
                 </NavigationView.MenuItems>
                 <Frame x:Name="dashboardFrame"/>
             </NavigationView>

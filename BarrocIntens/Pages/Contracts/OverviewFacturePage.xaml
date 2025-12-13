@@ -9,8 +9,17 @@
     xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
-    <Grid>
-        <TextBlock Text="Betalingen" />
+    <StackPanel>
+        <TextBlock Text="Licenties" />
+        <StackPanel>
+            <ComboBox x:Name="PaidCombobox"
+                      SelectionChanged="Filter_Changed"
+                      PlaceholderText="Betaald"
+                      >
+                <x:String>Betaald</x:String>
+                <x:String>Niet betaald</x:String>
+            </ComboBox>
+        </StackPanel>
         <ListView x:Name="FactureListView"
            IsItemClickEnabled="True"
            >
@@ -25,5 +34,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </Grid>
+    </StackPanel>
 </Page>

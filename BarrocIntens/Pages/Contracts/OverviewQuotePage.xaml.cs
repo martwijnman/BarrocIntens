@@ -41,7 +41,7 @@ public sealed partial class OverviewQuotePage : Page
             QuoteListView.ItemsSource = db.Quotes
                 .Include(q => q.Customer)
                 .Include(q => q.Items)
-                .Where(q => q.IsAccepted == false || q.IsRejected == false)
+                .Where(q => q.IsAccepted == false && q.IsRejected == false)
                 .ToList();
         }
     }
@@ -50,7 +50,6 @@ public sealed partial class OverviewQuotePage : Page
     {
         if (sender is Button btn && btn.DataContext is Quote quote)
         {
-            quote.IsAccepted = true;
             MakePDFFacture(quote);
             SendEmail(quote); // pas dit aan om email te sturen. uncomment: smtp.Send(mail);
             SaveFacture(quote);
@@ -59,10 +58,14 @@ public sealed partial class OverviewQuotePage : Page
 
     private void Button_Click_1(object sender, RoutedEventArgs e) // weigeren
     {
+        var db = new Data.AppDbContext();
         if (sender is Button btn && btn.DataContext is Quote quote)
         {
-            quote.IsRejected = true;
+            var quoteForSave = db.Quotes.FirstOrDefault(q => q.Id == quote.Id);
+            quoteForSave.IsAccepted = false;
+            db.SaveChanges();
             SendEmail(quote); // pas dit aan om email te sturen. uncomment: smtp.Send(mail);
+            Frame.Navigate(typeof(Pages.Contracts.OverviewQuotePage));
         }
     }
 
@@ -141,6 +144,10 @@ public sealed partial class OverviewQuotePage : Page
             .Include(qi => qi.Product)
             .ToList();
         double price = 0;
+
+        var quoteForSave = db.Quotes.FirstOrDefault(q => q.Id == quote.Id);
+        quoteForSave.IsAccepted = true;
+        db.SaveChanges();
 
         foreach (var item in quoteItems)
         {

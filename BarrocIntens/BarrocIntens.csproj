@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
@@ -15,16 +15,12 @@
   <ItemGroup>
     <Compile Remove="Pages\NewFolder1\**" />
     <Compile Remove="Pages\NewFolder2\**" />
-    <Compile Remove="Pages\NewFolder\**" />
     <EmbeddedResource Remove="Pages\NewFolder1\**" />
     <EmbeddedResource Remove="Pages\NewFolder2\**" />
-    <EmbeddedResource Remove="Pages\NewFolder\**" />
     <None Remove="Pages\NewFolder1\**" />
     <None Remove="Pages\NewFolder2\**" />
-    <None Remove="Pages\NewFolder\**" />
     <Page Remove="Pages\NewFolder1\**" />
     <Page Remove="Pages\NewFolder2\**" />
-    <Page Remove="Pages\NewFolder\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\Appointments\OverviewPage.xaml" />
@@ -76,6 +72,7 @@
     <PackageReference Include="CSharpMarkup.WinUI.LiveChartsCore.SkiaSharpView" Version="3.1.2" />
     <PackageReference Include="FluentValidation" Version="12.1.0" />
     <PackageReference Include="LiveCharts.Core" Version="0.9.8" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.7.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
@@ -100,6 +97,7 @@
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="Pages\Department\" />
+    <Folder Include="Pages\Owner\" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Finance\OverviewPage.xaml">
@@ -179,9 +177,6 @@
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <ItemGroup>
-    <PRIResource Remove="Pages\NewFolder\**" />
-  </ItemGroup>
   <ItemGroup>
     <PRIResource Remove="Pages\NewFolder1\**" />
   </ItemGroup>

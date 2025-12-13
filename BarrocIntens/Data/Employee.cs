@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,9 @@ namespace BarrocIntens.Data
 {
     internal class Employee
     {
+        public static Employee LoggedInEmployee { get; private set; }
+        //public static User LoggedInUser { get; set; }
+        public static event EventHandler OnEmployeeLoggedIn;
         [Key]
         public int Id { get; set; }
 
@@ -22,15 +26,30 @@ namespace BarrocIntens.Data
         public string Email { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Password { get; set; }
 
         public string PhoneNumber { get; set; }
 
         public string City { get; set; }
+        public string Department { get; set; }
+
+
+
+        //[Required]
+        //public int DepartmentId { get; set; }
+        //public Department Department { get; set; }
+
         public List<Planning> Tasks { get; set; }
 
-        public string Department { get; set; }
+        internal static void SetLoggedInEmployee(Employee employee)
+        {
+            LoggedInEmployee = employee;
+
+            // Roep de event aan, als iemand luistert, zodat pagina's daarop kunnen reageren.
+            OnEmployeeLoggedIn?.Invoke(LoggedInEmployee, EventArgs.Empty);
+        }
+
 
         // CRUD operations for Planning
 

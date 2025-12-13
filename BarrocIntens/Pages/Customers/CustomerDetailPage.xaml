@@ -26,10 +26,16 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Facture">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Id}"/>
-                        <TextBlock Text="{Binding PayCheck}" />
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Factuurnummer: " />
+                            <TextBlock Text="{Binding Id}"/>
+                        </StackPanel>
 
-                    </StackPanel>
+                            <TextBlock Text="{Binding PayCheck}" />
+                        </StackPanel>
+
+                        </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

@@ -44,5 +44,21 @@ namespace BarrocIntens.Pages.Contracts
         {
 
         }
-    }
+
+        private void Filter_Changed(object sender, object e)
+        {
+            var db = new Data.AppDbContext();
+            var query = db.Factures.AsQueryable();
+            if (PaidCombobox.SelectedItem == "Betaald")
+            {
+                query = query.Where(f => f.IsPaid == true);
+            }
+            else if (PaidCombobox.SelectedItem == "Niet betaald")
+            {
+                query = query.Where(f => f.IsPaid == false);
+            }
+            FactureListView.ItemsSource = query.ToList();
+        }
+
+        }
 }

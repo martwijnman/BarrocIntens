@@ -64,25 +64,33 @@ namespace BarrocIntens.Pages.Customers
                 return;
             }
 
-            if (BKRCheckBox.IsChecked == false)
+            if (BkrNumber.Value == null)
             {
-                ErrorTextBlock.Text = "BKR keuring moet voldaan zijn.";
+                ErrorTextBlock.Text = "Voer een geldige BKR-nummer in.";
                 return;
             }
+
+            //if (BKRCheckBox.IsChecked == false)
+            //{
+            //    ErrorTextBlock.Text = "BKR keuring moet voldaan zijn.";
+            //    return;
+            //}
 
             else
             {
                 ErrorTextBlock.Text = "";
             }
 
-                var myCustomer = new BarrocIntens.Data.Customer()
-                {
-                    Name = NameTextBox.Text,
-                    Email = EmailTextBox.Text,
-                    PhoneNumber = PhoneTextBox.Text,
-                    City = CityTextBox.Text,
-                    BkrStatus = BKRCheckBox.IsChecked == true
-                };
+            var myCustomer = new BarrocIntens.Data.Customer()
+            {
+                Name = NameTextBox.Text,
+                Email = EmailTextBox.Text,
+                PhoneNumber = PhoneTextBox.Text,
+                City = CityTextBox.Text,
+                //BkrStatus = BKRCheckBox.IsChecked == true
+                BkrNummer = (int)BkrNumber.Value,
+                BkrStatus = true,
+            };
 
             CheckTextBlock.Text = "Klant succesvol opgeslagen";
 

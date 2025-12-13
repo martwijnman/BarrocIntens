@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
+using BCrypt.Net;
 
 namespace BarrocIntens.Data
 {
@@ -23,6 +24,7 @@ namespace BarrocIntens.Data
         public DbSet<Quote> Quotes { get; set; }
         public DbSet<QuoteItem> QuoteItems { get; set; }
         public DbSet<Facture> Factures { get; set; }
+        public DbSet<PlanningEmployee> PlanningEmployees { get; set; }
 
 
         protected override void OnConfiguring(
@@ -165,7 +167,7 @@ namespace BarrocIntens.Data
                     Email = "peter.jansen@bedrijf.nl",
                     PhoneNumber = "0612345678",
                     City = "Breda",
-                    Password = "Welkom123",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
                     Department = "Sales"
                     
                     
@@ -179,7 +181,7 @@ namespace BarrocIntens.Data
                     Email = "lisa.vermeer@bedrijf.nl",
                     PhoneNumber = "0612285678",
                     City = "Breda",
-                    Password = "Welkom123",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
                     Department = "Sales"
                 },
                 new Employee
@@ -189,7 +191,7 @@ namespace BarrocIntens.Data
                     Email = "ahmed.elamrani@bedrijf.nl",
                     PhoneNumber = "0612287128",
                     City = "Breda",
-                    Password = "Welkom123",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
                     Department = "Sales"
                 },
 
@@ -200,7 +202,7 @@ namespace BarrocIntens.Data
                     Email = "Root@root.nl",
                     PhoneNumber = "0675287128",
                     City = "Breda",
-                    Password = "Root",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Root"),
                     Department = "Sales"
                 });
 
@@ -247,6 +249,7 @@ namespace BarrocIntens.Data
                     Description = "Installatie nieuwe zonnepanelen bij klant Jan de Vries",
                     Location = "Rotterdam",
                     Status = "niet gedaan",
+                    Category = "Storing",
                 },
                 new Planning
                 {
@@ -256,6 +259,7 @@ namespace BarrocIntens.Data
                     Description = "Installatie nieuwe zonnepanelen bij klant Jan de Vries",
                     Location = "Rotterdam",
                     Status = "niet gedaan",
+                    Category = "Adviesbezoek",
                 },
                 new Planning
                 {
@@ -265,6 +269,7 @@ namespace BarrocIntens.Data
                     Description = "Installatie nieuwe zonnepanelen bij klant Jan de Vries",
                     Location = "Rotterdam",
                     Status = "niet gedaan",
+                    Category = "Adviesbezoek",
                 });
 
             //modelBuilder.Entity<Planning>()
