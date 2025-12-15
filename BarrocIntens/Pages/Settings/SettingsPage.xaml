@@ -6,9 +6,15 @@
     xmlns:local="using:BarrocIntens.Pages.Settings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="500"
     mc:Ignorable="d">
 
-    <StackPanel>
+    <StackPanel Background="Black"
+                Padding="20">
+        <TextBlock
+            FontSize="20">
+            Instellingen
+        </TextBlock>
         <StackPanel>
             <PasswordBox
                 Header="Huidige wachtwoord"
@@ -24,6 +30,7 @@
                 Opslaan Wachtwoord
             </Button>
         </StackPanel>
+        <TextBlock FontSize="20">Uitloggen</TextBlock>
         <Button
             Click="Logout_Button"
             >Uitloggen</Button>

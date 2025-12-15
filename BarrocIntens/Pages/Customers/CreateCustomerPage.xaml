@@ -9,11 +9,15 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="TextControlHeaderForeground" Color="Black"/>
+        <SolidColorBrush x:Key="TextControlHeaderForeground" Color="White"/>
+
     </Page.Resources>
-    
-    <StackPanel Padding="80" Spacing="15">
+    <StackPanel Padding="80" Spacing="15" Background="Black">
+        <TextBlock Foreground="White" FontSize="20">
+            Maak een klant aan
+        </TextBlock>
         <TextBox x:Name="NameTextBox"
+                 Width="300"
                  Header="Naam:"></TextBox>
 
         <TextBox x:Name="EmailTextBox" 
@@ -21,22 +25,22 @@
 
         <TextBox x:Name="PhoneTextBox" 
                  Header="Telefeloonnummer:"></TextBox>
-
-        <TextBox x:Name="CityTextBox" 
+        <StackPanel Orientation="Horizontal" Spacing="170">
+            <TextBox x:Name="CityTextBox"
                  Header="Stad:"></TextBox>
 
-        <!--<CheckBox Foreground="Black" x:Name="BKRCheckBox">BKR keuring:</CheckBox>-->
+            <!--<CheckBox Foreground="Black" x:Name="BKRCheckBox">BKR keuring:</CheckBox>-->
 
-        <NumberBox x:Name="BkrNumber"
+            <NumberBox x:Name="BkrNumber"
                    Header="BKR nummer:"
             ></NumberBox>
-
+        </StackPanel>
 
         <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>
 
         <TextBlock x:Name="CheckTextBlock" Foreground="green"></TextBlock>
 
-        <Button Foreground="Black" x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
+        <Button Foreground="White" x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
 
     </StackPanel>
 </Page>

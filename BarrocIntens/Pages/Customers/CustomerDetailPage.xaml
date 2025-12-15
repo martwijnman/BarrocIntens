@@ -7,9 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BarrocIntens.Data"
+    Background="Black"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal" Spacing="50" Margin="30"  Width="750">
         <StackPanel>
             <Button x:Name="backButton" Click="backButton_Click">Terug naar Overzicht</Button>
             <TextBlock x:Name="CustomerNameTextBlock" FontSize="18" FontWeight="Bold" Text="Uniqlo" />
@@ -25,7 +26,7 @@
         
         <TextBlock Text="Lopende contracten" FontSize="16" FontWeight="SemiBold" Margin="0,20,0,10" />
 
-        <ListView x:Name="FactureListView" IsItemClickEnabled="True">
+        <ListView x:Name="FactureListView" IsItemClickEnabled="True" BorderBrush="White" BorderThickness="1" Width="300">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Facture">
                     <StackPanel Orientation="Horizontal" Spacing="20" Margin="0,5">

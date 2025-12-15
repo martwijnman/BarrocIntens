@@ -93,6 +93,8 @@ public sealed partial class CalenderPage : Page
             //}
 
             //calendarView.ItemTemplate = query.ToList();
+            calendarView.InvalidateArrange();
+
         }
     }
 
