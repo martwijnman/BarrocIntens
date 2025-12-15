@@ -20,9 +20,9 @@
         <!-- Also override selection if needed -->
         <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="Gray"/>
     </Page.Resources>
-     
+
     <ScrollView>
-        <StackPanel 
+        <StackPanel
         Orientation="Horizontal"
         >
             <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed"
@@ -34,13 +34,13 @@
                     <NavigationViewItem Content="Medewerkers" Icon="Contact" Tag="EmployeesCreation.employeesCreate"/>
                     <NavigationViewItem Content="Planning" Icon="Calendar" Tag="Planning.CalenderPage"/>
                     <NavigationViewItem Content="Verkoop" Icon="Shop" Tag="Product.OverviewPage"/>
-                    <NavigationViewItem Content="Contracten" Icon="Document" Tag="Contracts.OverviewPage"/>
                     <NavigationViewItem Content="Monteurs" Icon="Repair" Tag="Technicians.TechniciansViewPage"/>
+                    <NavigationViewItem Content="Contracts" Icon="Mail" Tag="Contracts.OverviewPage"/>
                 </NavigationView.MenuItems>
                 <Frame x:Name="dashboardFrame"/>
             </NavigationView>
 
-           
+
 
         </StackPanel>
     </ScrollView>

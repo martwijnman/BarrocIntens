@@ -27,5 +27,6 @@ namespace BarrocIntens.Pages.Product
         {
             InitializeComponent();
         }
+        public int productId { get; set;  }
     }
 }

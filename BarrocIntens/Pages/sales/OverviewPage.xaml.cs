@@ -29,8 +29,10 @@ public sealed partial class OverviewPage : Page
         InitializeComponent();
         using (var db = new AppDbContext())
         {
-            var bills = db.Bills.ToList();
-            BillListView.ItemsSource = bills;
+            var products = db.Products
+                .Where(p => p.NotificationOutOfStock == true)
+                .ToList();
+            BillListView.ItemsSource = products;
         }
 
     }

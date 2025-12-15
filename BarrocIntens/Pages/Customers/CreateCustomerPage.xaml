@@ -25,7 +25,11 @@
         <TextBox x:Name="CityTextBox" 
                  Header="Stad:"></TextBox>
 
-        <CheckBox Foreground="Black" x:Name="BKRCheckBox">BKR keuring:</CheckBox>
+        <!--<CheckBox Foreground="Black" x:Name="BKRCheckBox">BKR keuring:</CheckBox>-->
+
+        <NumberBox x:Name="BkrNumber"
+                   Header="BKR nummer:"
+            ></NumberBox>
 
 
         <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>

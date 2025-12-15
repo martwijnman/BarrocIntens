@@ -29,6 +29,8 @@ namespace BarrocIntens.Data
         [Required]
         public int MinimumStock { get; set; }
 
+        public int StockShortage => MinimumStock - Stock;
+
         [Required]
         public string Deliverer { get; set; }
 

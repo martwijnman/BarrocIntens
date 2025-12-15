@@ -35,39 +35,43 @@ namespace BarrocIntens.Pages.Login
         }
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            
 
-            var employee = new Employee
+
+            string email = emailbox.Text?.Trim();
+            string password = passwordBox.Password;
+
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
-                Email = emailbox.Text,
-                Password = passwordBox.Password
-            };
+                errorText.Text = "Email and password are required.";
+                return;
+            }
 
-            var context = new ValidationContext(employee);
-            var results = new List<ValidationResult>();
+            using var db = new Data.AppDbContext();
 
-            if (!Validator.TryValidateObject(employee, context, results, true))
+
+            var user = db.Employees.FirstOrDefault(e => e.Email == email);
+
+
+            if (user == null ||
+                string.IsNullOrWhiteSpace(user.Password) ||
+                !BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
-                var errors = new List<string>();
-                foreach (var validationResult in results)
-                {
-                    errors.Add(validationResult.ErrorMessage);
-                }
-                errorText.Text = string.Join(Environment.NewLine, errors);
+                errorText.Text = "Invalid username or password.";
+                return;
             }
 
 
-            using (var db = new Data.AppDbContext())
-            {
-                var loginEmployee = db.Employees
-                    .FirstOrDefault(e => e.Email == employee.Email && e.Password == employee.Password);
+            Data.Employee.SetLoggedInEmployee(user);
+            var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            settings.Values["IsLoggedIn"] = true;
+            settings.Values["Name"] = user.Name;
+            settings.Values["EmployeeId"] = user.Id;
+            settings.Values["Role"] = user.Department;
+            settings.Values["Password"] = password;
+            Frame.Navigate(typeof(DashboardWindow), user.Id);
 
-                if (loginEmployee != null)
-                {
-                    int employeeId = loginEmployee.Id;
-                    Frame.Navigate(typeof(DashboardWindow), employeeId);
-                }
-            }
         }
     }
 }
+

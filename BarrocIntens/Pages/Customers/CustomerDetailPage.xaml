@@ -9,29 +9,35 @@
     xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
-    <StackPanel>
+    <StackPanel Orientation="Horizontal">
         <StackPanel>
-            <Button x:Name="backButton"
-     Click="backButton_Click">Terug naar Overzicht</Button>
-            <TextBlock x:Name="CustomerNameTextBlock"/>
-            <TextBlock x:Name="CustomerEmailTextBlock"/>
-            <TextBlock x:Name="CustomerPhoneTextBlock"/>
-            <TextBlock x:Name="CustomerCityTextBlock"/>
-            <TextBlock x:Name="CustomerBkrStatusTextBlock"/>
+            <Button x:Name="backButton" Click="backButton_Click">Terug naar Overzicht</Button>
+            <TextBlock x:Name="CustomerNameTextBlock" FontSize="18" FontWeight="Bold" Text="Uniqlo" />
+            <TextBlock x:Name="CustomerAddressTextBlock" Text="Lijnbaan 177, 3012 EN Rotterdam" />
+            <TextBlock x:Name="CustomerEmailTextBlock" Text="rotterdam@uniqlo.com" />
+            <TextBlock x:Name="CustomerPhoneTextBlock" Text="{Binding Phone}" />
+        <TextBlock x:Name="CustomerCityTextBlock" Text="{Binding City}" />
+        <TextBlock x:Name="CustomerBkrStatusTextBlock" Text="{Binding BkrStatus}" />
+        
         </StackPanel>
-        <TextBlock Text="Licenties" />
-        <ListView x:Name="FactureListView"
-           IsItemClickEnabled="True"
-           >
+        <StackPanel>
+            
+        
+        <TextBlock Text="Lopende contracten" FontSize="16" FontWeight="SemiBold" Margin="0,20,0,10" />
+
+        <ListView x:Name="FactureListView" IsItemClickEnabled="True">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Facture">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Id}"/>
-                        <TextBlock Text="{Binding PayCheck}" />
+                    <StackPanel Orientation="Horizontal" Spacing="20" Margin="0,5">
+                        <!--<Image Source="{Binding ProfileImageUri}" Width="40" Height="40" />-->
 
+                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold" />
+                        <TextBlock Text="2 maanden" VerticalAlignment="Center" Foreground="Gray" />
+                            <!-- Example: "TayotaCoff" + " 2 maanden" -->
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        </StackPanel>
     </StackPanel>
 </Page>

@@ -30,7 +30,23 @@
                 <x:String>Niet Gedaan</x:String>
             </ComboBox>
 
+            <ComboBox x:Name="CategoryCheckbox"
+       Header="Status"
+       PlaceholderText="Categorie selecteren"
+       Width="200"
+           Background="Black">
+                <x:String>Storing</x:String>
+                <x:String>Vergadering</x:String>
+                <x:String>Controle</x:String>
+                <x:String>Adviesbezoek</x:String>
+            </ComboBox>
+
+            <TextBlock>Klanten:</TextBlock>
             <StackPanel x:Name="CitizenSelector" Orientation="Horizontal" Spacing="8">
+            </StackPanel>
+
+            <TextBlock>Werknemer:</TextBlock>
+            <StackPanel x:Name="EmployeeSelector" Orientation="Horizontal" Spacing="8">
             </StackPanel>
 
             <TextBlock x:Name="errorText" />

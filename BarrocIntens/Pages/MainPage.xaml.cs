@@ -37,6 +37,11 @@ namespace BarrocIntens.Pages
         {
             this.InitializeComponent();
 
+            // user login data
+            var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            // Greeting
+            //greetingText.Text $"Hallo, {}";
+
             // --- CHART DATA ---
             var db = new AppDbContext();
 

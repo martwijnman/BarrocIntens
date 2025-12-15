@@ -50,8 +50,8 @@ namespace BarrocIntens.Pages.EmployeesCreation
             if (!string.IsNullOrWhiteSpace(nameFilter))
                 query = query.Where(c => c.Name.ToLower().Contains(nameFilter));
 
-            if (!string.IsNullOrWhiteSpace(departmentFilter))
-                query = query.Where(c => c.Department.ToLower().Contains(departmentFilter));
+            //if (!string.IsNullOrWhiteSpace(departmentFilter))
+            //    query = query.Where(c => c.Department.ToLower().Contains(departmentFilter));
 
             employeesListView.ItemsSource = query
                 .ToList();

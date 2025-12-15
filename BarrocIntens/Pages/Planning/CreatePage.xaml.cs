@@ -44,7 +44,8 @@ namespace BarrocIntens.Pages.Planning
                     Plan = PlanTextbox.Text,
                     Location = LocationTextbox.Text,
                     Description = DescriptionTextbox.Text,
-                    Status = StatusCheckbox.SelectedItem?.ToString()
+                    Status = StatusCheckbox.SelectedItem?.ToString(),
+                    Category = CategoryCheckbox.SelectedItem?.ToString()
                 };
                 db.Plannings.Add(planning);
 
@@ -79,6 +80,16 @@ namespace BarrocIntens.Pages.Planning
                         });
                         db.SaveChanges();
                     }
+                    foreach (int SelectedEmployeeId in SelectedEmployeeIds)
+                    {
+                        // making invidual customers for the planning
+                        db.PlanningEmployees.Add(new PlanningEmployee
+                        {
+                            EmployeeId = SelectedEmployeeId,
+                            PlanningId = planning.Id,
+                        });
+                        db.SaveChanges();
+                    }
                     Frame.Navigate(typeof(Pages.Planning.CalenderPage));
                 }
             }
@@ -91,6 +102,7 @@ namespace BarrocIntens.Pages.Planning
 
             using var db = new Data.AppDbContext();
             var customers = db.Customers.ToList();
+            var employees  = db.Employees.ToList();
 
             foreach (var customer in customers)
             {
@@ -105,10 +117,45 @@ namespace BarrocIntens.Pages.Planning
 
                 CitizenSelector.Children.Add(btn);
             }
+
+            foreach (var employee in employees)
+            {
+                var btn = new ToggleButton
+                {
+                    Content = employee.Name,
+                    Tag = employee.Id,
+                    Margin = new Thickness(4, 0, 4, 0)
+                };
+
+                btn.Click += ToggleEmployee;
+
+                EmployeeSelector.Children.Add(btn);
+            }
         }
 
-
         public void ToggleCustomer(object sender, RoutedEventArgs e)
+        {
+
+            using (var db = new AppDbContext())
+            {
+                // make the connectiontable
+                // 1: list
+                var btn = (ToggleButton)sender;
+                var id = (int)btn.Tag;
+                if (btn.IsChecked == true)
+                {
+                    if (!SelectedEmployeeIds.Contains(id))
+                        SelectedEmployeeIds.Add(id);
+                }
+                else
+                {
+                    SelectedEmployeeIds.Remove(id);
+                }
+            }
+
+
+        }
+        public void ToggleEmployee(object sender, RoutedEventArgs e)
         {
             
             using (var db = new AppDbContext())
@@ -119,12 +166,12 @@ namespace BarrocIntens.Pages.Planning
                 var id = (int)btn.Tag;
                 if (btn.IsChecked == true)
                 {
-                    if (!SelectedCustomerIds.Contains(id))
-                        SelectedCustomerIds.Add(id);
+                    if (!SelectedEmployeeIds.Contains(id))
+                        SelectedEmployeeIds.Add(id);
                 }
                 else
                 {
-                    SelectedCustomerIds.Remove(id);
+                    SelectedEmployeeIds.Remove(id);
                 }
             }
 
