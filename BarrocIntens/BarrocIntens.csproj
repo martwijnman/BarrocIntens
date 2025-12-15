@@ -97,6 +97,7 @@
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="Pages\Department\" />
+    <Folder Include="Pages\NewFolder\" />
     <Folder Include="Pages\Owner\" />
   </ItemGroup>
   <ItemGroup>

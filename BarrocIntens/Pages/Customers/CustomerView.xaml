@@ -9,40 +9,124 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+
+    <Grid Background="#0B0B0B"
+      Padding="28">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--Stackpanel for the search bars that you can search on for their name or department-->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Spacing="10" Margin="5">
-            <TextBox x:Name="customersNameSearchTextBox" 
-       PlaceholderText="Zoek op naam..."
-       Width="200"
-       TextChanged="customersNameSearchTextBox_TextChanged"/>
+        <!-- HEADER -->
+        <StackPanel Grid.Row="0"
+                Spacing="14"
+                Margin="0,0,0,24">
+
+            <TextBlock Text="Klanten"
+                   FontSize="32"
+                   FontWeight="SemiBold"
+                   Foreground="#FFD600"/>
+
+            <!-- SEARCH -->
+            <Border Background="#141414"
+                CornerRadius="16"
+                Padding="14">
+
+                <StackPanel Orientation="Horizontal"
+                        Spacing="10">
+
+                    <FontIcon FontFamily="Segoe Fluent Icons"
+                          Glyph="&#xE721;"
+                          Foreground="#FFD600"
+                          FontSize="18"/>
+
+                    <TextBox x:Name="customersNameSearchTextBox"
+                         PlaceholderText="Zoek op klantnaam"
+                         Width="280"
+                         Background="#0F0F0F"
+                         Foreground="White"
+                         BorderBrush="#2A2A2A"
+                         BorderThickness="1"
+                         CornerRadius="10"
+                         Padding="10,6"
+                         TextChanged="customersNameSearchTextBox_TextChanged"/>
+                </StackPanel>
+            </Border>
         </StackPanel>
 
-        <ListView x:Name="customersListView" Grid.Row="1" IsItemClickEnabled="True" ItemClick="customersListView_ItemClick"
-                  >
+        <!-- LIST -->
+        <ListView x:Name="customersListView"
+              Grid.Row="1"
+              Background="Transparent"
+              BorderThickness="0"
+              IsItemClickEnabled="True"
+              ItemClick="customersListView_ItemClick">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0,0,0,16"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="localData:Customer">
-                    <StackPanel Spacing="10" Padding="20">
-                        <TextBlock>
-                 <Run>(#</Run>
-                 <Run Text="{x:Bind Id}" />
-                 <Run Text="{x:Bind Name}" />
-                 <Run>)</Run>
-                        </TextBlock>
-                        <TextBlock Text="{x:Bind Email}" />
-                        <Button x:Name="UpdateButton" Click="UpdateButton_Click">
-                            <FontIcon FontFamily="Segoe Fluent Icons" FontWeight="Bold" Glyph="&#xE104;" />
-                        </Button>
-                        <TextBlock x:Name="ErrorTextBlock"></TextBlock>
-                    </StackPanel>
+
+                    <!-- CUSTOMER CARD -->
+                    <Border Background="#141414"
+                        CornerRadius="18"
+                        Padding="18">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- INFO -->
+                            <StackPanel Spacing="6">
+
+                                <TextBlock FontSize="17"
+                                       FontWeight="SemiBold"
+                                       Foreground="White">
+                                <Run Text="#"/>
+                                <Run Text="{x:Bind Id}"/>
+                                <Run Text="  "/>
+                                <Run Text="{x:Bind Name}"/>
+                                </TextBlock>
+
+                                <TextBlock Text="{x:Bind Email}"
+                                       FontSize="13"
+                                       Foreground="#9A9A9A"/>
+
+                                <!-- ERROR / STATUS -->
+                                <TextBlock x:Name="ErrorTextBlock"
+                                       FontSize="12"
+                                       Foreground="#FF5C5C"/>
+                            </StackPanel>
+
+                            <!-- ACTION -->
+                            <Button Grid.Column="1"
+                                Width="42"
+                                Height="42"
+                                Background="#FFD600"
+                                Foreground="Black"
+                                CornerRadius="10"
+                                Click="UpdateButton_Click">
+
+                                <FontIcon FontFamily="Segoe Fluent Icons"
+                                      Glyph="&#xE104;"
+                                      FontSize="16"/>
+                            </Button>
+                        </Grid>
+
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
     </Grid>
+
 </Page>

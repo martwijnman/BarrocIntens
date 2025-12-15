@@ -7,56 +7,123 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
 
-    <StackPanel Padding="15" Spacing="15">
-        <TextBox x:Name="employeeNameTextBox" 
-         Header="Naam:"></TextBox>
-        <TextBox x:Name="employeeEmailTextBox" 
-    Header="Email:"></TextBox>
+            <!-- TITEL -->
+            <Style x:Key="PageTitle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="#FFD600"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
 
-        <PasswordBox x:Name="generatePasswordBox" Width="200" PlaceholderText="Generate password"
-    PasswordChanged="PasswordHiddenBox_PasswordChanged"/>
+            <!-- SUBTITEL -->
+            <Style x:Key="SubTitle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Foreground" Value="#AAAAAA"/>
+                <Setter Property="Margin" Value="0,0,0,25"/>
+            </Style>
 
-        <Button Content="Generate" Click="GeneratePassword_Click"/>
+            <!-- INPUT -->
+            <Style TargetType="TextBox">
+                <Setter Property="Width" Value="300"/>
+                <Setter Property="Background" Value="#2A2A2A"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="#FFD600"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="0,0,0,15"/>
+            </Style>
 
-        <TextBox
-        x:Name="passwordVisibleBox"
-        Width="200"
-        Visibility="Collapsed"
-        TextChanged="PasswordVisibleBox_TextChanged"
-    />
+            <!-- PASSWORDBOX -->
+            <Style TargetType="PasswordBox">
+                <Setter Property="Width" Value="300"/>
+                <Setter Property="Background" Value="#2A2A2A"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="#FFD600"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="0,0,0,15"/>
+            </Style>
 
-        <Button
-        x:Name="togglePasswordButton"
-        Click="TogglePasswordVisibility_Click"
-        Content="👁"
-    />
+            <!-- COMBOBOX -->
+            <Style TargetType="ComboBox">
+                <Setter Property="Width" Value="300"/>
+                <Setter Property="Background" Value="#2A2A2A"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="#FFD600"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="0,0,0,15"/>
+            </Style>
 
-        <TextBox x:Name="employeePhoneTextBox" 
-         Header="Telefeloonnummer:"></TextBox>
+            <!-- BUTTON -->
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="#FFD600"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="14,8"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Width" Value="200"/>
+            </Style>
 
-        <TextBox x:Name="employeeCityTextBox" 
-         Header="Stad:"></TextBox>
-            <ComboBox RelativePanel.AlignVerticalCenterWithPanel="True"
-              x:Name="employeeDepartmentComboBox"
-              Header="Afdeling"
-              DisplayMemberPath="Name"
-              SelectedValuePath="Id" >
-            <ComboBoxItem>Sales</ComboBoxItem>
-            <ComboBoxItem>Purchasing</ComboBoxItem>
-            <ComboBoxItem>Maintenance</ComboBoxItem>
-            <ComboBoxItem>Finance</ComboBoxItem>
-            <ComboBoxItem>Planning</ComboBoxItem>
-        </ComboBox>
+        </Page.Resources>
 
+    <Grid Padding="80" Background="Black">
+        <StackPanel Spacing="10">
 
-        <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>
+            <!-- TITEL -->
+            <TextBlock Text="Nieuwe medewerker"
+                       Style="{StaticResource PageTitle}"/>
 
-        <TextBlock x:Name="CheckTextBlock" Foreground="Green"></TextBlock>
+            <TextBlock Text="Vul de gegevens in om een medewerker aan te maken"
+                       Style="{StaticResource SubTitle}"/>
 
-        <Button x:Name="DeleteButton" Click="DeleteButton_Click">Verwijderen</Button>
+            <!-- INPUTS -->
+            <TextBox x:Name="employeeNameTextBox" Header="Naam"/>
+            <TextBox x:Name="employeeEmailTextBox" Header="Email"/>
+            <PasswordBox x:Name="generatePasswordBox" Header="Wachtwoord"
+                         PasswordChanged="PasswordHiddenBox_PasswordChanged"/>
 
-        <Button x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBox x:Name="passwordVisibleBox" Header="Wachtwoord zichtbaar"
+                         Width="200" Visibility="Collapsed"
+                         TextChanged="PasswordVisibleBox_TextChanged"/>
+                <Button x:Name="togglePasswordButton"
+                        Content="👁"
+                        Click="TogglePasswordVisibility_Click"/>
+            </StackPanel>
 
-    </StackPanel>
+            <TextBox x:Name="employeePhoneTextBox" Header="Telefoonnummer"/>
+            <TextBox x:Name="employeeCityTextBox" Header="Stad"/>
+
+            <ComboBox x:Name="employeeDepartmentComboBox" Header="Afdeling">
+                <ComboBoxItem Content="Sales"/>
+                <ComboBoxItem Content="Purchasing"/>
+                <ComboBoxItem Content="Maintenance"/>
+                <ComboBoxItem Content="Finance"/>
+                <ComboBoxItem Content="Planning"/>
+            </ComboBox>
+
+            <!-- FEEDBACK -->
+            <TextBlock x:Name="ErrorTextBlock"
+                       Foreground="#FF4D4D"
+                       FontWeight="SemiBold"
+                       Margin="0,10,0,0"/>
+            <TextBlock x:Name="CheckTextBlock"
+                       Foreground="#4DFF88"
+                       FontWeight="SemiBold"/>
+
+            <!-- ACTION BUTTONS -->
+            <StackPanel Orientation="Horizontal" Spacing="20" Margin="0,25,0,0">
+                <Button x:Name="DeleteButton" Content="Verwijderen" Background="Red" Foreground="White"/>
+                <Button x:Name="SaveButton" Content="Opslaan" Click="SaveButton_Click"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+
 </Page>

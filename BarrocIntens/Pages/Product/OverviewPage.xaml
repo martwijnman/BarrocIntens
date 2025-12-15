@@ -9,71 +9,105 @@
     xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Vertical">
+    <Grid Background="#0B0B0B"
+      Padding="24">
 
-        <!--TODO: Make the filters work-->
-        <!-- Filters -->
-        <StackPanel Orientation="Horizontal" Margin="10">
-            <ComboBox x:Name="StockCheckbox"
-                  PlaceholderText="Type selecteren"
-                  Width="200"
-                  Margin="0,0,10,0"
-                  SelectionChanged="Filter_Changed">
-                <x:String>Op voorraad</x:String>
-                <x:String>Niet op voorraad</x:String>
-            </ComboBox>
-            <NumberBox x:Name="PriceFilter"
-                ValueChanged="Filter_Changed"/>
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Spacing="10" Margin="5">
-                <TextBox x:Name="ProductSearchTextBox" 
-                    PlaceholderText="Zoek op naam..."
-                    Width="200"
-                    TextChanged="ProductSearchTextBox_TextChanged"/>
-            </StackPanel>
-            <Button Click="GoToOrder">Order</Button>
-        </StackPanel>
-        
+        <StackPanel Spacing="26">
 
+            <!-- FILTER BAR -->
+            <Border Background="#141414"
+                CornerRadius="18"
+                Padding="16">
 
-        <!-- Product Grid -->
-        <ListView ItemsSource="{Binding}"
-              IsItemClickEnabled="True"
-              SelectionMode="None"
-              x:Name="ProductView"
-              Margin="20">
+                <StackPanel Orientation="Horizontal"
+                        Spacing="16"
+                        VerticalAlignment="Center">
 
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal"
-                               MaximumRowsOrColumns="4"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+                    <ComboBox x:Name="StockCheckbox"
+                          Width="190"
+                          PlaceholderText="Voorraad"
+                          Background="#0F0F0F"
+                          Foreground="White"
+                          BorderBrush="#2A2A2A"
+                          BorderThickness="1"
+                          CornerRadius="10"
+                          SelectionChanged="Filter_Changed">
+                        <x:String>Op voorraad</x:String>
+                        <x:String>Niet op voorraad</x:String>
+                    </ComboBox>
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="10"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+                    <NumberBox x:Name="PriceFilter"
+                           Width="150"
+                           Header="Max prijs"
+                           Background="#0F0F0F"
+                           Foreground="White"
+                           BorderBrush="#2A2A2A"
+                           BorderThickness="1"
+                           CornerRadius="10"
+                           ValueChanged="Filter_Changed"/>
 
+                    <TextBox x:Name="ProductSearchTextBox"
+                         Width="240"
+                         PlaceholderText="Zoek product…"
+                         Background="#0F0F0F"
+                         Foreground="White"
+                         BorderBrush="#2A2A2A"
+                         BorderThickness="1"
+                         CornerRadius="10"
+                         Padding="10,6"
+                         TextChanged="ProductSearchTextBox_TextChanged"/>
 
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:Product">
-                    <Grid Width="220" Height="500">
-                        <Border Background="Black"
-                            CornerRadius="12"
-                            BorderThickness="1"
-                            BorderBrush="Black">
-                            <StackPanel Spacing="8" Padding="12">
+                    <Button Content="Order"
+                        Padding="16,8"
+                        Background="#FFD600"
+                        Foreground="Black"
+                        FontWeight="SemiBold"
+                        CornerRadius="12"
+                        BorderThickness="0"
+                        Click="GoToOrder"/>
+                </StackPanel>
+            </Border>
+
+            <!-- PRODUCT GRID -->
+            <ListView x:Name="ProductView"
+                  Background="Transparent"
+                  SelectionMode="None"
+                  IsItemClickEnabled="True">
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal"
+                                   MaximumRowsOrColumns="4"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="14"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Product">
+
+                        <!-- PRODUCT CARD -->
+                        <Border Width="220"
+                            Height="480"
+                            Background="#141414"
+                            CornerRadius="20"
+                            Padding="16">
+
+                            <StackPanel Spacing="16">
 
                                 <Image Source="{x:Bind ImagePath}"
                                    Height="140"
                                    Stretch="UniformToFill"/>
 
                                 <TextBlock Text="{x:Bind Name}"
-                                       FontSize="18"
+                                       FontSize="17"
                                        FontWeight="SemiBold"
                                        Foreground="White"
                                        TextWrapping="Wrap"
@@ -82,58 +116,58 @@
                                 <TextBlock Text="{x:Bind Price}"
                                        FontSize="16"
                                        FontWeight="Bold"
-                                       Foreground="Yellow"/>
+                                       Foreground="#FFD600"/>
 
-                                <TextBlock x:Name="TimesSelected"
-                                   FontSize="16"
-                                   FontWeight="Bold"
-                                   Foreground="Yellow">
-                                    <!--<TextBlock.RenderTransform>
-                                        <ScaleTransform x:Name="PopScale" ScaleX="1" ScaleY="1"/>
-                                    </TextBlock.RenderTransform>-->
-                                </TextBlock>
-
-
-                                <Border Background="#222"
-                                    Padding="4,2"
-                                    CornerRadius="6"
+                                <Border Background="#0F0F0F"
+                                    Padding="6,3"
+                                    CornerRadius="8"
+                                    BorderBrush="#2A2A2A"
+                                    BorderThickness="1"
                                     HorizontalAlignment="Left">
+
                                     <TextBlock Text="{x:Bind Stock}"
                                            FontSize="12"
-                                           Foreground="White"/>
+                                           Foreground="#B5B5B5"/>
                                 </Border>
 
-                                <Button Content="Detail"
-                                    HorizontalAlignment="Left"
-                                    Width="100"
-                                    Background="Yellow"
-                                    Foreground="Black"
-                                    Click="ProductClick"
-                                    CornerRadius="6"/>
-                                
-                                <Button Content="+" 
-                                    HorizontalAlignment="Right"
-                                    Width="50"
-                                    Background="Yellow"
-                                    Foreground="Black"
-                                    CornerRadius="6"
-                                    Click="PlusClick"/>
-                                
-                                <Button Content="-" 
-                                    Width="50"
-                                    Background="Yellow"
-                                    Foreground="Black"
-                                    CornerRadius="6"
-                                    Click="MinClick"/>
-                                
+                                <StackPanel Orientation="Horizontal"
+                                        Spacing="10"
+                                        Margin="0,8,0,0">
+
+                                    <Button Content="Detail"
+                                        Width="82"
+                                        Background="Transparent"
+                                        Foreground="#FFD600"
+                                        BorderBrush="#FFD600"
+                                        BorderThickness="1"
+                                        CornerRadius="10"
+                                        Click="ProductClick"/>
+
+                                    <Button Content="+"
+                                        Width="42"
+                                        Background="#FFD600"
+                                        Foreground="Black"
+                                        CornerRadius="10"
+                                        Click="PlusClick"/>
+
+                                    <Button Content="-"
+                                        Width="42"
+                                        Background="#FFD600"
+                                        Foreground="Black"
+                                        CornerRadius="10"
+                                        Click="MinClick"/>
+                                </StackPanel>
+
                             </StackPanel>
                         </Border>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-        </ListView>
-    </StackPanel>
+        </StackPanel>
+    </Grid>
+
+
 
 
 </Page>

@@ -71,9 +71,9 @@ namespace BarrocIntens.Pages.Customers
 
             CustomerNameTextBlock.Text = $"Naam: {customer.Name}";
             CustomerEmailTextBlock.Text = $"Email: {customer.Email}";
-            CustomerPhoneTextBlock.Text = $"Telefoon: {customer.PhoneNumber}";
-            CustomerCityTextBlock.Text = $"Stad: {customer.City}";
-            CustomerBkrStatusTextBlock.Text = $"BKR status: {customer.BkrStatus}";
+            //CustomerPhoneTextBlock.Text = $"Telefoon: {customer.PhoneNumber}";
+            //CustomerCityTextBlock.Text = $"Stad: {customer.City}";
+            //CustomerBkrStatusTextBlock.Text = $"BKR status: {customer.BkrStatus}";
 
             FactureListView.ItemsSource = db.Factures
                 .Include(f => f.Quote)

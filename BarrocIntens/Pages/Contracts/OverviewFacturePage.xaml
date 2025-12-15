@@ -11,119 +11,153 @@
     Width="500"
     mc:Ignorable="d">
 
-        <Page.Resources>
+    <Page.Resources>
 
-            <!-- TITEL -->
-            <Style x:Key="PageTitle" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="32"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="Foreground" Value="#FFD600"/>
-                <Setter Property="Margin" Value="0,0,0,20"/>
-            </Style>
+        <!-- TITELS -->
+        <Style x:Key="PageTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
 
-            <!-- SUBTITEL -->
-            <Style x:Key="SubTitle" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="Foreground" Value="#AAAAAA"/>
-                <Setter Property="Margin" Value="0,0,0,20"/>
-            </Style>
+        <Style x:Key="PageSubTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#8A8A8A"/>
+            <Setter Property="Margin" Value="0,0,0,24"/>
+        </Style>
 
-            <!-- KNOP -->
-            <Style x:Key="ActionButton" TargetType="Button">
-                <Setter Property="CornerRadius" Value="8"/>
-                <Setter Property="Padding" Value="12,6"/>
-                <Setter Property="Background" Value="#FFD600"/>
-                <Setter Property="Foreground" Value="Black"/>
-            </Style>
+        <!-- BUTTONS -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Background" Value="#FFD600"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
 
-            <!-- COMBOBOX -->
-            <Style TargetType="ComboBox">
-                <Setter Property="Background" Value="#2A2A2A"/>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="BorderBrush" Value="#FFD600"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="CornerRadius" Value="8"/>
-                <Setter Property="Margin" Value="0,0,0,20"/>
-            </Style>
+        <Style x:Key="GhostButton" TargetType="Button">
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
 
-        </Page.Resources>
+        <!-- COMBOBOX -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#141414"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Margin" Value="0,0,0,24"/>
+        </Style>
 
-        <Grid Padding="30">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    </Page.Resources>
 
-            <!-- TITEL -->
-            <TextBlock Text="Facturen overzicht"
+    <Grid Background="#0B0B0B"
+      Padding="28">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Facturen"
                    Style="{StaticResource PageTitle}"/>
 
-            <!-- FILTER -->
-            <StackPanel Grid.Row="1">
-                <TextBlock Text="Filter op betaalstatus"
-                       Style="{StaticResource SubTitle}"/>
+            <TextBlock Text="Overzicht van alle facturen"
+                   Style="{StaticResource PageSubTitle}"/>
+        </StackPanel>
 
-                <ComboBox x:Name="PaidCombobox"
-                      SelectionChanged="Filter_Changed"
-                      PlaceholderText="Betaalstatus">
-                    <x:String>Betaald</x:String>
-                    <x:String>Niet betaald</x:String>
-                </ComboBox>
-            </StackPanel>
+        <!-- FILTER -->
+        <StackPanel Grid.Row="1"
+                Margin="0,0,0,16">
 
-            <!-- LIST -->
-            <ListView x:Name="FactureListView"
-                  Grid.Row="2"
-                  Background="Transparent"
-                  BorderThickness="0"
-                  IsItemClickEnabled="True">
+            <TextBlock Text="Filter op betaalstatus"
+                   FontSize="13"
+                   Foreground="#8A8A8A"
+                   Margin="0,0,0,6"/>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Facture">
+            <ComboBox x:Name="PaidCombobox"
+                  PlaceholderText="Selecteer status"
+                  SelectionChanged="Filter_Changed">
+                <x:String>Betaald</x:String>
+                <x:String>Niet betaald</x:String>
+            </ComboBox>
+        </StackPanel>
 
-                        <!-- CARD -->
-                        <Border
-                        Background="#2A2A2A"
-                        CornerRadius="12"
-                        Padding="15"
-                        Margin="0,0,0,12"
-                        BorderBrush="#333"
-                        BorderThickness="1">
+        <!-- LIST -->
+        <ListView x:Name="FactureListView"
+              Grid.Row="2"
+              Background="Transparent"
+              BorderThickness="0"
+              IsItemClickEnabled="True">
 
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0,0,0,14"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
 
-                                <!-- KLANT -->
-                                <TextBlock
-                                Text="{Binding Quote.Customer.Name}"
-                                Foreground="White"
-                                FontSize="16"
-                                FontWeight="SemiBold"/>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:Facture">
 
-                                <!-- STATUS -->
-                                <TextBlock
-                                Grid.Column="1"
-                                Text="{Binding PayCheck}"
-                                Foreground="#FFD600"
-                                VerticalAlignment="Center"/>
+                    <!-- CARD -->
+                    <Border Background="#141414"
+                        CornerRadius="18"
+                        Padding="18">
 
-                                <!-- ACTIE -->
-                                <Button
-                                Grid.Column="2"
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- KLANT -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="{Binding Quote.Customer.Name}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="White"/>
+
+                                <TextBlock Text="Factuur"
+                                       FontSize="12"
+                                       Foreground="#8A8A8A"/>
+                            </StackPanel>
+
+                            <!-- STATUS -->
+                            <TextBlock Grid.Column="1"
+                                   Text="{Binding PayCheck}"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="#FFD600"
+                                   VerticalAlignment="Center"/>
+
+                            <!-- ACTIE -->
+                            <Button Grid.Column="2"
                                 Content="Details"
-                                Style="{StaticResource ActionButton}"
+                                Style="{StaticResource GhostButton}"
                                 Click="Button_Click"/>
-                            </Grid>
-                        </Border>
+                        </Grid>
 
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                    </Border>
 
-        </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+    </Grid>
+
 </Page>
