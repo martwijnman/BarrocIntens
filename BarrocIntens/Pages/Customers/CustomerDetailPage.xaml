@@ -12,13 +12,13 @@
 
     <StackPanel Orientation="Horizontal" Spacing="50" Margin="30"  Width="750">
         <StackPanel>
-            <Button x:Name="backButton" Click="backButton_Click">Terug naar Overzicht</Button>
-            <TextBlock x:Name="CustomerNameTextBlock" FontSize="18" FontWeight="Bold" Text="Uniqlo" />
-            <TextBlock x:Name="CustomerAddressTextBlock" Text="Lijnbaan 177, 3012 EN Rotterdam" />
-            <TextBlock x:Name="CustomerEmailTextBlock" Text="rotterdam@uniqlo.com" />
-            <TextBlock x:Name="CustomerPhoneTextBlock" Text="{Binding Phone}" />
-        <TextBlock x:Name="CustomerCityTextBlock" Text="{Binding City}" />
-        <TextBlock x:Name="CustomerBkrStatusTextBlock" Text="{Binding BkrStatus}" />
+            <Button Foreground="Yellow" x:Name="backButton" Click="backButton_Click">Terug naar Overzicht</Button>
+            <TextBlock Foreground="Yellow" x:Name="CustomerNameTextBlock" FontSize="18" FontWeight="Bold" Text="Uniqlo" />
+            <TextBlock Foreground="Yellow" x:Name="CustomerAddressTextBlock" Text="Lijnbaan 177, 3012 EN Rotterdam" />
+            <TextBlock Foreground="Yellow" x:Name="CustomerEmailTextBlock" Text="rotterdam@uniqlo.com" />
+            <TextBlock Foreground="Yellow" x:Name="CustomerPhoneTextBlock" Text="{Binding Phone}" />
+            <TextBlock Foreground="Yellow" x:Name="CustomerCityTextBlock" Text="{Binding City}" />
+            <TextBlock Foreground="Yellow" x:Name="CustomerBkrStatusTextBlock" Text="{Binding BkrStatus}" />
         
         </StackPanel>
         <StackPanel>
@@ -32,9 +32,9 @@
                     <StackPanel Orientation="Horizontal" Spacing="20" Margin="0,5">
                         <!--<Image Source="{Binding ProfileImageUri}" Width="40" Height="40" />-->
 
-                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold" />
-                        <TextBlock Text="2 maanden" VerticalAlignment="Center" Foreground="Gray" />
-                            <!-- Example: "TayotaCoff" + " 2 maanden" -->
+                            <TextBlock Foreground="Yellow" Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold" />
+                            <TextBlock Foreground="Yellow" Text="{Binding ContractDuring}" VerticalAlignment="Center" />
+
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -1,4 +1,4 @@
-using BarrocIntens.Data;
+﻿using BarrocIntens.Data;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
@@ -96,7 +96,7 @@ namespace BarrocIntens.Pages
             DataContext = this;
             //var LoggedInEmployee = db.Employees.FirstOrDefault(e => e.Id == EmployeeId);
             //Greeting.Text = $"Hello {LoggedInEmployee.Name}";
-        
+            ApplyDepartmentVisibility();
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -134,6 +134,52 @@ namespace BarrocIntens.Pages
         {
             Frame.Navigate(typeof(Pages.Technicians.TechniciansViewPage));
         }
+        private void ApplyDepartmentVisibility()
+        {
+            var department = Employee.LoggedInEmployee?.Department;
+
+            PlanningButton.Visibility = Visibility.Collapsed;
+            CustomerButton.Visibility = Visibility.Collapsed;
+            EmployeeButton.Visibility = Visibility.Collapsed;
+            SalesButton.Visibility = Visibility.Collapsed;
+            ContractButton.Visibility = Visibility.Collapsed;
+            MonteurButton.Visibility = Visibility.Collapsed;
+
+            switch (department)
+            {
+                case "Planning":
+                    PlanningButton.Visibility = Visibility.Visible;
+                    CustomerButton.Visibility = Visibility.Visible;
+                    break;
+
+                case "Sales":
+                    SalesButton.Visibility = Visibility.Visible;
+                    ContractButton.Visibility = Visibility.Visible;
+                    CustomerButton.Visibility = Visibility.Visible;
+                    break;
+
+                case "HR":
+                    EmployeeButton.Visibility = Visibility.Visible;
+                    break;
+
+                case "Maintenance":
+                    PlanningButton.Visibility = Visibility.Visible;
+                    MonteurButton.Visibility = Visibility.Visible;
+                    break;
+
+                case "Management":
+                    // Management ziet alles 👑
+                    PlanningButton.Visibility = Visibility.Visible;
+                    CustomerButton.Visibility = Visibility.Visible;
+                    EmployeeButton.Visibility = Visibility.Visible;
+                    SalesButton.Visibility = Visibility.Visible;
+                    ContractButton.Visibility = Visibility.Visible;
+                    MonteurButton.Visibility = Visibility.Visible;
+                    break;
+            }
+        }
+
+
     }
 
 }

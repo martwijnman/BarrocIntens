@@ -11,30 +11,119 @@
     Width="500"
     mc:Ignorable="d">
 
-    <StackPanel>
-        <TextBlock Text="Licenties" />
-        <StackPanel>
-            <ComboBox x:Name="PaidCombobox"
-                      SelectionChanged="Filter_Changed"
-                      PlaceholderText="Betaald"
-                      >
-                <x:String>Betaald</x:String>
-                <x:String>Niet betaald</x:String>
-            </ComboBox>
-        </StackPanel>
-        <ListView x:Name="FactureListView"
-           IsItemClickEnabled="True"
-           >
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:Facture">
-                    <StackPanel Orientation="Horizontal" Width="300" Spacing="100">
-                        <TextBlock Text="{Binding Quote.Customer.Name}"/>
-                        <TextBlock Text="{Binding PayCheck}" />
+        <Page.Resources>
 
-                        <Button Click="Button_Click">Details</Button>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackPanel>
+            <!-- TITEL -->
+            <Style x:Key="PageTitle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="#FFD600"/>
+                <Setter Property="Margin" Value="0,0,0,20"/>
+            </Style>
+
+            <!-- SUBTITEL -->
+            <Style x:Key="SubTitle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Foreground" Value="#AAAAAA"/>
+                <Setter Property="Margin" Value="0,0,0,20"/>
+            </Style>
+
+            <!-- KNOP -->
+            <Style x:Key="ActionButton" TargetType="Button">
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Padding" Value="12,6"/>
+                <Setter Property="Background" Value="#FFD600"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <!-- COMBOBOX -->
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="#2A2A2A"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="#FFD600"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Margin" Value="0,0,0,20"/>
+            </Style>
+
+        </Page.Resources>
+
+        <Grid Padding="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- TITEL -->
+            <TextBlock Text="Facturen overzicht"
+                   Style="{StaticResource PageTitle}"/>
+
+            <!-- FILTER -->
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Filter op betaalstatus"
+                       Style="{StaticResource SubTitle}"/>
+
+                <ComboBox x:Name="PaidCombobox"
+                      SelectionChanged="Filter_Changed"
+                      PlaceholderText="Betaalstatus">
+                    <x:String>Betaald</x:String>
+                    <x:String>Niet betaald</x:String>
+                </ComboBox>
+            </StackPanel>
+
+            <!-- LIST -->
+            <ListView x:Name="FactureListView"
+                  Grid.Row="2"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  IsItemClickEnabled="True">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Facture">
+
+                        <!-- CARD -->
+                        <Border
+                        Background="#2A2A2A"
+                        CornerRadius="12"
+                        Padding="15"
+                        Margin="0,0,0,12"
+                        BorderBrush="#333"
+                        BorderThickness="1">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- KLANT -->
+                                <TextBlock
+                                Text="{Binding Quote.Customer.Name}"
+                                Foreground="White"
+                                FontSize="16"
+                                FontWeight="SemiBold"/>
+
+                                <!-- STATUS -->
+                                <TextBlock
+                                Grid.Column="1"
+                                Text="{Binding PayCheck}"
+                                Foreground="#FFD600"
+                                VerticalAlignment="Center"/>
+
+                                <!-- ACTIE -->
+                                <Button
+                                Grid.Column="2"
+                                Content="Details"
+                                Style="{StaticResource ActionButton}"
+                                Click="Button_Click"/>
+                            </Grid>
+                        </Border>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
 </Page>

@@ -203,7 +203,7 @@ namespace BarrocIntens.Data
                     PhoneNumber = "0675287128",
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Root"),
-                    Department = "Sales"
+                    Department = "Management"
                 });
 
             modelBuilder.Entity<Malfunction>().HasData(
