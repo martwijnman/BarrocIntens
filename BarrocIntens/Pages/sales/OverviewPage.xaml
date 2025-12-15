@@ -14,11 +14,12 @@
                   IsItemClickEnabled="True"
                   >
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:Bill">
-                    <StackPanel>
-                        <!--<TextBlock Text="{x:Bind Bill.Customer.Name }" x:Name="detailSelectorBarItem" />-->
-                        <!--<TextBlock Text="{x:Bind Bill.Employee.Name }" x:Name="detailSelectorBarItem" />-->
-                        <TextBlock Text="{x:Bind TotalAmount }" x:Name="detailSelectorBarItem" />
+                <DataTemplate x:DataType="models:Product">
+                    <StackPanel x:Name="detailSelectorBarItem">
+                        <TextBlock Text="{x:Bind Name }"  />
+                        <TextBlock Text="{x:Bind Price }" />
+                        <TextBlock Text="{x:Bind StockShortage }" /> <!-- minimum - stock doen -->
+                        <TextBlock Text="{x:Bind Deliverer }" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -28,9 +28,15 @@ namespace BarrocIntens.Data
         [MaxLength(180)]
         public string City { get; set; }
 
-        [Required(ErrorMessage = "Voer een monteur in")]
+        [Required]
+        public double MalfunctionId { get; set; }
+
+        //[Required(ErrorMessage = "Voer een monteur in")]
         // contractduur
         // financiele status
+
+        [Required]
+        public int BkrNummer { get; set; }
         public bool BkrStatus { get; set; } // nullable
                                             // CRUD operations for Department
 

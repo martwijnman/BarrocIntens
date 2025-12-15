@@ -25,7 +25,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- COMBOBOX in de middelste kolom zodat hij zichtbaar en bereikbaar is -->
-            <StackPanel>
+            <StackPanel
+                Orientation="Horizontal">
                 <ComboBox x:Name="StatusCheckbox"
                   Grid.Column="1"
                   Header="Status"
@@ -34,10 +35,23 @@
                   Margin="10,0"
                   Foreground="White"
                   Background="Black"
-                  SelectionChanged="Status_Filter">
+                  SelectionChanged="Filter_Changed">
                     <x:String>Gedaan</x:String>
                     <x:String>Niet Gedaan</x:String>
                 </ComboBox>
+                
+                <ComboBox x:Name="CategoryCheckbox"
+                Header="Categorie"
+                PlaceholderText="Categorie selecteren"
+                Width="200"
+                SelectionChanged="Filter_Changed"
+                Background="Black">
+                    <x:String>Storing</x:String>
+                    <x:String>Vergaderineg</x:String>
+                    <x:String>Controle</x:String>
+                    <x:String>Adviesbezoek</x:String>
+                </ComboBox>
+                
             </StackPanel>
 
 

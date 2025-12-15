@@ -161,7 +161,32 @@ namespace BarrocIntens.Pages.Product
             var button = (Button)sender;
             var product = (Data.Product)button.DataContext;
 
-            Frame.Navigate(typeof(DetailPage), product);
+            Frame.Navigate(typeof(DetailPage), product.Id);
+        }
+        private void ProductSearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    => ApplyFilters();
+
+        private void ApplyFilters()
+        {
+            using var db = new AppDbContext();
+
+            var nameFilter = ProductSearchTextBox.Text?.ToLower() ?? string.Empty;
+
+            var query = db.Products.AsQueryable();
+
+
+
+            if (!string.IsNullOrWhiteSpace(nameFilter))
+                query = query.Where(c => c.Name.ToLower().Contains(nameFilter));
+
+
+            if (!double.IsEvenInteger(0))
+            {
+                query = query.Where(p => p.Price >= PriceFilter.Value);
+            }
+
+            ProductView.ItemsSource = query
+                .ToList();
         }
 
         private void Filter_Changed(object sender, object e)
@@ -169,13 +194,6 @@ namespace BarrocIntens.Pages.Product
             using (var db = new AppDbContext())
             {
                 var query = db.Products.AsQueryable();
-
-
-                if (ProductSearchTextbox.Text != "")
-                {
-                    string search = ProductSearchTextbox.Text;
-                    query = query.Where(g => g.Name.Contains(search));
-                }
 
                 if (StockCheckbox.SelectedValue as string == "Op voorraad")
                 {
@@ -193,10 +211,7 @@ namespace BarrocIntens.Pages.Product
                 }
 
 
-                if (PriceFilter.Value > 0)
-                {
-                    query = query.Where(p => p.Price >= PriceFilter.Value);
-                }
+                
                
 
                 ProductView.ItemsSource = query.ToList();

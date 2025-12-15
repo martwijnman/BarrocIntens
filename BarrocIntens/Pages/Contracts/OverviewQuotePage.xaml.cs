@@ -38,11 +38,27 @@ public sealed partial class OverviewQuotePage : Page
         InitializeComponent();
         using (var db = new Data.AppDbContext())
         {
-            QuoteListView.ItemsSource = db.Quotes
+            var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            if (settings.Values["Role"] == "Owner")
+            {
+                QuoteListView.ItemsSource = db.Quotes
                 .Include(q => q.Customer)
                 .Include(q => q.Items)
-                .Where(q => q.IsAccepted == false || q.IsRejected == false)
+                .Where(q => q.IsAccepted == false && q.IsRejected == false)
                 .ToList();
+            }
+            else
+            {
+                QuoteListView.ItemsSource = db.Quotes
+                .Include(q => q.Customer)
+                .Include(q => q.Items)
+                .ThenInclude(i => i.Product)
+                .Where(q => !q.IsAccepted && !q.IsRejected)
+                .AsEnumerable()
+                .Where(q => q.Items.Sum(item => item.Total * item.Product.Price) <= 5000)
+                .ToList();
+            }
+            
         }
     }
 
@@ -50,7 +66,6 @@ public sealed partial class OverviewQuotePage : Page
     {
         if (sender is Button btn && btn.DataContext is Quote quote)
         {
-            quote.IsAccepted = true;
             MakePDFFacture(quote);
             SendEmail(quote); // pas dit aan om email te sturen. uncomment: smtp.Send(mail);
             SaveFacture(quote);
@@ -59,10 +74,14 @@ public sealed partial class OverviewQuotePage : Page
 
     private void Button_Click_1(object sender, RoutedEventArgs e) // weigeren
     {
+        var db = new Data.AppDbContext();
         if (sender is Button btn && btn.DataContext is Quote quote)
         {
-            quote.IsRejected = true;
+            var quoteForSave = db.Quotes.FirstOrDefault(q => q.Id == quote.Id);
+            quoteForSave.IsAccepted = false;
+            db.SaveChanges();
             SendEmail(quote); // pas dit aan om email te sturen. uncomment: smtp.Send(mail);
+            Frame.Navigate(typeof(Pages.Contracts.OverviewQuotePage));
         }
     }
 
@@ -141,6 +160,10 @@ public sealed partial class OverviewQuotePage : Page
             .Include(qi => qi.Product)
             .ToList();
         double price = 0;
+
+        var quoteForSave = db.Quotes.FirstOrDefault(q => q.Id == quote.Id);
+        quoteForSave.IsAccepted = true;
+        db.SaveChanges();
 
         foreach (var item in quoteItems)
         {

@@ -7,16 +7,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BarrocIntens.Data"
+    Background="Black"
+    Width="500"
     mc:Ignorable="d">
 
-    <Grid>
-        <TextBlock Text="Betalingen" />
+    <StackPanel>
+        <TextBlock Text="Licenties" />
+        <StackPanel>
+            <ComboBox x:Name="PaidCombobox"
+                      SelectionChanged="Filter_Changed"
+                      PlaceholderText="Betaald"
+                      >
+                <x:String>Betaald</x:String>
+                <x:String>Niet betaald</x:String>
+            </ComboBox>
+        </StackPanel>
         <ListView x:Name="FactureListView"
            IsItemClickEnabled="True"
            >
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Facture">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Width="300" Spacing="100">
                         <TextBlock Text="{Binding Quote.Customer.Name}"/>
                         <TextBlock Text="{Binding PayCheck}" />
 
@@ -25,5 +36,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </Grid>
+    </StackPanel>
 </Page>

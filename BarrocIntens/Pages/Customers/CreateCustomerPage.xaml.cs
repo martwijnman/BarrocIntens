@@ -1,6 +1,8 @@
 using BarrocIntens.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 
@@ -38,8 +40,73 @@ namespace BarrocIntens.Pages.Customers
             return Regex.IsMatch(phone, @"^\+?[\d\s\-\(\)]{7,20}$");
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        //private void SaveButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (string.IsNullOrWhiteSpace(NameTextBox.Text))
+        //    {
+        //        ErrorTextBlock.Text = "Naam mag niet leeg zijn";
+        //        return;
+        //    }
+
+        //    if (!IsValidEmail(EmailTextBox.Text))
+        //    {
+        //        ErrorTextBlock.Text = "Voer een geldig e-mail adres in.";
+        //        return;
+        //    }
+
+        //    if (!IsValidPhone(PhoneTextBox.Text))
+        //    {
+        //        ErrorTextBlock.Text = "Voer een geldig telefoonnummer in.";
+        //        return;
+        //    }   
+
+        //    if (string.IsNullOrWhiteSpace(CityTextBox.Text))
+        //    {
+        //        ErrorTextBlock.Text = "Voer een geldige stadsnaam in.";
+        //        return;
+        //    }
+
+        //    if (BkrNumber.Value == null)
+        //    {
+        //        ErrorTextBlock.Text = "Voer een geldige BKR-nummer in.";
+        //        return;
+        //    }
+
+        //    //if (BKRCheckBox.IsChecked == false)
+        //    //{
+        //    //    ErrorTextBlock.Text = "BKR keuring moet voldaan zijn.";
+        //    //    return;
+        //    //}
+
+        //    else
+        //    {
+        //        ErrorTextBlock.Text = "";
+        //    }
+
+        //    var myCustomer = new BarrocIntens.Data.Customer()
+        //    {
+        //        Name = NameTextBox.Text,
+        //        Email = EmailTextBox.Text,
+        //        PhoneNumber = PhoneTextBox.Text,
+        //        City = CityTextBox.Text,
+        //        //BkrStatus = BKRCheckBox.IsChecked == true
+        //        BkrNummer = (int)BkrNumber.Value,
+        //        BkrStatus = true,
+        //    };
+
+        //    CheckTextBlock.Text = "Klant succesvol opgeslagen";
+
+        //    using (var dbContext = new AppDbContext())
+        //    {
+        //        dbContext.Customers.Add(myCustomer);
+        //        dbContext.SaveChanges();
+        //    }
+
+        //}
+
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // Validatie
             if (string.IsNullOrWhiteSpace(NameTextBox.Text))
             {
                 ErrorTextBlock.Text = "Naam mag niet leeg zijn";
@@ -56,7 +123,7 @@ namespace BarrocIntens.Pages.Customers
             {
                 ErrorTextBlock.Text = "Voer een geldig telefoonnummer in.";
                 return;
-            }   
+            }
 
             if (string.IsNullOrWhiteSpace(CityTextBox.Text))
             {
@@ -64,25 +131,61 @@ namespace BarrocIntens.Pages.Customers
                 return;
             }
 
-            if (BKRCheckBox.IsChecked == false)
+            if (BkrNumber.Value == null)
             {
-                ErrorTextBlock.Text = "BKR keuring moet voldaan zijn.";
+                ErrorTextBlock.Text = "Voer een geldig BKR-nummer in.";
                 return;
             }
 
-            else
+            ErrorTextBlock.Text = "";
+
+
+            bool bkrStatus = false;
+
+            try
             {
-                ErrorTextBlock.Text = "";
+                using var client = new HttpClient();
+                client.BaseAddress = new Uri("https://bkrnumbers.free.beeceptor.com/");
+
+                var jsonString = await client.GetStringAsync("");
+
+
+                jsonString = "[" + System.Text.RegularExpressions.Regex.Replace(jsonString, @"}\s*,\s*{", "},{") + "]";
+
+                var options = new System.Text.Json.JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var data = System.Text.Json.JsonSerializer.Deserialize<BkrNumber[]>(jsonString, options);
+
+                if (data != null)
+                {
+
+                    var match = Array.Find(data, b => b.BkrNumberValue == BkrNumber.Value.ToString());
+                    if (match != null)
+                    {
+
+                        bkrStatus = match.Status.Equals("positive", StringComparison.OrdinalIgnoreCase);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorTextBlock.Text = "Fout bij BKR-check: " + ex.Message;
+                return;
             }
 
-                var myCustomer = new BarrocIntens.Data.Customer()
-                {
-                    Name = NameTextBox.Text,
-                    Email = EmailTextBox.Text,
-                    PhoneNumber = PhoneTextBox.Text,
-                    City = CityTextBox.Text,
-                    BkrStatus = BKRCheckBox.IsChecked == true
-                };
+
+            var myCustomer = new BarrocIntens.Data.Customer()
+            {
+                Name = NameTextBox.Text,
+                Email = EmailTextBox.Text,
+                PhoneNumber = PhoneTextBox.Text,
+                City = CityTextBox.Text,
+                BkrNummer = (int)BkrNumber.Value,
+                BkrStatus = bkrStatus,
+            };
 
             CheckTextBlock.Text = "Klant succesvol opgeslagen";
 
@@ -91,9 +194,7 @@ namespace BarrocIntens.Pages.Customers
                 dbContext.Customers.Add(myCustomer);
                 dbContext.SaveChanges();
             }
-
         }
-
         private void SaveButton_Click_1(object sender, RoutedEventArgs e)
         {
 

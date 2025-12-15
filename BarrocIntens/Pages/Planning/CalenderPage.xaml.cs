@@ -62,28 +62,40 @@ public sealed partial class CalenderPage : Page
         Frame.Navigate(typeof(Pages.Planning.DetailPage), clickedCalendarItemId);
     }
 
-    private void Status_Filter(object sender, object e)
+
+    private void Filter_Changed(object sender, object e)
     {
-        // Forceer refresh van de CalendarView,
-        // zodat CalendarViewDayItemChanging opnieuw wordt uitgevoerd
-        var db = new AppDbContext();
-        var query = db.Products.AsQueryable();
-        if (StatusCheckbox.SelectedValue as string == "Gedaan")
+        using (var db = new AppDbContext())
         {
-            var planningIds = db.Plannings
-                            .Where(p => p.Status == "Gedaan")
-                            .Select(p => p.Id);
-            query = query.Where(p => planningIds.Contains(p.Id));
+            var query = db.Plannings.AsQueryable();
+
+            if (StatusCheckbox.SelectedItem as string != "")
+            {
+                var planningStatus = db.Plannings
+                                .Where(p => p.Status == StatusCheckbox.SelectedItem)
+                                .Select(p => p.Status);
+                query = query.Where(p => planningStatus.Contains(p.Status));
+            }
+
+            if (CategoryCheckbox.SelectedItem as string != "")
+            {
+                var planningCategories = db.Plannings
+                                .Where(p => p.Category == CategoryCheckbox.SelectedItem)
+                                .Select(p => p.Category);
+                query = query.Where(p => planningCategories.Contains(p.Category));
+            }
+            //if (DepartmentCheckbox.SelectedValue as string != "")
+            //{
+            //    var planningDepartments = db.Plannings
+            //                    .Where(p => p.DepartmentId == DepartmentCheckbox.SelectedItem)
+            //                    .Select(p => p.DepartmentId);
+            //    query = query.Where(p => planningDepartments.Contains(p.DepartmentId));
+            //}
+
+            //calendarView.ItemTemplate = query.ToList();
+            calendarView.InvalidateArrange();
+
         }
-        if (StatusCheckbox.SelectedValue as string == "Niet Gedaan")
-        {
-            var planningIds = db.Plannings
-                            .Where(p => p.Status == "Niet Gedaan")
-                            .Select(p => p.Id);
-            query = query.Where(p => planningIds.Contains(p.Id));
-        }
-        //calendarView.InvalidateMeasure();
-        //calendarView.UpdateLayout();
     }
 
 }

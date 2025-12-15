@@ -36,7 +36,7 @@ public sealed partial class OrderPage : Page
         InitializeComponent();
         System.Diagnostics.Debug.WriteLine("WALLET COUNT: " + wallet.Count);
         using var db = new Data.AppDbContext();
-        var customers = db.Customers.ToList();
+        var customers = db.Customers.Where(c => c.BkrStatus == true).ToList();
         CustomerCheckbox.Items.Clear();
 
         foreach (var customer in customers)
