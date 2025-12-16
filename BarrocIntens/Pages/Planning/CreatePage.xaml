@@ -9,7 +9,38 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#0F0F0F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="10,6"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#0F0F0F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="Background" Value="#0F0F0F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FFD600"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
     </Page.Resources>
 
     <ScrollView  Width="1400">
@@ -49,18 +80,96 @@
                 <x:String>Adviesbezoek</x:String>
             </ComboBox>
 
-            <TextBlock>Klanten:</TextBlock>
-            <StackPanel x:Name="CitizenSelector" Orientation="Horizontal" Spacing="8">
-            </StackPanel>
+            <!-- TITLE -->
+            <TextBlock Text="Planning aanmaken"
+                   FontSize="32"
+                   FontWeight="SemiBold"
+                   Foreground="#FFD600"/>
 
-            <TextBlock>Werknemer:</TextBlock>
-            <StackPanel x:Name="EmployeeSelector" Orientation="Horizontal" Spacing="8">
-            </StackPanel>
+            <!-- FORM CARD -->
+            <Border Background="#141414"
+                CornerRadius="20"
+                Padding="24">
 
-            <TextBlock x:Name="errorText" />
-            <Button Click="CreateButton">
-                Save
-            </Button>
+                <StackPanel Spacing="22">
+
+                    <DatePicker x:Name="date"
+                            Header="Datum"/>
+
+                    <TextBox x:Name="PlanTextbox"
+                         Header="Plan"
+                         PlaceholderText="Wat gaat er gebeuren?"/>
+
+                    <TextBox x:Name="LocationTextbox"
+                         Header="Locatie"
+                         PlaceholderText="Waar vindt het plaats?"/>
+
+                    <TextBox x:Name="DescriptionTextbox"
+                         Header="Beschrijving"
+                         PlaceholderText="Extra informatie"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         Height="100"/>
+
+                    <StackPanel Orientation="Horizontal"
+                            Spacing="20">
+
+                        <ComboBox x:Name="StatusCheckbox"
+                              Header="Status"
+                              Width="200"
+                              PlaceholderText="Selecteer status">
+                            <x:String>Gedaan</x:String>
+                            <x:String>Niet gedaan</x:String>
+                        </ComboBox>
+
+                        <ComboBox x:Name="CategoryCheckbox"
+                              Header="Categorie"
+                              Width="220"
+                              PlaceholderText="Selecteer categorie">
+                            <x:String>Storing</x:String>
+                            <x:String>Vergadering</x:String>
+                            <x:String>Controle</x:String>
+                            <x:String>Adviesbezoek</x:String>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- CLIENTS -->
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Klanten"
+                               Foreground="#FFD600"
+                               FontWeight="SemiBold"/>
+                        <StackPanel x:Name="CitizenSelector"
+                                Orientation="Horizontal"
+                                Spacing="8"/>
+                    </StackPanel>
+
+                    <!-- EMPLOYEES -->
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Werknemer"
+                               Foreground="#FFD600"
+                               FontWeight="SemiBold"/>
+                        <StackPanel x:Name="EmployeeSelector"
+                                Orientation="Horizontal"
+                                Spacing="8"/>
+                    </StackPanel>
+
+                    <!-- ERROR -->
+                    <TextBlock x:Name="errorText"
+                           Foreground="#FF5C5C"
+                           FontSize="13"/>
+
+                    <!-- ACTION -->
+                    <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+
+                        <Button Content="Opslaan"
+                            Click="CreateButton"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
         </StackPanel>
     </ScrollView>
+
 </Page>

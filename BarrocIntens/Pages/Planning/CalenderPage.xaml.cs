@@ -30,7 +30,8 @@ public sealed partial class CalenderPage : Page
     public CalenderPage()
     {
         InitializeComponent();
-
+        var db = new AppDbContext();
+        TodayPlanningListView.ItemsSource = db.Plannings.Where(p => p.Date == DateOnly.FromDateTime(DateTime.Now)).ToList();
     }
     private void AddCalendarItemButton_Click(object sender, RoutedEventArgs e)
     {

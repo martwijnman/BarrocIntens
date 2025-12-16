@@ -9,24 +9,80 @@
     
     mc:Ignorable="d">
 
-    <StackPanel>
-        <ListView x:Name="WalletListView">
+    <StackPanel Padding="30" Spacing="20" Background="Black">
+
+        <!-- TITEL -->
+        <TextBlock Text="Orders"
+                   FontSize="28"
+                   FontWeight="SemiBold"
+                   Foreground="#FFD600"
+                   Margin="0,0,0,20"/>
+
+        <!-- CUSTOMER COMBOBOX -->
+        <ComboBox x:Name="CustomerCheckbox"
+                  PlaceholderText="Selecteer klant"
+                  Width="200"
+                  Background="#2A2A2A"
+                  Foreground="White"
+                  BorderBrush="#FFD600"
+                  BorderThickness="1"
+                  CornerRadius="8"
+                  Padding="10"/>
+
+        <!-- WALLET / PRODUCTS LIST -->
+        <ListView x:Name="WalletListView"
+                  Background="Transparent"
+                  BorderThickness="0">
+
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <TextBlock Text="{Binding Product.Name}" Width="200"/>
-                        <TextBlock Text="{Binding Aantal}" Width="50"/>
-                        <TextBlock Text="{Binding Product.Price}" Width="80"/>
-                    </StackPanel>
+                    <Border Background="#2A2A2A"
+                            CornerRadius="12"
+                            Padding="12"
+                            Margin="0,0,0,12"
+                            BorderBrush="#333"
+                            BorderThickness="1">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- PRODUCT NAAM -->
+                            <TextBlock Text="{Binding Product.Name}"
+                                       Foreground="White"
+                                       FontWeight="SemiBold"
+                                       FontSize="15"/>
+
+                            <!-- AANTAL -->
+                            <TextBlock Text="{Binding Aantal}"
+                                       Grid.Column="1"
+                                       Foreground="#FFD600"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+
+                            <!-- PRIJS -->
+                            <TextBlock Text="{Binding Product.Price}"
+                                       Grid.Column="2"
+                                       Foreground="White"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"/>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ComboBox x:Name="CustomerCheckbox"
-      Header="Customer"
-      PlaceholderText="Status selecteren"
-      Width="200">
-        </ComboBox>
-        <Button Content="Order maken" Click="MakeOrder" />
 
+
+        <Button Content="Order maken"
+                Width="180"
+                Padding="14,8"
+                Background="#FFD600"
+                Foreground="Black"
+                CornerRadius="10"
+                FontWeight="SemiBold"
+                Click="MakeOrder"/>
     </StackPanel>
 </Page>

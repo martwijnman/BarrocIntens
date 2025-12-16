@@ -35,6 +35,7 @@ namespace BarrocIntens
             InitializeComponent();
             using (var db = new AppDbContext())
             {
+
                 db.Database.EnsureCreated();
             }
             LoginCheck();

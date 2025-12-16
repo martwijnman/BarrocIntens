@@ -1,30 +1,157 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="BarrocIntens.Pages.Contracts.OverviewQuotePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BarrocIntens.Pages.Contracts"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:BarrocIntens.Data"
-    mc:Ignorable="d">
+    xmlns:models="using:BarrocIntens.Data">
 
-    <Grid>
-        <ListView x:Name="QuoteListView"
-           IsItemClickEnabled="True"
-           >
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:Quote">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Customer.Name}"/>
-                        <TextBlock Text="{Binding CreatedAt}"/>
-                        <TextBlock Text="{Binding ItemsCount}"/>
-                        <Button Click="Button_Click_2">Details</Button>
-                        <Button Click="Button_Click">Accepteren</Button>
-                        <Button Click="Button_Click_1">Weigeren</Button>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+    <Grid Background="#0B0B0B"
+      Padding="28">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- TITLE -->
+        <StackPanel Grid.Row="0"
+                Margin="0,0,0,24">
+
+            <TextBlock Text="Offertes"
+                   FontSize="28"
+                   FontWeight="SemiBold"
+                   Foreground="White"/>
+
+            <TextBlock Text="Overzicht van aangemaakte offertes"
+                   FontSize="14"
+                   Foreground="#8A8A8A"/>
+        </StackPanel>
+
+        <!-- CONTENT -->
+        <Grid Grid.Row="1">
+
+            <!-- EMPTY STATE -->
+            <StackPanel x:Name="EmptyStatePanel"
+                    Visibility="Collapsed"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Spacing="12">
+
+                <TextBlock Text="📄"
+                       FontSize="40"
+                       HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Geen offertes"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       Foreground="White"
+                       HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Er zijn nog geen offertes aangemaakt."
+                       FontSize="14"
+                       Foreground="#9A9A9A"
+                       HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+            <!-- LIST -->
+            <ListView x:Name="QuoteListView"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  IsItemClickEnabled="True">
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="0,0,0,14"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Quote">
+
+                        <Border Background="#141414"
+                            CornerRadius="18"
+                            Padding="18">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2.2*"/>
+                                    <ColumnDefinition Width="1.2*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- LEFT INFO -->
+                                <StackPanel Spacing="4">
+
+                                    <TextBlock Text="{Binding Customer.Name}"
+                                           FontSize="16"
+                                           FontWeight="SemiBold"
+                                           Foreground="White"/>
+
+                                    <TextBlock Text="{Binding CreatedAt}"
+                                           FontSize="12"
+                                           Foreground="#8A8A8A"/>
+
+                                </StackPanel>
+
+                                <!-- ITEMS -->
+                                <StackPanel Grid.Column="1"
+                                        VerticalAlignment="Center">
+
+                                    <TextBlock Text="Items"
+                                           FontSize="12"
+                                           Foreground="#8A8A8A"/>
+
+                                    <TextBlock Text="{Binding ItemsCount}"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="#FFD600"/>
+                                </StackPanel>
+
+                                <!-- ACTIONS -->
+                                <StackPanel Grid.Column="2"
+                                        Orientation="Horizontal"
+                                        Spacing="10"
+                                        VerticalAlignment="Center">
+
+                                    <Button Content="Details"
+                                        Background="Transparent"
+                                        Foreground="White"
+                                        BorderBrush="#2A2A2A"
+                                        BorderThickness="1"
+                                        CornerRadius="10"
+                                        Padding="12,6"
+                                        Click="Button_Click_2"/>
+
+                                    <Button Content="Accepteren"
+                                        Background="#FFD600"
+                                        Foreground="Black"
+                                        CornerRadius="10"
+                                        Padding="14,6"
+                                        Click="Button_Click"/>
+
+                                    <Button Content="Weigeren"
+                                        Background="Transparent"
+                                        Foreground="#FFD600"
+                                        BorderBrush="#FFD600"
+                                        BorderThickness="1"
+                                        CornerRadius="10"
+                                        Padding="12,6"
+                                        Click="Button_Click_1"/>
+                                </StackPanel>
+
+                            </Grid>
+
+                        </Border>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </Grid>
+
     </Grid>
+
 </Page>

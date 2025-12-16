@@ -203,7 +203,7 @@ namespace BarrocIntens.Data
                     PhoneNumber = "0675287128",
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Root"),
-                    Department = "Sales"
+                    Department = "Management"
                 });
 
             modelBuilder.Entity<Malfunction>().HasData(
@@ -304,7 +304,8 @@ namespace BarrocIntens.Data
                     MinimumStock = 10,
                     Deliverer = "Wizzmie",
                     NotificationOutOfStock = false,
-                    Image = "logo.png"
+                    Image = "wizzmie.jpg",
+                    IsMachine = true
                 },
                 new Product
                 {
@@ -316,7 +317,8 @@ namespace BarrocIntens.Data
                     MinimumStock = 5,
                     Deliverer = "IceAndWarm",
                     NotificationOutOfStock = false,
-                    Image = "logo.png"
+                    Image = "arah.jpg",
+                    IsMachine = true
                 },
                 new Product
                 {
@@ -328,7 +330,8 @@ namespace BarrocIntens.Data
                     MinimumStock = 8,
                     Deliverer = "Arah",
                     NotificationOutOfStock = false,
-                    Image = "logo.png"
+                    Image = "arah.jpg",
+                    IsMachine = true
                 },
                 new Product
                 {
@@ -340,8 +343,22 @@ namespace BarrocIntens.Data
                     MinimumStock = 3,
                     Deliverer = "Pawon Luwak Coffee",
                     NotificationOutOfStock = false,
-                    Image = "logo.png"
-                });
+                    Image = "wizzmie.jpg",
+                    IsMachine = true
+                },
+            new Product
+            {
+                Id = 5,
+                Name = "Aceh Arabica 1.000 kg",
+                Category = "Arabica",
+                Price = 159.00,
+                Stock = 5,
+                MinimumStock = 3,
+                Deliverer = "Aceh Coffee Company",
+                NotificationOutOfStock = false,
+                Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
+                IsMachine = false
+            });
         }
     }
 

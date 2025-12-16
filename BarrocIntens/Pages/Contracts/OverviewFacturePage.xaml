@@ -11,30 +11,153 @@
     Width="500"
     mc:Ignorable="d">
 
-    <StackPanel>
-        <TextBlock Text="Licenties" />
-        <StackPanel>
+    <Page.Resources>
+
+        <!-- TITELS -->
+        <Style x:Key="PageTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="PageSubTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#8A8A8A"/>
+            <Setter Property="Margin" Value="0,0,0,24"/>
+        </Style>
+
+        <!-- BUTTONS -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Background" Value="#FFD600"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style x:Key="GhostButton" TargetType="Button">
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <!-- COMBOBOX -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#141414"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Margin" Value="0,0,0,24"/>
+        </Style>
+
+    </Page.Resources>
+
+    <Grid Background="#0B0B0B"
+      Padding="28">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Facturen"
+                   Style="{StaticResource PageTitle}"/>
+
+            <TextBlock Text="Overzicht van alle facturen"
+                   Style="{StaticResource PageSubTitle}"/>
+        </StackPanel>
+
+        <!-- FILTER -->
+        <StackPanel Grid.Row="1"
+                Margin="0,0,0,16">
+
+            <TextBlock Text="Filter op betaalstatus"
+                   FontSize="13"
+                   Foreground="#8A8A8A"
+                   Margin="0,0,0,6"/>
+
             <ComboBox x:Name="PaidCombobox"
-                      SelectionChanged="Filter_Changed"
-                      PlaceholderText="Betaald"
-                      >
+                  PlaceholderText="Selecteer status"
+                  SelectionChanged="Filter_Changed">
                 <x:String>Betaald</x:String>
                 <x:String>Niet betaald</x:String>
             </ComboBox>
         </StackPanel>
+
+        <!-- LIST -->
         <ListView x:Name="FactureListView"
-           IsItemClickEnabled="True"
-           >
+              Grid.Row="2"
+              Background="Transparent"
+              BorderThickness="0"
+              IsItemClickEnabled="True">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0,0,0,14"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Facture">
-                    <StackPanel Orientation="Horizontal" Width="300" Spacing="100">
-                        <TextBlock Text="{Binding Quote.Customer.Name}"/>
-                        <TextBlock Text="{Binding PayCheck}" />
 
-                        <Button Click="Button_Click">Details</Button>
-                    </StackPanel>
+                    <!-- CARD -->
+                    <Border Background="#141414"
+                        CornerRadius="18"
+                        Padding="18">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- KLANT -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="{Binding Quote.Customer.Name}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="White"/>
+
+                                <TextBlock Text="Factuur"
+                                       FontSize="12"
+                                       Foreground="#8A8A8A"/>
+                            </StackPanel>
+
+                            <!-- STATUS -->
+                            <TextBlock Grid.Column="1"
+                                   Text="{Binding PayCheck}"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="#FFD600"
+                                   VerticalAlignment="Center"/>
+
+                            <!-- ACTIE -->
+                            <Button Grid.Column="2"
+                                Content="Details"
+                                Style="{StaticResource GhostButton}"
+                                Click="Button_Click"/>
+                        </Grid>
+
+                    </Border>
+
                 </DataTemplate>
             </ListView.ItemTemplate>
+
         </ListView>
-    </StackPanel>
+
+    </Grid>
+
 </Page>
