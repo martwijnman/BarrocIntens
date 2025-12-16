@@ -29,15 +29,17 @@ namespace BarrocIntens.Pages.Planning
             InitializeComponent();
         }
         public int SelectedPlanningId;
+        public int selectedEmployeeId;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var db = new Data.AppDbContext();
             SelectedPlanningId = (int)e.Parameter;
             var selectedPlan = db.Plannings.FirstOrDefault(p => p.Id == SelectedPlanningId);
+            var selectedEmloyee = db.Employees.FirstOrDefault(e => e.Id == selectedEmployeeId);
             Plan.Text = selectedPlan.Plan;
             Date.Text =   selectedPlan.Date.ToString("dd-MM-yyyy");
-            Status.Text = selectedPlan.Status;
+            Status.Text = selectedPlan.Status;  
 
             // filter for customers who are linked in the planningId
             var customers = db.CostumerPlannings

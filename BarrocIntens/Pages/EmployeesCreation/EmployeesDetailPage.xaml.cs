@@ -74,10 +74,5 @@ namespace BarrocIntens.Pages.EmployeesCreation
         {
             Frame.GoBack();
         }
-
-        private void ShowBuildings_Click(object sender, RoutedEventArgs e)
-        {
-            // Navigation to buildings page can go here
-        }
     }
 }

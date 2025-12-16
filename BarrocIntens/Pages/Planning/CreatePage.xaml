@@ -21,11 +21,11 @@
             <TextBox x:Name="PlanTextbox" Header="Plan" PlaceholderText="Plan" />
             <TextBox x:Name="LocationTextbox" Header="Location" PlaceholderText="Location" />
             <TextBox x:Name="DescriptionTextbox" Header="Description" PlaceholderText="Description" />
-            <ComboBox x:Name="StatusCheckbox"
+            <ComboBox x:Name="StatusCheckbox" Foreground="White"
                   Header="Status"
                   PlaceholderText="Status selecteren"
                   Width="200"
-                      Background="Black">
+                      Background="LightGray">
                 <x:String>Gedaan</x:String>
                 <x:String>Niet Gedaan</x:String>
             </ComboBox>
@@ -35,6 +35,14 @@
        PlaceholderText="Categorie selecteren"
        Width="200"
            Background="Black">
+
+            <ListBox SelectionMode="Single"
+            x:Name="EmployeesListBox"
+            Grid.Row="3"
+            Height="150"
+            DisplayMemberPath="Name"
+            SelectionChanged="EmployeesListBox_SelectionChanged"/>
+
                 <x:String>Storing</x:String>
                 <x:String>Vergadering</x:String>
                 <x:String>Controle</x:String>

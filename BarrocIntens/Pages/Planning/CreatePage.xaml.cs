@@ -28,11 +28,18 @@ namespace BarrocIntens.Pages.Planning
         public CreatePage()
         {
             InitializeComponent();
+            LoadEmployees();
         }
 
         // lists of workers and customersS
         private List<int> SelectedCustomerIds = new();
         private List<int> SelectedEmployeeIds = new();
+
+        private void LoadEmployees()
+        {
+            using var db = new AppDbContext();
+            EmployeesListBox.ItemsSource = db.Employees.ToList();
+        }
 
         private void CreateButton(object sender, RoutedEventArgs e)
         {
@@ -176,6 +183,16 @@ namespace BarrocIntens.Pages.Planning
             }
 
 
+        }
+
+        private void EmployeesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listBox = sender as ListBox;
+
+            if (listBox.SelectedItem is Employee selectedEmployee)
+            {
+                EmployeesListBox.SelectedItem = selectedEmployee.Id;
+            }
         }
     }
 }

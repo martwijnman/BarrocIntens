@@ -6,18 +6,19 @@
     xmlns:local="using:BarrocIntens.Pages.EmployeesCreation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="Black"
     mc:Ignorable="d">
 
     <Grid>
-        <StackPanel>
+        <StackPanel Spacing="25" Margin="30"  Width="750" BorderBrush="Yellow">
             <Button x:Name="backButton"
          Click="backButton_Click">Terug naar Overzicht</Button>
-            <TextBlock x:Name="employeeNameTextBlock"/>
-            <TextBlock x:Name="employeeEmailTextBlock"/>
-            <TextBlock x:Name="EmployeePhoneTextBlock"/>
-            <TextBlock x:Name="EmployeeCityTextBlock"/>
-            <TextBlock x:Name="EmployeeDepartmentTextBlock"/>
-            <TextBlock x:Name="EmployeeTasksTextBlock"/>
+            <TextBlock Foreground="Yellow" x:Name="employeeNameTextBlock"/>
+            <TextBlock Foreground="Yellow" x:Name="employeeEmailTextBlock"/>
+            <TextBlock Foreground="Yellow" x:Name="EmployeePhoneTextBlock"/>
+            <TextBlock Foreground="Yellow" x:Name="EmployeeCityTextBlock"/>
+            <TextBlock Foreground="Yellow" x:Name="EmployeeDepartmentTextBlock"/>
+            <TextBlock Foreground="Yellow" x:Name="EmployeeTasksTextBlock"/>
         </StackPanel>
     </Grid>
 </Page>
