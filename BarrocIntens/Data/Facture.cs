@@ -25,7 +25,7 @@ namespace BarrocIntens.Data
 
         public string PayCheck
         {
-            get { return IsPaid ? "🟢" : "🔴"; }
+            get { return IsPaid ? "●" : "○"; }
         }
 
 
