@@ -51,6 +51,8 @@
                          CornerRadius="10"
                          Padding="10,6"
                          TextChanged="customersNameSearchTextBox_TextChanged"/>
+
+                    <Button x:Name="CreationButton" Content="+" Click="CreationButton_Click"></Button>
                 </StackPanel>
             </Border>
         </StackPanel>

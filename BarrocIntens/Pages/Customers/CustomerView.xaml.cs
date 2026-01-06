@@ -69,5 +69,10 @@ namespace BarrocIntens.Pages.Customers
 
             Frame.Navigate(typeof(UpdateCustomerPage), selectedCustomer);
         }
+
+        private void CreationButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(CreateCustomerPage));
+        }
     }
 }
