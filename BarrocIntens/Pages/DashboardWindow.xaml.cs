@@ -50,6 +50,9 @@ namespace BarrocIntens.Pages
                     case "Customer.CreateCustomerPage":
                         dashboardFrame.Navigate(typeof(Customers.CreateCustomerPage));
                         break;
+                    case "Customer.CustomerView":
+                        dashboardFrame.Navigate(typeof(Customers.CustomerView));
+                        break;
                     case "Planning.CalenderPage":
                         dashboardFrame.Navigate(typeof(Planning.CalenderPage));
                         break;

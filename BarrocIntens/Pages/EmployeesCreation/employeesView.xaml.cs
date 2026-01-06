@@ -76,5 +76,10 @@ namespace BarrocIntens.Pages.EmployeesCreation
 
             Frame.Navigate(typeof(EmployeesUpdatePage), selectedEmployee);
         }
+
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(employeesCreate));
+        }
     }
 }

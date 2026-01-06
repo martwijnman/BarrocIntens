@@ -77,7 +77,6 @@
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Facture">
-
                         <Border Background="#2A2A2A"
                                 CornerRadius="14"
                                 Padding="14"
@@ -96,13 +95,10 @@
                                            Foreground="White"
                                            FontSize="14"/>
                             </StackPanel>
-
                         </Border>
-
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
         </StackPanel>
 
     </StackPanel>
