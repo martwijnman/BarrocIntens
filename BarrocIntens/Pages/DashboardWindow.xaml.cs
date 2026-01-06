@@ -71,9 +71,12 @@ namespace BarrocIntens.Pages
                         break;
                     case "Technicians.TechniciansViewPage":
                         dashboardFrame.Navigate(typeof(Technicians.TechniciansViewPage));
-                        break;
+                        break; 
                     case "Settings":
                         dashboardFrame.Navigate(typeof(Settings.SettingsPage));
+                        break;
+                    case "Purchase.OverviewPage":
+                        dashboardFrame.Navigate(typeof(Purchase.OverviewPage));
                         break;
                 }
             }

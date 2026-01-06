@@ -83,6 +83,14 @@
                 Foreground="Black"
                 CornerRadius="10"
                 FontWeight="SemiBold"
-                Click="MakeOrder"/>
+                Click="MakeOrder"/> 
+        <Button Content="Terug"
+                Width="180"
+                Padding="14,8"
+                Background="Black"
+                Foreground="#FFD600"
+                CornerRadius="10"
+                FontWeight="SemiBold"
+                Click="GoBack_Button"/>
     </StackPanel>
 </Page>

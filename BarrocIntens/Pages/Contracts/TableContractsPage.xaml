@@ -3,47 +3,89 @@
     x:Class="BarrocIntens.Pages.Contracts.TableContractsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BarrocIntens.Pages.Contracts"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Background="Black">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
+    <Grid Background="Black" Padding="40">
 
-            <!-- Contracten keuren -->
-            <Button Width="150" Height="150"
-                CornerRadius="16"
-                Background="#2D2D2D"
-                Foreground="White"
+        <!-- CONTENT -->
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            Spacing="32">
+
+            <!-- CONTRACTEN KEUREN -->
+            <Button
+                Width="180"
+                Height="180"
+                Background="#1C1C1C"
+                BorderBrush="#FFD600"
+                BorderThickness="1"
+                CornerRadius="20"
                 Click="Button_Click">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock FontFamily="Segoe Fluent Icons"
-                           Text="&#xE787;" FontSize="50"
-                           HorizontalAlignment="Center"/>
-                    <TextBlock Text="Contracten keuren" FontSize="17"
-                           Foreground="Yellow"
-                           Margin="0,10,0,0"
-                           HorizontalAlignment="Center"/>
-                </StackPanel>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        FontFamily="Segoe Fluent Icons"
+                        Text="&#xE787;"
+                        FontSize="56"
+                        Foreground="White"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Text="Contracten keuren"
+                        FontSize="15"
+                        FontWeight="SemiBold"
+                        Foreground="#FFD600"
+                        Margin="0,12,0,20"
+                        HorizontalAlignment="Center"/>
+                </Grid>
             </Button>
 
-            <!-- Betalingsoverzicht -->
-            <Button Width="150" Height="150"
-                CornerRadius="16"
-                Background="#2D2D2D"
-                Foreground="White"
+            <!-- BETALINGSOVERZICHT -->
+            <Button
+                Width="180"
+                Height="180"
+                Background="#1C1C1C"
+                BorderBrush="#333"
+                BorderThickness="1"
+                CornerRadius="20"
                 Click="Button_Click_1">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock FontFamily="Segoe Fluent Icons"
-                           Text="&#xE77B;" FontSize="50"
-                           HorizontalAlignment="Center"/>
-                    <TextBlock Text="Betalingsoverzicht" FontSize="17"
-                           Foreground="Yellow"
-                           Margin="0,10,0,0"
-                           HorizontalAlignment="Center"/>
-                </StackPanel>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        FontFamily="Segoe Fluent Icons"
+                        Text="&#xE77B;"
+                        FontSize="56"
+                        Foreground="White"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Text="Betalingsoverzicht"
+                        FontSize="15"
+                        FontWeight="SemiBold"
+                        Foreground="#AAAAAA"
+                        Margin="0,12,0,20"
+                        HorizontalAlignment="Center"/>
+                </Grid>
             </Button>
+
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Page>
+

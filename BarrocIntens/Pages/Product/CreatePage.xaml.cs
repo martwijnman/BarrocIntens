@@ -1,3 +1,4 @@
+using BarrocIntens.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -27,7 +28,10 @@ namespace BarrocIntens.Pages.Product
         public CreatePage()
         {
             InitializeComponent();
+            LoadDeliverers();
+            LoadMatrials();
         }
+        public List<int> SelectedMatrialIds = new();
         private void CreateButton(object sender, RoutedEventArgs e)
         {
             using (var db = new Data.AppDbContext())
@@ -39,8 +43,8 @@ namespace BarrocIntens.Pages.Product
                     Price = double.Parse(PriceTextbox.Text),
                     Stock = int.Parse(StockTextbox.Text),
                     MinimumStock = int.Parse(MinimumStockTextbox.Text),
-                    Deliverer = DelivererTextbox.Text,
-                    NotificationOutOfStock = NotificationOutOfStockToggle.IsOn,
+                    DelivererId = 1,
+                    NotificationOutOfStock = false,
                     Image = ImageTextbox.Text
                 };
 
@@ -60,6 +64,50 @@ namespace BarrocIntens.Pages.Product
                 Frame.Navigate(typeof(Pages.Product.OverviewPage));
             }
         }
+        
+        private void ToggleMatrial(object sender, RoutedEventArgs e)
+        {
+            var btn = (ToggleButton)sender;
+            var id = (int)btn.Tag;
+
+            if (btn.IsChecked == true)
+            {
+                if (!SelectedMatrialIds.Contains(id)) SelectedMatrialIds.Add(id);
+            }
+            else
+            {
+                SelectedMatrialIds.Remove(id);
+            }
+        }
+        
+        private void LoadMatrials()
+        {
+            using var db = new AppDbContext();
+            foreach (var matrial in db.Matrials.ToList())
+            {
+                var btn = new ToggleButton
+                {
+                    Content = matrial.Name,
+                    Tag = matrial.Id,
+                    Margin = new Thickness(4, 0, 4, 0)
+                };
+                btn.Click += ToggleMatrial;
+                MatrialSelector.Children.Add(btn);
+            }
+        }
+        private void LoadDeliverers()
+        {
+            using (var db = new AppDbContext())
+            {
+                var deliverers = db.Deliverers
+                                 .OrderBy(p => p.Name)
+                                 .Select(p => p.Name)
+                                 .ToList();
+
+                DelivererCombo.ItemsSource = deliverers;
+            }
+        }
+
 
     }
 }

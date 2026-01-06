@@ -60,8 +60,12 @@ namespace BarrocIntens
 
             if (settings.Values.TryGetValue("EmployeeId", out object value) && value is int id)
             {
-                using var db = new AppDbContext();
 
+                using var db = new AppDbContext();
+                
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+                
                 var employee = db.Employees.FirstOrDefault(e => e.Id == id);
 
                 if (employee != null)

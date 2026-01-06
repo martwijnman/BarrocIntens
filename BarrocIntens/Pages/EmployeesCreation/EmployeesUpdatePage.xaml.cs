@@ -53,7 +53,7 @@ namespace BarrocIntens.Pages.EmployeesCreation
 
             // Pre-select the employee's department
             employeeDepartmentComboBox.SelectedItem = departments
-                .FirstOrDefault(d => d.Name == _employee.Department);
+                .FirstOrDefault(d => d.Id == _employee.DepartmentId); // vervang in de toggle
         }
 
 
@@ -126,7 +126,7 @@ namespace BarrocIntens.Pages.EmployeesCreation
             _employee.Password = hashedPassword;
             _employee.PhoneNumber = employeePhoneTextBox.Text;
             _employee.City = employeeCityTextBox.Text;
-            _employee.Department = selectedDept.Name;
+            _employee.DepartmentId = 1; // vervang met toggle
 
             // Save changes
             using (var db = new AppDbContext())

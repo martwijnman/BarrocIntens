@@ -10,7 +10,7 @@
     <StackPanel Background="#0B0B0B">
 
         <Grid Margin="24"
-          Width="1400">
+          Width="800">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -29,9 +29,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Horizontal"
-                            Spacing="16">
-
+                    <StackPanel Orientation="Horizontal" Spacing="16">
                         <ComboBox x:Name="StatusCheckbox"
                               PlaceholderText="Status"
                               Width="180"
@@ -86,6 +84,7 @@
                               CalendarItemBorderThickness="0"
                               HorizontalDayItemAlignment="Center"
                               VerticalDayItemAlignment="Top"
+                              Width="500"
                               CalendarViewDayItemChanging="CalendarView_CalendarViewDayItemChanging"/>
                 </Border>
 

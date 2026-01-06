@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.UI;
+using Microsoft.UI.Xaml.Media;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,12 +24,13 @@ namespace BarrocIntens.Data
 
         public bool IsPaid { get; set; }
 
-
         public string PayCheck
         {
-            get { return IsPaid ? "●" : "○"; }
+            get { return IsPaid ? "○" : "●"; }
         }
-
+        public Brush PayColor =>
+            IsPaid ? new SolidColorBrush(Colors.LimeGreen)
+                   : new SolidColorBrush(Colors.Red);
 
         public DateOnly StartDate = DateOnly.FromDateTime(DateTime.Now).AddDays(5);
         public DateOnly EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(370);

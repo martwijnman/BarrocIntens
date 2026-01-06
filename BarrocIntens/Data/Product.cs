@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.UI;
+using Microsoft.UI.Xaml.Media;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -35,10 +37,18 @@ namespace BarrocIntens.Data
         public bool IsMachine { get; set; }
 
         [Required]
-        public string Deliverer { get; set; }
+        public int DelivererId { get; set; }
+        public Deliverer Deliverer { get; set; }
 
         [Required]
         public bool NotificationOutOfStock { get; set; }
+        public string NotificationSymbol
+        {
+            get { return NotificationOutOfStock ? "○" : "●"; }
+        }
+        public Brush NotificationColor =>
+            NotificationOutOfStock ? new SolidColorBrush(Colors.LimeGreen)
+                   : new SolidColorBrush(Colors.Red);
 
         [Required]
         public string Image { get; set; }
@@ -46,7 +56,7 @@ namespace BarrocIntens.Data
         // CRUD operations for Planning
 
         // Update
-        public void Update(int productId, string name, string category, double price, int stock, int minimumStock, string deliverer, bool notificationOutOfStock, string image)
+        public void Update(int productId, string name, string category, double price, int stock, int minimumStock, int delivererId, bool notificationOutOfStock, string image)
         {
             using (var db = new AppDbContext())
             {
@@ -58,7 +68,7 @@ namespace BarrocIntens.Data
                     planning.Price = price;
                     planning.Stock = stock;
                     planning.MinimumStock = minimumStock;
-                    planning.Deliverer = deliverer;
+                    planning.DelivererId = delivererId;
                     planning.NotificationOutOfStock = notificationOutOfStock;
                     planning.Image = image;
                     db.SaveChanges();

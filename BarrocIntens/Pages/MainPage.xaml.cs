@@ -138,7 +138,7 @@ namespace BarrocIntens.Pages
         }
         private void ApplyDepartmentVisibility()
         {
-            var department = Employee.LoggedInEmployee?.Department;
+            var department = Employee.LoggedInEmployee?.Department.Name;
 
             PlanningButton.Visibility = Visibility.Collapsed;
             CustomerButton.Visibility = Visibility.Collapsed;

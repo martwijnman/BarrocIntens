@@ -15,6 +15,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Microsoft.EntityFrameworkCore;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -47,7 +48,7 @@ namespace BarrocIntens.Pages.Technicians
 
             var nameFilter = TechniciansNameSearchTextBox.Text?.ToLower() ?? string.Empty;
 
-            var query = db.Employees.Where(c => c.Department == "Maintenance").
+            var query = db.Employees.Include(e => e.Department).Where(e => e.Department.Name == "Maintenance").
                 AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(nameFilter))

@@ -139,9 +139,9 @@
                             <!-- STATUS -->
                             <TextBlock Grid.Column="1"
                                    Text="{Binding PayCheck}"
+                                   Foreground="{x:Bind PayColor}"
                                    FontSize="14"
                                    FontWeight="SemiBold"
-                                   Foreground="#FFD600"
                                    VerticalAlignment="Center"/>
 
                             <!-- ACTIE -->

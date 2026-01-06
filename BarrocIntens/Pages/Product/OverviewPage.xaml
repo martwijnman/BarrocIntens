@@ -65,6 +65,14 @@
                         CornerRadius="12"
                         BorderThickness="0"
                         Click="GoToOrder"/>
+                    <Button Content="+"
+                    Padding="16,8"
+                    Background="#FFD600"
+                    Foreground="Black"
+                    FontWeight="SemiBold"
+                    CornerRadius="12"
+                    BorderThickness="0"
+                    Click="GoCreate_Button"/>
                 </StackPanel>
             </Border>
 

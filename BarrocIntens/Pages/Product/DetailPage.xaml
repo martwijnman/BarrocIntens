@@ -13,7 +13,7 @@
 
         <!-- Product Image -->
         <Border x:Name="ImageBorder" CornerRadius="10" BorderBrush="Gray" BorderThickness="1" Grid.Column="0" Margin="0,0,20,0">
-            <Image x:Name="ProductImage" Stretch="UniformToFill"/>
+            <Image x:Name="ProductImage" Stretch="UniformToFill" Width="500"/>
         </Border>
 
         <!-- Product Details -->
@@ -40,7 +40,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <TextBlock Text="Machine:" FontWeight="SemiBold"/>
+                <TextBlock Text="Type:" FontWeight="SemiBold"/>
                 <TextBlock x:Name="IsMachineText"/>
             </StackPanel>
 
@@ -48,8 +48,37 @@
                 <TextBlock Text="Notify when out of stock:" FontWeight="SemiBold"/>
                 <TextBlock x:Name="NotificationText"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Matrialen:" FontWeight="SemiBold"/>
+            </StackPanel>
+            <ItemsControl x:Name="MaterialsList">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapGrid MaximumRowsOrColumns="3" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="8" BorderThickness="1" Padding="8" Margin="5"
+                    BorderBrush="Yellow" Background="Black">
+                            <StackPanel Width="120" Spacing="6">
+
+                                <TextBlock Text="{Binding Name}" 
+                               FontSize="14" FontWeight="SemiBold"
+                               TextWrapping="Wrap" HorizontalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
             <Button Content="Edit Product" Width="150" HorizontalAlignment="Left" Margin="0,20,0,0" Click="EditProduct_Click"/>
+            <Button Click="GoBack_Button" Width="150">
+                Terug
+            </Button>
         </StackPanel>
+
     </Grid>
 </Page>

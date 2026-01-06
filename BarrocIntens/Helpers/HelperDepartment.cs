@@ -15,7 +15,7 @@ namespace BarrocIntens.Helpers
             if (employee == null)
                 return false;
 
-            return allowedDepartments.Contains(employee.Department);
+            return allowedDepartments.Contains(employee.Department.Name);
         }
     }
 }

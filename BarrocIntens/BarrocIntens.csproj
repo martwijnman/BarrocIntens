@@ -13,16 +13,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Pages\NewFolder1\**" />
-    <Compile Remove="Pages\NewFolder2\**" />
-    <EmbeddedResource Remove="Pages\NewFolder1\**" />
-    <EmbeddedResource Remove="Pages\NewFolder2\**" />
-    <None Remove="Pages\NewFolder1\**" />
-    <None Remove="Pages\NewFolder2\**" />
-    <Page Remove="Pages\NewFolder1\**" />
-    <Page Remove="Pages\NewFolder2\**" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Pages\Appointments\OverviewPage.xaml" />
     <None Remove="Pages\Bill\OverviewPage.xaml" />
     <None Remove="Pages\Contracts\OverviewFacturePage.xaml" />
@@ -42,6 +32,7 @@
     <None Remove="Pages\Planning\EditPage.xaml" />
     <None Remove="Pages\Product\OrderPage.xaml" />
     <None Remove="Pages\Product\OverviewPage.xaml" />
+    <None Remove="Pages\Purchase\CreatePage.xaml" />
     
   </ItemGroup>
 
@@ -97,8 +88,20 @@
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="Pages\Department\" />
+    <Folder Include="Pages\NewFolder1\" />
+    <Folder Include="Pages\NewFolder2\" />
     <Folder Include="Pages\NewFolder\" />
     <Folder Include="Pages\Owner\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Purchase\CreatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Purchase\OverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Finance\OverviewPage.xaml">
@@ -178,12 +181,6 @@
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <ItemGroup>
-    <PRIResource Remove="Pages\NewFolder1\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <PRIResource Remove="Pages\NewFolder2\**" />
-  </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Settings\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>

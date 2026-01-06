@@ -101,7 +101,6 @@
                        Foreground="#4DFF88"
                        FontWeight="SemiBold"/>
 
-
             <Button x:Name="SaveButton"
                     Content="Klant opslaan"
                     Margin="0,25,0,0"

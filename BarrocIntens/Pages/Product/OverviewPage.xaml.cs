@@ -52,11 +52,16 @@ namespace BarrocIntens.Pages.Product
 
         private Dictionary<Data.Product, int> wallet = new();
 
-        private int timesSelected = 0;
+        private int timesSelected = 0; 
 
         private void OverviewPage_Loaded(object sender, RoutedEventArgs e)
         {
             Errors("emptystock");
+        }
+
+        private void GoCreate_Button(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Pages.Product.CreatePage));
         }
 
         private void PlusClick(object sender, RoutedEventArgs e)
@@ -141,8 +146,7 @@ namespace BarrocIntens.Pages.Product
             await dialog.ShowAsync();
 
         }
-
-
+        
 
         private void GoToOrder(object sender, RoutedEventArgs e)
         {

@@ -33,6 +33,7 @@
                     <NavigationViewItem Content="Klanten" Icon="Contact" Tag="Customer.CreateCustomerPage"/>
                     <NavigationViewItem Content="Medewerkers" Icon="Contact" Tag="EmployeesCreation.employeesCreate"/>
                     <NavigationViewItem Content="Planning" Icon="Calendar" Tag="Planning.CalenderPage"/>
+                    <NavigationViewItem Content="Inkoop" Icon="Shop" Tag="Purchase.OverviewPage"/>
                     <NavigationViewItem Content="Verkoop" Icon="Shop" Tag="Product.OverviewPage"/>
                     <NavigationViewItem Content="Monteurs" Icon="Repair" Tag="Technicians.TechniciansViewPage"/>
                     <NavigationViewItem Content="Contracts" Icon="Mail" Tag="Contracts.OverviewPage"/>

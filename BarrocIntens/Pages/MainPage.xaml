@@ -127,11 +127,12 @@
                         <TextBlock Text="Monteurs" FontSize="17" Margin="0,10,0,0"/>
                     </StackPanel>
                 </Button>
-            </Grid>
 
 
+        </Grid>
 
-            <lvc:CartesianChart
+
+        <lvc:CartesianChart
             VerticalAlignment="Bottom"
             HorizontalAlignment="Right"
             Width="600"

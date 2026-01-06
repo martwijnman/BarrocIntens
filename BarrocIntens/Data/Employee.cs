@@ -32,7 +32,9 @@ namespace BarrocIntens.Data
         public string PhoneNumber { get; set; }
 
         public string City { get; set; }
-        public string Department { get; set; }
+
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
 
 
 

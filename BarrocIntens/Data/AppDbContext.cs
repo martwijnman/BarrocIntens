@@ -25,6 +25,9 @@ namespace BarrocIntens.Data
         public DbSet<QuoteItem> QuoteItems { get; set; }
         public DbSet<Facture> Factures { get; set; }
         public DbSet<PlanningEmployee> PlanningEmployees { get; set; }
+        public DbSet<Matrial> Matrials { get; set; }
+        public DbSet<ProductMatrial> ProductMatrials { get; set; }
+        public DbSet<Deliverer> Deliverers { get; set; }
 
 
         protected override void OnConfiguring(
@@ -158,6 +161,13 @@ namespace BarrocIntens.Data
                     Name = "Sales",
                     Description =
                       "Beheert klantrelaties en genereert nieuwe verkoopkansen."
+                },
+                new Department
+                {
+                    Id = 5,
+                    Name = "Management",
+                    Description =
+                      "Beheert alles"
                 });
             modelBuilder.Entity<Employee>().HasData(
                 new Employee
@@ -168,7 +178,7 @@ namespace BarrocIntens.Data
                     PhoneNumber = "0612345678",
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
-                    Department = "Sales"
+                    DepartmentId = 4,
                     
                     
 
@@ -182,7 +192,7 @@ namespace BarrocIntens.Data
                     PhoneNumber = "0612285678",
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
-                    Department = "Sales"
+                    DepartmentId = 4,
                 },
                 new Employee
                 {
@@ -192,7 +202,7 @@ namespace BarrocIntens.Data
                     PhoneNumber = "0612287128",
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
-                    Department = "Sales"
+                    DepartmentId = 4,
                 },
 
                 new Employee
@@ -203,7 +213,7 @@ namespace BarrocIntens.Data
                     PhoneNumber = "0675287128",
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Root"),
-                    Department = "Management"
+                    DepartmentId = 5,
                 });
 
             modelBuilder.Entity<Malfunction>().HasData(
@@ -273,26 +283,32 @@ namespace BarrocIntens.Data
                 });
 
             //modelBuilder.Entity<Planning>()
-    //.HasMany(p => p.Customers)
-    //.WithMany()
-    //.UsingEntity<Dictionary<string, object>>(
-    //    "PlanningCustomers",
-    //    j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
-    //    j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
-    //    j =>
-        //{
-        //    j.HasKey("PlanningId", "CustomerId");
-        //    j.ToTable("PlanningCustomers");
+            //.HasMany(p => p.Customers)
+            //.WithMany()
+            //.UsingEntity<Dictionary<string, object>>(
+            //    "PlanningCustomers",
+            //    j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
+            //    j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
+            //    j =>
+            //{
+            //    j.HasKey("PlanningId", "CustomerId");
+            //    j.ToTable("PlanningCustomers");
 
-        //    // ✅ Join table seeding
-        //    j.HasData(
-        //        new { CustomerId = 1, PlanningId = 1 },
-        //        new { CustomerId = 2, PlanningId = 2 },
-        //        new { CustomerId = 3, PlanningId = 3 }
-        //    );
-        //});
+            //    // ✅ Join table seeding
+            //    j.HasData(
+            //        new { CustomerId = 1, PlanningId = 1 },
+            //        new { CustomerId = 2, PlanningId = 2 },
+            //        new { CustomerId = 3, PlanningId = 3 }
+            //    );
+            //});
 
-
+            modelBuilder.Entity<Deliverer>().HasData(
+                new Deliverer
+                {
+                    Id = 1,
+                    Name = "Wizzmie"
+                }
+                );
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
@@ -302,7 +318,7 @@ namespace BarrocIntens.Data
                     Price = 249.99,
                     Stock = 50,
                     MinimumStock = 10,
-                    Deliverer = "Wizzmie",
+                    DelivererId = 1,
                     NotificationOutOfStock = false,
                     Image = "wizzmie.jpg",
                     IsMachine = true
@@ -315,7 +331,7 @@ namespace BarrocIntens.Data
                     Price = 1299.00,
                     Stock = 15,
                     MinimumStock = 5,
-                    Deliverer = "IceAndWarm",
+                    DelivererId = 1,
                     NotificationOutOfStock = false,
                     Image = "arah.jpg",
                     IsMachine = true
@@ -328,7 +344,7 @@ namespace BarrocIntens.Data
                     Price = 199.99,
                     Stock = 25,
                     MinimumStock = 8,
-                    Deliverer = "Arah",
+                    DelivererId = 1,
                     NotificationOutOfStock = false,
                     Image = "arah.jpg",
                     IsMachine = true
@@ -341,7 +357,7 @@ namespace BarrocIntens.Data
                     Price = 899.00,
                     Stock = 5,
                     MinimumStock = 3,
-                    Deliverer = "Pawon Luwak Coffee",
+                    DelivererId = 1,
                     NotificationOutOfStock = false,
                     Image = "wizzmie.jpg",
                     IsMachine = true
@@ -354,11 +370,37 @@ namespace BarrocIntens.Data
                 Price = 159.00,
                 Stock = 5,
                 MinimumStock = 3,
-                Deliverer = "Aceh Coffee Company",
+                DelivererId = 1,
                 NotificationOutOfStock = false,
                 Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
                 IsMachine = false
             });
+            modelBuilder.Entity<Matrial>().HasData(
+    new Matrial { Id = 1, Name = "Rubber (10 mm)", Stock = 12, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 2, Name = "Rubber (14 mm)", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 3, Name = "Slang", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 4, Name = "Voeding (elektra)", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 2, MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 5, Name = "Ontkalker", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 6, Name = "Waterfilter", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 7, Name = "Reservoir sensor", Stock = 3, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 8, Name = "Druppelstop", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 9, Name = "Elektrische pomp", Stock = 1, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 10, Name = "Tandwiel 110mm", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 11, Name = "Tandwiel 70mm", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 12, Name = "Maalmotor", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 13, Name = "Zeef", Stock = 9, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 14, Name = "Reinigingstabletten", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 3, MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 15, Name = "Reinigingsborsteltjes", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 6, MinimumStock = 3, Quantity = 0 },
+    new Matrial { Id = 16, Name = "Ontkalkingspijp", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 }
+); modelBuilder.Entity<ProductMatrial>().HasData(
+    new ProductMatrial { Id = 1, ProductId = 1, MatrialId = 6 },  // Waterfilter
+    new ProductMatrial { Id = 2, ProductId = 2, MatrialId = 5 },  // Ontkalker
+    new ProductMatrial { Id = 3, ProductId = 2, MatrialId = 13 }, // Zeef
+    new ProductMatrial { Id = 4, ProductId = 3, MatrialId = 10 }, // Tandwiel 110mm
+    new ProductMatrial { Id = 5, ProductId = 2, MatrialId = 15 }  // Reinigingsborsteltjes
+);
+
+
         }
     }
 
