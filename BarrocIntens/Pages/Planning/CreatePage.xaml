@@ -47,69 +47,98 @@
         </Style>
     </Page.Resources>
 
-    <ScrollView Width="1400">
-        <StackPanel Spacing="20" Background="Black">
+    <ScrollViewer Width="1400">
+        <StackPanel Spacing="28" Background="Black" Padding="24">
 
-            <!-- PAGE TITLE -->
-            <TextBlock Text="Planning aanmaken"
-                       FontSize="32"
-                       FontWeight="SemiBold"
-                       Foreground="#FFD600"/>
+            <TextBlock
+            Text="Planning aanmaken"
+            FontSize="32"
+            FontWeight="SemiBold"
+            Foreground="#FFD600"/>
 
-            <!-- FORM CARD -->
-            <Border Background="#141414"
-                    CornerRadius="20"
-                    Padding="24">
+            <Border
+            Background="#141414"
+            CornerRadius="20"
+            Padding="28"
+            BorderBrush="#2A2A2A"
+            BorderThickness="1">
 
-                <StackPanel Spacing="22">
+                <StackPanel Spacing="24">
 
-                    <!-- PLANNING FIELDS -->
                     <DatePicker x:Name="PlanningDatePicker" Header="Datum"/>
-                    <TextBox x:Name="PlanningTextBox" Header="Plan" PlaceholderText="Wat gaat er gebeuren?"/>
-                    <TextBox x:Name="LocationTextBox" Header="Locatie" PlaceholderText="Waar vindt het plaats?"/>
-                    <TextBox x:Name="DescriptionTextBox" Header="Beschrijving"
-                             PlaceholderText="Extra informatie"
-                             TextWrapping="Wrap"
-                             AcceptsReturn="True"
-                             Height="100"/>
+
+                    <TextBox
+                    x:Name="PlanningTextBox"
+                    Header="Plan"
+                    PlaceholderText="Wat gaat er gebeuren?"/>
+
+                    <TextBox
+                    x:Name="LocationTextBox"
+                    Header="Locatie"
+                    PlaceholderText="Waar vindt het plaats?"/>
+
+                    <TextBox
+                    x:Name="DescriptionTextBox"
+                    Header="Beschrijving"
+                    PlaceholderText="Extra informatie"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    Height="120"/>
 
                     <!-- STATUS + CATEGORY -->
-                    <StackPanel Orientation="Horizontal" Spacing="20">
-                        <ComboBox x:Name="StatusComboBox" Header="Status" Width="200">
+                    <Grid ColumnSpacing="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox
+                        x:Name="StatusComboBox"
+                        Header="Status"
+                        Width="200">
                             <x:String>Gedaan</x:String>
                             <x:String>Niet gedaan</x:String>
                         </ComboBox>
 
-                        <ComboBox x:Name="CategoryComboBox" Header="Categorie" Width="220">
+                        <ComboBox
+                        x:Name="CategoryComboBox"
+                        Grid.Column="1"
+                        Header="Categorie"
+                        Width="220">
                             <x:String>Storing</x:String>
                             <x:String>Vergadering</x:String>
                             <x:String>Controle</x:String>
                             <x:String>Adviesbezoek</x:String>
                         </ComboBox>
-                    </StackPanel>
+                    </Grid>
 
-                    <!-- CLIENTS SELECTOR -->
-                    <StackPanel Spacing="6">
+                    <StackPanel Spacing="8">
                         <TextBlock Text="Klanten" Foreground="#FFD600" FontWeight="SemiBold"/>
                         <StackPanel x:Name="CitizenSelector" Orientation="Horizontal" Spacing="8"/>
                     </StackPanel>
 
-                    <!-- EMPLOYEES SELECTOR -->
-                    <StackPanel Spacing="6">
+                    <StackPanel Spacing="8">
                         <TextBlock Text="Werknemers" Foreground="#FFD600" FontWeight="SemiBold"/>
                         <StackPanel x:Name="EmployeeSelector" Orientation="Horizontal" Spacing="8"/>
                     </StackPanel>
 
-                    <!-- ERROR TEXT -->
-                    <TextBlock x:Name="ErrorTextBlock" Foreground="#FF5C5C" FontSize="13"/>
+                    <TextBlock
+                    x:Name="ErrorTextBlock"
+                    Foreground="#FF5C5C"
+                    FontSize="13"/>
 
-                    <!-- ACTION BUTTON -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="Opslaan" Click="CreateButton_Click"/>
+                    <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Spacing="12">
+
+                        <Button
+                        Content="Opslaan"
+                        Click="CreateButton_Click"/>
                     </StackPanel>
 
                 </StackPanel>
             </Border>
         </StackPanel>
-    </ScrollView>
+    </ScrollViewer>
+
 </Page>

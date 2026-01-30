@@ -7,8 +7,34 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BarrocIntens.Data"
+    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.WinUI"
     Background="Black"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="#111"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="AccentButton" TargetType="Button">
+            <Setter Property="Background" Value="#FFD600"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </Page.Resources>
+
     <ScrollViewer>
         <Grid Padding="40" Background="Black">
 
@@ -17,7 +43,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- HEADER ACTION -->
+            <!-- HEADER -->
             <Button
                 Content="+ Product"
                 HorizontalAlignment="Right"
@@ -31,287 +57,325 @@
                 Foreground="Black"
                 Click="CreateProduct_Button"/>
 
-            <!-- MAIN GRID -->
+            <!-- MAIN -->
             <Grid Grid.Row="1" Margin="0,30,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
+                <!-- LEFT -->
                 <StackPanel Grid.Column="0" Spacing="28">
 
-                    <!-- Statistics -->
-                    <Border
-                        Background="#111"
-                        CornerRadius="16"
-                        Padding="20"
-                        BorderBrush="#333"
-                        BorderThickness="1">
-                        <StackPanel Spacing="18">
-                            <TextBlock
-                                Text="Statistiek"
-                                FontSize="22"
-                                FontWeight="Bold"
-                                Foreground="White"/>
-                            <Border
-                                Height="100"
-                                Background="#FFD600"
-                                CornerRadius="10"
-                                Opacity="0.35"/>
-                        </StackPanel>
+                    <!-- VOORRAADTEKORT CHART -->
+                    <Border Background="#111" CornerRadius="16" Padding="16">
+                        <lvc:CartesianChart
+                            x:Name="StockChart"
+                            Width="600"
+                            Height="300"
+                            Background="#1E1E1E"
+                            ZoomMode="None"/>
                     </Border>
 
-
-                    <!-- PRODUCT OVERVIEW -->
-                    <Border
+                    <!-- PRODUCTEN -->
+                    <Border 
                         Background="#111"
+                        Padding="20"
                         CornerRadius="16"
-                        Padding="22"
                         BorderBrush="#333"
                         BorderThickness="1">
-
                         <StackPanel Spacing="18">
 
-                            <!-- Filter bar -->
-                            <StackPanel Orientation="Horizontal" Spacing="12">
-                                <TextBox
-                                    PlaceholderText="Zoek product..."
-                                    Width="230"
-                                    BorderBrush="#FFD600"
-                                    BorderThickness="1"
-                                    CornerRadius="8"
-                                    Foreground="White"
-                                    Background="#000"/>
 
-                                <ComboBox Width="150"
-                                          Background="#000"
-                                          Foreground="White"
-                                          BorderBrush="#FFD600"
-                                          CornerRadius="8">
-                                    <ComboBoxItem Content="Stock"/>
-                                    <ComboBoxItem Content="Naam"/>
-                                    <ComboBoxItem Content="Leverancier"/>
-                                </ComboBox>
-                            </StackPanel>
+                            <TextBlock
+                                Text="Producten"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Foreground="White"/>
 
-                            <!-- Header -->
-                            <Grid>
+
+                            <Grid ColumnSpacing="12">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Text="Product" Foreground="#FFD600"/>
-                                <TextBlock Text="Leverancier" Foreground="#FFD600" Grid.Column="1"/>
-                                <TextBlock Text="Stock" Foreground="#FFD600" Grid.Column="2"/>
-                                <TextBlock Text="Min" Foreground="#FFD600" Grid.Column="3"/>
-                                <TextBlock Text="Status" Foreground="#FFD600" Grid.Column="4"/>
+                                <TextBox
+                                    x:Name="FilterTextBoxProduct"
+                                    PlaceholderText="Zoek op naam of leverancier…"
+                                    Background="#1A1A1A"
+                                    Foreground="White"
+                                    BorderBrush="#333"
+                                    CornerRadius="8"
+                                    Padding="10,6"
+                                    TextChanged="Product_TextChanged"/>
+
+                                <ComboBox
+                                    x:Name="StatusComboBoxProduct"
+                                    Grid.Column="1"
+                                    Width="160"
+                                    PlaceholderText="Status"
+                                    Background="#1A1A1A"
+                                    Foreground="White"
+                                    BorderBrush="#333"
+                                    CornerRadius="8"
+                                    SelectionChanged="StatusProduct_SelectionChanged">
+                                    <ComboBoxItem Content="Alles"/>
+                                    <ComboBoxItem Content="Tekort"/>
+                                    <ComboBoxItem Content="Op voorraad"/>
+                                </ComboBox>
                             </Grid>
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                            <!-- Product List -->
-                            <ScrollViewer Height="170">
-                                <StackPanel Spacing="8">
+                                <TextBlock Text="Product" Foreground="#FFD600" FontWeight="SemiBold"/>
+                                <TextBlock Text="Leverancier" Grid.Column="1" Foreground="#FFD600"/>
+                                <TextBlock Text="Stock" Grid.Column="2" Foreground="#FFD600"/>
+                                <TextBlock Text="Min" Grid.Column="3" Foreground="#FFD600"/>
+                                <TextBlock Text="Status" Grid.Column="4" Foreground="#FFD600"/>
+                            </Grid>
+                            <ScrollViewer Height="220">
+                                <ListView x:Name="ProductListView" IsItemClickEnabled="True" ItemClick="ProductListView_ItemClick">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Product">
+                                            <Border
+                                                CornerRadius="10"
+                                                Padding="10"
+                                                Margin="0,4"
+                                                Background="#161616">
 
-                                    <!-- Hardcoded example -->
-                                    <Grid Padding="4">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Text="Aparaat" Foreground="White"/>
-                                        <TextBlock Text="XL Koffie B.V." Grid.Column="1" Foreground="White"/>
-                                        <TextBlock Text="5" Grid.Column="2" Foreground="White"/>
-                                        <TextBlock Text="20" Grid.Column="3" Foreground="White"/>
-                                        <TextBlock Text="0" Grid.Column="4" Foreground="White"/>
-
-                                        <Button
-                                            Content="Bestel"
-                                            Grid.Column="5"
-                                            CornerRadius="6"
-                                            Background="#FFD600"
-                                            Foreground="Black"
-                                            Padding="12,4"/>
-                                    </Grid>
-
-                                    <!-- Dynamic Product List -->
-                                    <ListView x:Name="ProductListView">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="models:Product">
-                                                <Grid Padding="4">
+                                                <Grid>
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="2"/>
                                                         <ColumnDefinition Width="2*"/>
                                                         <ColumnDefinition Width="2*"/>
-                                                        <ColumnDefinition Width="2*"/>
-                                                        <ColumnDefinition Width="2*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
 
                                                     <TextBlock Text="{x:Bind Name}" Foreground="White"/>
-                                                    <TextBlock Text="{x:Bind Deliverer.Name }" Grid.Column="1" Foreground="White"/>
+                                                    <TextBlock Text="{x:Bind Deliverer.Name}" Grid.Column="1" Foreground="#CCC"/>
                                                     <TextBlock Text="{x:Bind Stock}" Grid.Column="2" Foreground="White"/>
-                                                    <TextBlock Text="{x:Bind MinimumStock}" Grid.Column="3" Foreground="White"/>
-                                                    <TextBlock Text="{x:Bind NotificationSymbol}" Grid.Column="4" Foreground="{ x:Bind NotificationColor}"/>
+                                                    <TextBlock Text="{x:Bind MinimumStock}" Grid.Column="3" Foreground="#AAA"/>
 
-                                                    <Button Content="Bestel"
-                                                            Grid.Column="5"
-                                                            CornerRadius="6"
-                                                            Background="#FFD600"
-                                                            Foreground="Black"
-                                                            Padding="12,4"/>
+                                                    <!-- Status dot -->
+                                                    <Ellipse
+                                                        Grid.Column="4"
+                                                        Width="8"
+                                                        Height="8"
+                                                        Fill="{x:Bind NotificationColor}"
+                                                        VerticalAlignment="Center"/>
+
+                                                    <Button
+                                                        Content="Bestel"
+                                                        Grid.Column="5"
+                                                        Padding="12,4"
+                                                        CornerRadius="8"
+                                                        Background="#FFD600"
+                                                        Foreground="Black"
+                                                        Click="OrderASpecificProduct_Button"/>
                                                 </Grid>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
+                                            </Border>
+                                        </DataTemplate>
 
-                                </StackPanel>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </ScrollViewer>
-
+                            <!-- Actie knop -->
+                            <Button
+                                Content="Alles bijvullen"
+                                HorizontalAlignment="Right"
+                                Padding="12,6"
+                                CornerRadius="8"
+                                Background="#FFD600"
+                                Foreground="Black"
+                                Click="Order_AllProduct_Click"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>
 
-
-                <!-- SECOND COLUMN -->
+                <!-- RIGHT -->
                 <StackPanel Grid.Column="1" Margin="30,0,0,0" Spacing="28">
 
-                    <!-- MATERIALS -->
+                    <!-- MATERIALEN -->
                     <Border
                         Background="#111"
-                        Padding="22"
+                        Padding="20"
                         CornerRadius="16"
                         BorderBrush="#333"
                         BorderThickness="1">
 
                         <StackPanel Spacing="16">
+
+                            <!-- Titel -->
                             <TextBlock
-                                Text="Materialen bestellen"
+                                Text="Materialen"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 Foreground="White"/>
 
-                            <Grid>
+                            <!-- Filter -->
+                            <Grid ColumnSpacing="12">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Text="Materiaal" Foreground="#FFD600"/>
-                                <TextBlock Text="Stock" Grid.Column="1" Foreground="#FFD600"/>
-                                <TextBlock Text="Min" Grid.Column="2" Foreground="#FFD600"/>
-                                <TextBlock Text="Status" Foreground="#FFD600" Grid.Column="4"/>
+                                <TextBox
+                                    x:Name="FilterTextBoxMatrial"
+                                    PlaceholderText="Zoek op materiaalnaam…"
+                                    Background="#1A1A1A"
+                                    Foreground="White"
+                                    BorderBrush="#333"
+                                    CornerRadius="8"
+                                    Padding="10,6"
+                                    TextChanged="Matrial_TextChanged"/>
+
+                                <ComboBox
+                                    x:Name="StatusComboBoxMatrial"
+                                    Grid.Column="1"
+                                    Width="160"
+                                    PlaceholderText="Status"
+                                    Background="#1A1A1A"
+                                    Foreground="White"
+                                    BorderBrush="#333"
+                                    CornerRadius="8"
+                                    SelectionChanged="StatusMatrial_SelectionChanged">
+                                    <ComboBoxItem Content="Alles"/>
+                                    <ComboBoxItem Content="Tekort"/>
+                                    <ComboBoxItem Content="Op voorraad"/>
+                                </ComboBox>
                             </Grid>
 
-                            <ScrollViewer Height="140">
-                                <ListView x:Name="MatrialListView">
+                            <!-- Header -->
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Materiaal" Foreground="#FFD600" FontWeight="SemiBold"/>
+                                <TextBlock Text="Stock" Grid.Column="1" Foreground="#FFD600"/>
+                                <TextBlock Text="Min" Grid.Column="2" Foreground="#FFD600"/>
+                                <TextBlock Text="Status" Grid.Column="3" Foreground="#FFD600"/>
+                            </Grid>
+
+                            <!-- List -->
+                            <ScrollViewer Height="200">
+                                <ListView
+                                    x:Name="MatrialListView"
+                                    IsItemClickEnabled="True"
+                                    ItemClick="MatrialListView_ItemClick">
+
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:Matrial">
-                                            <Grid Padding="4">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="2*"/>
-                                                    <ColumnDefinition Width="2*"/>
-                                                    <ColumnDefinition Width="2*"/>
-                                                    <ColumnDefinition Width="2*"/>
-                                                    <ColumnDefinition Width="2*"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
 
-                                                <TextBlock Text="{x:Bind Name}" Foreground="White"/>
-                                                <TextBlock Text="{x:Bind Stock}" Grid.Column="1" Foreground="White"/>
-                                                <TextBlock Text="{x:Bind MinimumStock}" Grid.Column="2" Foreground="White"/>
-                                                <TextBlock Text="{x:Bind NotificationSymbol}" Grid.Column="5" Foreground="{ x:Bind NotificationColor}"/>
+                                            <Border
+                                                Background="#161616"
+                                                CornerRadius="10"
+                                                Padding="10"
+                                                Margin="0,4">
 
-                                                <Button
-                                                    Content="+"
-                                                    Grid.Column="6"
-                                                    CornerRadius="6"
-                                                    Padding="10,4"
-                                                    Background="#FFD600"
-                                                    Foreground="Black"
-                                                    Click="OrderASpecificMatrial_Button"/>
-                                            </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="3*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock
+                                                        Text="{x:Bind Name}"
+                                                        Foreground="White"/>
+
+                                                    <TextBlock
+                                                        Text="{x:Bind Stock}"
+                                                        Grid.Column="1"
+                                                        Foreground="White"/>
+
+                                                    <TextBlock
+                                                        Text="{x:Bind MinimumStock}"
+                                                        Grid.Column="2"
+                                                        Foreground="#AAA"/>
+
+                                                    <Ellipse
+                                                        Grid.Column="3"
+                                                        Width="8"
+                                                        Height="8"
+                                                        Fill="{x:Bind NotificationColor}"
+                                                        VerticalAlignment="Center"/>
+
+                                                    <Button
+                                                        Grid.Column="4"
+                                                        Content="+"
+                                                        Padding="10,4"
+                                                        CornerRadius="8"
+                                                        Background="#FFD600"
+                                                        Foreground="Black"
+                                                        Click="OrderASpecificMatrial_Button"/>
+                                                </Grid>
+
+                                            </Border>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
                             </ScrollViewer>
 
+                            <!-- Actie knop -->
                             <Button
-                                Content="Bestellen"
-                                Width="120"
+                                Content="Alles bijvullen"
                                 HorizontalAlignment="Right"
-                                CornerRadius="6"
+                                Padding="12,6"
+                                CornerRadius="8"
                                 Background="#FFD600"
                                 Foreground="Black"
-                                Padding="10,4"/>
+                                Click="Order_AllMatrial_Click"/>
+
                         </StackPanel>
                     </Border>
 
-
-                    <!-- SUPPLIER SHORTCUTS -->
-                    <Border
-                        Background="#111"
-                        Padding="22"
-                        CornerRadius="16"
-                        BorderBrush="#333"
-                        BorderThickness="1">
-
+                    <!-- LEVERANCIERS -->
+                    <Border Background="#111" Padding="22" CornerRadius="16" BorderBrush="#333" BorderThickness="1">
                         <StackPanel Spacing="16">
-                            <TextBlock
-                                Text="Snelkoppelingen leveranciers"
-                                FontSize="20"
-                                FontWeight="Bold"
-                                Foreground="White"/>
+                            <TextBlock Text="Leveranciers" FontSize="20" FontWeight="Bold" Foreground="White"/>
 
-                            <ListView x:Name="DelivererListView">
+                            <ListView x:Name="DelivererListView" IsItemClickEnabled="True" ItemClick="DelivererListView_ItemClick">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:Deliverer">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
+                                        <Grid ColumnDefinitions="2*,*">
+                                            <TextBlock Text="{x:Bind Name}" Foreground="White"/>
 
                                             <Button
-                                                Content="{x:Bind Name}"
-                                                Background="#333"
-                                                Foreground="White"
-                                                CornerRadius="6"
-                                                Padding="10,4"/>
-
-                                            <Button
-                                                Content="+ Bestellen"
                                                 Grid.Column="1"
+                                                Content="Bestel alles"
                                                 CornerRadius="6"
                                                 Padding="10,4"
                                                 Background="#FFD600"
-                                                Foreground="Black"/>
+                                                Foreground="Black"
+                                                Click="Shortcut_Company_Button"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-
                         </StackPanel>
                     </Border>
 
                 </StackPanel>
-
             </Grid>
         </Grid>
     </ScrollViewer>
+
 
 </Page>
