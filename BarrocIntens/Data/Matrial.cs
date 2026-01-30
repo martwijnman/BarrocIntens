@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BarrocIntens.Data
 {
-    class Matrial
+    public class Matrial
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -18,7 +18,9 @@ namespace BarrocIntens.Data
         public string ImagePath => $"ms-appx:///Assets/{Image}";
         public int Stock { get; set; }
         public int MinimumStock { get; set; }
+        public int Sold { get; set; }
         public int Quantity { get; set; }
+        public int OrderAmount { get; set; } = 0;
         [Required]
         public bool NotificationOutOfStock { get; set; }
         public string NotificationSymbol

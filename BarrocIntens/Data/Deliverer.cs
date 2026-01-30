@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace BarrocIntens.Data
 {
-    class Deliverer
+    public class Deliverer
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public ProductDeliverer ProductDeliverer { get; set; }
+        public MatrialDeliverer MatrialDeliverer { get; set; }
     }
 }

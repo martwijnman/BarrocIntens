@@ -38,7 +38,7 @@
 
                     <NumberBox x:Name="PriceFilter"
                            Width="150"
-                           Header="Max prijs"
+                           PlaceholderText="Max prijs....."
                            Background="#0F0F0F"
                            Foreground="White"
                            BorderBrush="#2A2A2A"

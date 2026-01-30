@@ -186,7 +186,7 @@ namespace BarrocIntens.Pages.Product
 
             if (!double.IsEvenInteger(0))
             {
-                query = query.Where(p => p.Price >= PriceFilter.Value);
+                query = query.Where(p => p.Price <= PriceFilter.Value);
             }
 
             ProductView.ItemsSource = query
@@ -213,16 +213,8 @@ namespace BarrocIntens.Pages.Product
                                     .Select(p => p.Id);
                     query = query.Where(p => productIds.Contains(p.Id));
                 }
-
-
-                
-               
-
                 ProductView.ItemsSource = query.ToList();
             }
         }
-        
-
-
     }
 }

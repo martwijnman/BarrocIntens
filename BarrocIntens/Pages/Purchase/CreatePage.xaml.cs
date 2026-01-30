@@ -110,5 +110,8 @@ public sealed partial class CreatePage : Page
             DelivererCombo.ItemsSource = deliverers;
         }
     }
+
+
+    // ik heb dit gedaan om per onderdeel iets makkerli
 }
 

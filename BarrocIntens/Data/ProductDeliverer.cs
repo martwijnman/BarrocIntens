@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BarrocIntens.Data
 {
-    internal class ProductDeliverer
+    public class ProductDeliverer
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

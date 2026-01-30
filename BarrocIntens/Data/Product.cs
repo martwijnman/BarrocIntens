@@ -3,13 +3,14 @@ using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BarrocIntens.Data
 {
-    internal class Product
+    public class Product
     {
         [Key]
         public int Id { get; set; }
@@ -32,6 +33,10 @@ namespace BarrocIntens.Data
         public int MinimumStock { get; set; }
 
         public int StockShortage => MinimumStock - Stock;
+        public int OrderAmount { get; set; } = 0;
+
+        [AllowNull]
+        public int TotalSold { get; set; }
 
         [Required]
         public bool IsMachine { get; set; }
@@ -39,6 +44,7 @@ namespace BarrocIntens.Data
         [Required]
         public int DelivererId { get; set; }
         public Deliverer Deliverer { get; set; }
+
 
         [Required]
         public bool NotificationOutOfStock { get; set; }
