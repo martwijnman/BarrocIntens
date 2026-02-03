@@ -31,6 +31,7 @@ namespace BarrocIntens.Pages
         public DashboardWindow()
         {
             InitializeComponent();
+            // add with the facture an autofill if products are out of term
         }
 
 

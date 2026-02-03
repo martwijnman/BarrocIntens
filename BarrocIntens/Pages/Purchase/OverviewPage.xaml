@@ -45,7 +45,7 @@
 
             <!-- HEADER -->
             <Button
-                Content="+ Product"
+                Content="Bestelling bevestigen"
                 HorizontalAlignment="Right"
                 Width="180"
                 Height="48"
@@ -55,7 +55,8 @@
                 BorderThickness="0"
                 Background="#FFD600"
                 Foreground="Black"
-                Click="CreateProduct_Button"/>
+                Click="ApproveOrder_Button"/>
+
 
             <!-- MAIN -->
             <Grid Grid.Row="1" Margin="0,30,0,0">
@@ -125,7 +126,11 @@
                                     <ComboBoxItem Content="Op voorraad"/>
                                 </ComboBox>
                             </Grid>
-                            <Grid Margin="0,0,0,6">
+                            <Grid
+                                Margin="0,0,17,6"
+                                Padding="10"
+                                Height="48">
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="2*"/>
@@ -135,14 +140,50 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Text="Product" Foreground="#FFD600" FontWeight="SemiBold"/>
-                                <TextBlock Text="Leverancier" Grid.Column="1" Foreground="#FFD600"/>
-                                <TextBlock Text="Stock" Grid.Column="2" Foreground="#FFD600"/>
-                                <TextBlock Text="Min" Grid.Column="3" Foreground="#FFD600"/>
-                                <TextBlock Text="Status" Grid.Column="4" Foreground="#FFD600"/>
+                                <TextBlock
+                                    Text="Product"
+                                    Foreground="#FFD600"
+                                    FontWeight="SemiBold"
+                                    VerticalAlignment="Center"/>
+
+                                <!--<TextBlock
+                                    Text="Leverancier"
+                                    Grid.Column="1"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>-->
+
+                                <TextBlock
+                                    Text="Stock"
+                                    Grid.Column="2"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+
+                                <TextBlock
+                                    Text="Min"
+                                    Grid.Column="3"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+
+                                <TextBlock
+                                    Text="Status"
+                                    Grid.Column="4"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
                             </Grid>
+
+
                             <ScrollViewer Height="220">
-                                <ListView x:Name="ProductListView" IsItemClickEnabled="True" ItemClick="ProductListView_ItemClick">
+                                <ListView x:Name="ProductListView"
+                                    IsItemClickEnabled="True"
+                                    ItemClick="ProductListView_ItemClick"
+                                    HorizontalContentAlignment="Stretch">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:Product">
                                             <Border
@@ -162,7 +203,7 @@
                                                     </Grid.ColumnDefinitions>
 
                                                     <TextBlock Text="{x:Bind Name}" Foreground="White"/>
-                                                    <TextBlock Text="{x:Bind Deliverer.Name}" Grid.Column="1" Foreground="#CCC"/>
+                                                    <!--<TextBlock Text="{x:Bind Deliverer.Name}" Grid.Column="1" Foreground="#CCC"/>-->
                                                     <TextBlock Text="{x:Bind Stock}" Grid.Column="2" Foreground="White"/>
                                                     <TextBlock Text="{x:Bind MinimumStock}" Grid.Column="3" Foreground="#AAA"/>
 
@@ -175,7 +216,7 @@
                                                         VerticalAlignment="Center"/>
 
                                                     <Button
-                                                        Content="Bestel"
+                                                        Content="+"
                                                         Grid.Column="5"
                                                         Padding="12,4"
                                                         CornerRadius="8"
@@ -256,20 +297,51 @@
                             </Grid>
 
                             <!-- Header -->
-                            <Grid Margin="0,0,0,6">
+                            <Grid
+                                Margin="0,0,17,6"
+                                Padding="10"
+                                Height="48">
+
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Text="Materiaal" Foreground="#FFD600" FontWeight="SemiBold"/>
-                                <TextBlock Text="Stock" Grid.Column="1" Foreground="#FFD600"/>
-                                <TextBlock Text="Min" Grid.Column="2" Foreground="#FFD600"/>
-                                <TextBlock Text="Status" Grid.Column="3" Foreground="#FFD600"/>
+                                <TextBlock
+                                    Text="Product"
+                                    Foreground="#FFD600"
+                                    FontWeight="SemiBold"
+                                    VerticalAlignment="Center"/>
+
+                                <!--<TextBlock
+                                    Text="Leverancier"
+                                    Grid.Column="1"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>-->
+
+                                <TextBlock
+                                    Text="Stock"
+                                    Grid.Column="2"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+
+                                <TextBlock
+                                    Text="Min"
+                                    Grid.Column="3"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+
+                                <TextBlock
+                                    Text="Status"
+                                    Grid.Column="4"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
                             </Grid>
+
 
                             <!-- List -->
                             <ScrollViewer Height="200">
@@ -277,6 +349,12 @@
                                     x:Name="MatrialListView"
                                     IsItemClickEnabled="True"
                                     ItemClick="MatrialListView_ItemClick">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
 
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:Matrial">

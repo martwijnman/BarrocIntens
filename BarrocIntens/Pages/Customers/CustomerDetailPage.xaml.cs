@@ -29,7 +29,7 @@ namespace BarrocIntens.Pages.Customers
         public CustomerDetailPage()
         {
             
-                InitializeComponent();
+            InitializeComponent();
 
         }
 

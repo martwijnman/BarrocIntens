@@ -30,14 +30,22 @@ namespace BarrocIntens.Pages.Contracts
             using (var db = new Data.AppDbContext())
             {
                 var factures = db.Factures
-                    .Include(q => q.Quote)
-                    .ThenInclude(c => c.Customer)
+                    .Include(f => f.Quote)
+                        .ThenInclude(q => q.Customer)
                     .ToList();
 
-
-                
-                FactureListView.ItemsSource = factures;
+                if (factures.Any())
+                {
+                    FactureListView.ItemsSource = factures;
+                    NoResultText.Text = "";
+                }
+                else
+                {
+                    FactureListView.ItemsSource = null;
+                    NoResultText.Text = "Geen facturen";
+                }
             }
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -47,18 +55,32 @@ namespace BarrocIntens.Pages.Contracts
 
         private void Filter_Changed(object sender, object e)
         {
-            var db = new Data.AppDbContext();
-            var query = db.Factures.AsQueryable();
-            if (PaidCombobox.SelectedItem == "Betaald")
+            using var db = new Data.AppDbContext();
+
+            var query = db.Factures
+                .Include(f => f.Quote)
+                .ThenInclude(q => q.Customer)
+                .AsQueryable();
+
+            string selectedStatus = PaidCombobox.SelectedItem as string;
+
+            switch (selectedStatus)
             {
-                query = query.Where(f => f.IsPaid == true);
+                case "Betaald":
+                    query = query.Where(f => f.IsPaid);
+                    break;
+
+                case "Niet betaald":
+                    query = query.Where(f => !f.IsPaid);
+                    break;
             }
-            else if (PaidCombobox.SelectedItem == "Niet betaald")
-            {
-                query = query.Where(f => f.IsPaid == false);
-            }
-            FactureListView.ItemsSource = query.ToList();
+
+            var result = query.ToList();
+
+            FactureListView.ItemsSource = result;
+            NoResultText.Text = result.Any() ? "" : "Geen facturen gevonden";
         }
 
-        }
+
+    }
 }

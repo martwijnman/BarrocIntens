@@ -1,4 +1,4 @@
-<Page 
+﻿<Page 
     x:Class="BarrocIntens.Pages.Planning.CalenderPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,6 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BarrocIntens.Data"
     mc:Ignorable="d">
+    <!--<Page.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>-->
+
+
     <StackPanel Background="#0B0B0B">
 
         <Grid Margin="24"
@@ -37,7 +42,10 @@
                               Foreground="White"
                               BorderBrush="Transparent"
                               CornerRadius="10"
-                              SelectionChanged="Filter_Changed"/>
+                              SelectionChanged="Filter_Changed">
+                            <x:String>Gedaan</x:String>
+                            <x:String>Niet gedaan</x:String>
+                        </ComboBox>
 
                         <ComboBox x:Name="CategoryCheckbox"
                               PlaceholderText="Categorie"
@@ -46,7 +54,12 @@
                               Foreground="White"
                               BorderBrush="Transparent"
                               CornerRadius="10"
-                              SelectionChanged="Filter_Changed"/>
+                              SelectionChanged="Filter_Changed">
+                            <x:String>Storing</x:String>
+                            <x:String>Vergadering</x:String>
+                            <x:String>Controle</x:String>
+                            <x:String>Adviesbezoek</x:String>
+                        </ComboBox>
                     </StackPanel>
 
                     <Button Grid.Column="1"
@@ -77,15 +90,16 @@
                     Padding="18"
                     Margin="0,0,20,0">
 
-                    <CalendarView x:Name="calendarView"
-                              Background="Transparent"
-                              Foreground="White"
-                              CalendarItemCornerRadius="10"
-                              CalendarItemBorderThickness="0"
-                              HorizontalDayItemAlignment="Center"
-                              VerticalDayItemAlignment="Top"
-                              Width="500"
-                              CalendarViewDayItemChanging="CalendarView_CalendarViewDayItemChanging"/>
+                    <CalendarView
+                        x:Name="calendarView"
+                        Width="500"
+                        SelectionMode="Single"
+                        CalendarViewDayItemChanging="CalendarView_CalendarViewDayItemChanging"
+                        SelectedDatesChanged="CalendarView_SelectedDatesChanged"/>
+
+
+
+
                 </Border>
 
                 <!-- TODAY PANEL -->

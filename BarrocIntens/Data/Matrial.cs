@@ -21,6 +21,8 @@ namespace BarrocIntens.Data
         public int Sold { get; set; }
         public int Quantity { get; set; }
         public int OrderAmount { get; set; } = 0;
+        public int DelivererId { get; set; }
+        public Deliverer Deliverer { get; set; }
         [Required]
         public bool NotificationOutOfStock { get; set; }
         public string NotificationSymbol
@@ -28,7 +30,7 @@ namespace BarrocIntens.Data
             get { return NotificationOutOfStock ? "○" : "●"; }
         }
         public Brush NotificationColor =>
-            NotificationOutOfStock ? new SolidColorBrush(Colors.LimeGreen)
-                   : new SolidColorBrush(Colors.Red);
+            NotificationOutOfStock ? new SolidColorBrush(Colors.Red)
+                   : new SolidColorBrush(Colors.LimeGreen);
     }
 }

@@ -13,18 +13,27 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using SkiaSharp;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Mail;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,10 +46,14 @@ namespace BarrocIntens.Pages.Purchase;
 public sealed partial class OverviewPage : Page
 {
     /// <summary>
-    /// Deze heb ik gemaakt voor de Charts
+    /// I made this for the Charts
     /// </summary>
     public ISeries[] SalesSeries { get; set; }
     public ObservableCollection<double> RevenueValues { get; set; }
+
+    // I made this to put the products in the wallet, because I need 
+    private Dictionary<Data.Product, int> walletProduct = new();
+    private Dictionary<Data.Matrial, int> walletMatrial = new();
 
 
 
@@ -292,65 +305,130 @@ public sealed partial class OverviewPage : Page
     {
         using var db = new AppDbContext();
 
-        var productShortages = db.Products
+        var shortages = db.Products
             .Where(p => p.Stock < p.MinimumStock)
             .Select(p => new
             {
                 Name = p.Name,
                 Shortage = p.MinimumStock - p.Stock
             })
-            .ToList();
-        var matrialShortages = db.Matrials
-            .Where(p => p.Stock < p.MinimumStock)
-            .Select(p => new
-            {
-                Name = p.Name,
-                Shortage = p.MinimumStock - p.Stock
-            })
+            .Concat(
+                db.Matrials
+                    .Where(m => m.Stock < m.MinimumStock)
+                    .Select(m => new
+                    {
+                        Name = m.Name,
+                        Shortage = m.MinimumStock - m.Stock
+                    })
+            )
             .ToList();
 
+        // Maak één serie voor alle tekorten
         StockChart.Series = new ISeries[]
         {
-            new ColumnSeries<int>
-            {
-                Values = productShortages.Select(s => s.Shortage).ToArray(),
-                Name = $"Voorraad tekort {productShortages.FirstOrDefault()?.Name ?? "Onbekend"}",
-                Fill = new SolidColorPaint(SKColors.OrangeRed)
-            },
-            new ColumnSeries<int>
-            {
-                Values = matrialShortages.Select(s => s.Shortage).ToArray(),
-                Name = $"Voorraad tekort van {matrialShortages.FirstOrDefault()?.Name ?? "Onbekend"}",
-                Fill = new SolidColorPaint(SKColors.OrangeRed)
-            }
-        };
-
-        StockChart.XAxes = new[]
+        new ColumnSeries<int>
         {
-            new Axis
-            {
-                Labels = productShortages.Select(s => s.Name).ToArray()
-            },
-            new Axis
-            {
-                Labels = matrialShortages.Select(s => s.Name).ToArray()
-            }
+            Values = shortages.Select(s => s.Shortage).ToArray(),
+            Name = "Voorraad tekorten", // één naam voor de hele serie
+            Fill = new SolidColorPaint(SKColors.Yellow)
+        }
         };
 
+        // X-as labels zijn de product/materiaal namen
+        StockChart.XAxes = new Axis[]
+        {
+        new Axis
+        {
+            Labels = shortages.Select(s => s.Name).ToArray()
+        }
+        };
     }
 
-
-
-
-
-
-    private void CreateProduct_Button(object sender, RoutedEventArgs e)
+    private async void CreateProduct_Button(object sender, RoutedEventArgs e)
     {
-        Frame.Navigate(typeof(Pages.Purchase.CreatePage));
+        //Frame.Navigate(typeof(Pages.Product.CreatePage));
+        // Maak de dialog
+        var dialog = new ContentDialog
+        {
+          Title = "Nieuw Product",
+          CloseButtonText = "Annuleren",
+          PrimaryButtonText = "Opslaan",
+          XamlRoot = this.XamlRoot
+        };
+
+        // Maak de inhoud van de dialog
+        var grid = new Grid
+        {
+            RowDefinitions =
+        {
+            new RowDefinition { Height = GridLength.Auto },
+            new RowDefinition { Height = GridLength.Auto },
+            new RowDefinition { Height = GridLength.Auto },
+            new RowDefinition { Height = GridLength.Auto },
+            new RowDefinition { Height = GridLength.Auto },
+            new RowDefinition { Height = GridLength.Auto },
+        },
+            Margin = new Thickness(0, 0, 0, 0)
+        };
+
+        var nameBox = new TextBox { PlaceholderText = "Naam" };
+        var categoryBox = new TextBox { PlaceholderText = "Categorie" };
+        var priceBox = new TextBox { PlaceholderText = "Prijs" };
+        var stockBox = new TextBox { PlaceholderText = "Voorraad" };
+        var minStockBox = new TextBox { PlaceholderText = "Minimale voorraad" };
+        var imageBox = new TextBox { PlaceholderText = "Image pad" };
+
+        grid.Children.Add(nameBox); Grid.SetRow(nameBox, 0);
+        grid.Children.Add(categoryBox); Grid.SetRow(categoryBox, 1);
+        grid.Children.Add(priceBox); Grid.SetRow(priceBox, 2);
+        grid.Children.Add(stockBox); Grid.SetRow(stockBox, 3);
+        grid.Children.Add(minStockBox); Grid.SetRow(minStockBox, 4);
+        grid.Children.Add(imageBox); Grid.SetRow(imageBox, 5);
+
+        dialog.Content = grid;
+
+        // Wacht op de gebruiker
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            using var db = new AppDbContext();
+            var product = new Data.Product
+            {
+                Name = nameBox.Text,
+                Category = categoryBox.Text,
+                Price = double.TryParse(priceBox.Text, out var p) ? p : 0,
+                Stock = int.TryParse(stockBox.Text, out var s) ? s : 0,
+                MinimumStock = int.TryParse(minStockBox.Text, out var m) ? m : 0,
+                DelivererId = 1, // optioneel, kan later dynamisch
+                NotificationOutOfStock = false,
+                Image = imageBox.Text
+            };
+
+            // Validatie
+            var context = new ValidationContext(product);
+            var results = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(product, context, results, true))
+            {
+                var errors = results.Select(r => r.ErrorMessage).ToList();
+                await new ContentDialog
+                {
+                    Title = "Fouten",
+                    Content = string.Join(Environment.NewLine, errors),
+                    CloseButtonText = "Sluiten",
+                    XamlRoot = this.XamlRoot
+                }.ShowAsync();
+                return;
+            }
+
+            db.Products.Add(product);
+            db.SaveChanges();
+        }
     }
     // bestellingen
     private async void OrderASpecificProduct_Button(object sender, RoutedEventArgs e)
     {
+        var db = new AppDbContext();
         if (sender is not Button button) return;
         if (button.DataContext is not Data.Product product) return;
         if (XamlRoot == null) return;
@@ -367,12 +445,21 @@ public sealed partial class OverviewPage : Page
         if (await dialog.ShowAsync() != ContentDialogResult.Primary)
             return;
 
-        using var db = new AppDbContext();
 
+        //var dbMatrial = (Data.Matrial)button.DataContext;
         var dbMatrial = db.Matrials.First(m => m.Id == product.Id);
-        dbMatrial.Stock += 1;
 
-        db.SaveChanges();
+        dbMatrial.Stock++;
+
+        if (walletMatrial.ContainsKey(dbMatrial))
+            walletMatrial[dbMatrial]++;
+        else
+            walletMatrial[dbMatrial] = 1;
+
+
+        //dbMatrial.Stock += 1;
+
+        //db.SaveChanges();
         LoadData();
     }
 
@@ -584,7 +671,7 @@ public sealed partial class OverviewPage : Page
     // uitvoering
     private void Order_AllProduct_Click(object sender, RoutedEventArgs e)
     {
-            if (XamlRoot == null) return;
+        if (XamlRoot == null) return;
 
     var dialog = new ContentDialog
     {
@@ -709,6 +796,7 @@ public sealed partial class OverviewPage : Page
             .ToList();
 
     }
+
     private void ApplyFiltersMatrials()
     {
         using var db = new AppDbContext();
@@ -750,5 +838,126 @@ public sealed partial class OverviewPage : Page
     {
         ApplyFiltersProducts();
     }
+
+    // I made this to send a notification to ask that they want to approve the order
+    public string Email { get; set; }
+    List<dynamic> items = new();
+
+    private async void ApproveOrder_Button(object sender, RoutedEventArgs e)
+    {
+        if (XamlRoot == null) return;
+
+        using var db = new AppDbContext();
+
+        if (!walletProduct.Any() && !walletMatrial.Any())
+            return;
+
+        var dialog = new ContentDialog
+        {
+            Title = "Offerte versturen",
+            Content = "Offertes worden per leverancier verstuurd.",
+            PrimaryButtonText = "Versturen",
+            CloseButtonText = "Annuleren",
+            XamlRoot = XamlRoot
+        };
+
+        if (await dialog.ShowAsync() != ContentDialogResult.Primary)
+            return;
+
+        var items = new List<OfferItem>();
+
+        // 🔹 producten
+        foreach (var kvp in walletProduct)
+        {
+            items.Add(new OfferItem
+            {
+                DelivererId = kvp.Key.DelivererId,
+                Name = kvp.Key.Name,
+                Amount = kvp.Value,
+                Price = kvp.Key.Price
+            });
+        }
+
+        // 🔹 materialen (zelfde leverancier-id gebruiken!)
+        foreach (var kvp in walletMatrial)
+        {
+            items.Add(new OfferItem
+            {
+                DelivererId = kvp.Key.DelivererId, // ← moet bestaan in Matrial
+                Name = kvp.Key.Name,
+                Amount = kvp.Value,
+                Price = kvp.Key.Price
+            });
+        }
+
+        var grouped = items.GroupBy(i => i.DelivererId);
+
+        foreach (var group in grouped)
+        {
+            var deliverer = db.Deliverers.First(d => d.Id == group.Key);
+
+            var pdfPath = MakeOfferPDF(deliverer, group.ToList());
+
+            SendOfferEmail(deliverer.Email, pdfPath);
+        }
+    }
+    private string MakeOfferPDF(Deliverer deliverer, List<OfferItem> items)
+    {
+        PdfDocument document = new PdfDocument();
+        document.Info.Title = "Offerte";
+
+        PdfPage page = document.AddPage();
+        XGraphics gfx = XGraphics.FromPdfPage(page);
+
+        XFont font = new XFont("Segoe UI", 11);
+        XFont bold = new XFont("Segoe UI", 14);
+
+        double y = 40;
+
+        gfx.DrawString($"Offerte voor {deliverer.Name}", bold, XBrushes.Black, 40, y);
+        y += 30;
+
+        foreach (var item in items)
+        {
+            gfx.DrawString(
+                $"{item.Name} – {item.Amount} x €{item.Price:F2}",
+                font,
+                XBrushes.Black,
+                40,
+                y
+            );
+            y += 20;
+        }
+
+        string path = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            $"offerte_{deliverer.Id}_{DateTime.Now:yyyyMMddHHmm}.pdf"
+        );
+
+        document.Save(path);
+        return path;
+    }
+    private void SendOfferEmail(string email, string pdfPath)
+    {
+        var mail = new MailMessage
+        {
+            From = new MailAddress("noreply@barrocintens.nl"),
+            Subject = "Nieuwe offerte",
+            Body = "Beste leverancier,\n\nIn de bijlage vindt u een offerte.\n\nMet vriendelijke groet,\nBarrocIntens"
+        };
+
+        mail.To.Add(email);
+        mail.Attachments.Add(new Attachment(pdfPath));
+
+        var smtp = new SmtpClient("smtp.jouwdomein.nl")
+        {
+            Port = 587,
+            EnableSsl = true,
+            Credentials = new NetworkCredential("EMAIL", "WACHTWOORD")
+        };
+
+        //smtp.Send(mail);
+    }
+
 
 }

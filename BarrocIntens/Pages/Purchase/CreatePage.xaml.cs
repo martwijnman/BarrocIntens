@@ -22,7 +22,7 @@ using System.Windows.Forms;
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace BarrocIntens.Pages.Purchase;
-
+ 
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
@@ -103,9 +103,9 @@ public sealed partial class CreatePage : Page
         using (var db = new AppDbContext())
         {
             var deliverers = db.Deliverers
-                             .OrderBy(p => p.Name)
-                             .Select(p => p.Name)
-                             .ToList();
+                .OrderBy(p => p.Name)
+                .Select(p => p.Name)
+                .ToList();
 
             DelivererCombo.ItemsSource = deliverers;
         }

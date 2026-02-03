@@ -39,27 +39,31 @@ public sealed partial class OverviewQuotePage : Page
         using (var db = new Data.AppDbContext())
         {
             var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            if (settings.Values["Role"] == "Owner")
-            {
-                QuoteListView.ItemsSource = db.Quotes
+            var role = settings.Values["Role"]?.ToString();
+
+            IQueryable<Quote> query = db.Quotes
                 .Include(q => q.Customer)
                 .Include(q => q.Items)
-                .Where(q => q.IsAccepted == false && q.IsRejected == false)
-                .ToList();
-            }
-            else
+                    .ThenInclude(i => i.Product)
+                .Where(q => !q.IsAccepted && !q.IsRejected);
+
+            if (role != "Owner")
             {
-                QuoteListView.ItemsSource = db.Quotes
-                .Include(q => q.Customer)
-                .Include(q => q.Items)
-                .ThenInclude(i => i.Product)
-                .Where(q => !q.IsAccepted && !q.IsRejected)
-                .AsEnumerable()
-                .Where(q => q.Items.Sum(item => item.Total * item.Product.Price) <= 5000)
-                .ToList();
+                query = query
+                    .AsEnumerable()
+                    .Where(q => q.Items.Sum(i => i.Total * i.Product.Price) <= 5000)
+                    .AsQueryable();
             }
-            
+
+            var result = query.ToList();
+
+            QuoteListView.ItemsSource = result;
+
+            NoResultText.Text = result.Any()
+                ? string.Empty
+                : "Geen contracten";
         }
+
     }
 
     private void Button_Click(object sender, RoutedEventArgs e) // accepteren

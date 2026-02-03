@@ -82,34 +82,34 @@ namespace BarrocIntens.Data
                     Time = 30
                 });
             modelBuilder.Entity<Customer>().HasData(
-    new Customer
-    {
-        Id = 1,
-        Name = "Jan de Vries",
-        Email = "jan.devries@example.com",
-        PhoneNumber = "0612345678",
-        City = "Amsterdam",
-        BkrStatus = false
-    },
-    new Customer
-    {
-        Id = 2,
-        Name = "Sophie van Dijk",
-        Email = "sophie.vandijk@example.com",
-        PhoneNumber = "0622334455",
-        City = "Rotterdam",
-        BkrStatus = true
-    },
-    new Customer
-    {
-        Id = 3,
-        Name = "Ali Yılmaz",
-        Email = "ali.yilmaz@example.com",
-        PhoneNumber = "0688776655",
-        City = "Utrecht",
+                new Customer
+                {
+                    Id = 1,
+                    Name = "Jan de Vries",
+                    Email = "jan.devries@example.com",
+                    PhoneNumber = "0612345678",
+                    City = "Amsterdam",
+                    BkrStatus = false
+                },
+                new Customer
+                {
+                    Id = 2,
+                    Name = "Sophie van Dijk",
+                    Email = "sophie.vandijk@example.com",
+                    PhoneNumber = "0622334455",
+                    City = "Rotterdam",
+                    BkrStatus = true
+                },
+                new Customer
+                {
+                    Id = 3,
+                    Name = "Ali Yılmaz",
+                    Email = "ali.yilmaz@example.com",
+                    PhoneNumber = "0688776655",
+                    City = "Utrecht",
 
-        BkrStatus = false
-    });
+                    BkrStatus = false
+                });
             modelBuilder.Entity<Bill>().HasData(
                 new Bill
                 {
@@ -248,7 +248,6 @@ namespace BarrocIntens.Data
 
 
 
-
             // Seeding data
             modelBuilder.Entity<Planning>().HasData(
                 new Planning
@@ -281,32 +280,12 @@ namespace BarrocIntens.Data
                     Status = "niet gedaan",
                     Category = "Adviesbezoek",
                 });
-
-            //modelBuilder.Entity<Planning>()
-            //.HasMany(p => p.Customers)
-            //.WithMany()
-            //.UsingEntity<Dictionary<string, object>>(
-            //    "PlanningCustomers",
-            //    j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
-            //    j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
-            //    j =>
-            //{
-            //    j.HasKey("PlanningId", "CustomerId");
-            //    j.ToTable("PlanningCustomers");
-
-            //    // ✅ Join table seeding
-            //    j.HasData(
-            //        new { CustomerId = 1, PlanningId = 1 },
-            //        new { CustomerId = 2, PlanningId = 2 },
-            //        new { CustomerId = 3, PlanningId = 3 }
-            //    );
-            //});
-
             modelBuilder.Entity<Deliverer>().HasData(
                 new Deliverer
                 {
                     Id = 1,
-                    Name = "Wizzmie"
+                    Name = "Wizzmie",
+                    Email = "wizzmie@gmail.com",
                 }
                 );
             modelBuilder.Entity<Product>().HasData(
@@ -362,43 +341,45 @@ namespace BarrocIntens.Data
                     Image = "wizzmie.jpg",
                     IsMachine = true
                 },
-            new Product
-            {
-                Id = 5,
-                Name = "Aceh Arabica 1.000 kg",
-                Category = "Arabica",
-                Price = 159.00,
-                Stock = 5,
-                MinimumStock = 3,
-                DelivererId = 1,
-                NotificationOutOfStock = false,
-                Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
-                IsMachine = false
-            });
+                new Product
+                {
+                    Id = 5,
+                    Name = "Aceh Arabica 1.000 kg",
+                    Category = "Arabica",
+                    Price = 159.00,
+                    Stock = 5,
+                    MinimumStock = 3,
+                    DelivererId = 1,
+                    NotificationOutOfStock = false,
+                    Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
+                    IsMachine = false
+                }
+            );
             modelBuilder.Entity<Matrial>().HasData(
-    new Matrial { Id = 1, Name = "Rubber (10 mm)", Stock = 12, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 2, Name = "Rubber (14 mm)", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 3, Name = "Slang", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 4, Name = "Voeding (elektra)", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 2, MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 5, Name = "Ontkalker", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 6, Name = "Waterfilter", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 7, Name = "Reservoir sensor", Stock = 3, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 8, Name = "Druppelstop", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 9, Name = "Elektrische pomp", Stock = 1, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 10, Name = "Tandwiel 110mm", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 11, Name = "Tandwiel 70mm", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 12, Name = "Maalmotor", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 13, Name = "Zeef", Stock = 9, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 14, Name = "Reinigingstabletten", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 3, MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 15, Name = "Reinigingsborsteltjes", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 6, MinimumStock = 3, Quantity = 0 },
-    new Matrial { Id = 16, Name = "Ontkalkingspijp", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0 }
-); modelBuilder.Entity<ProductMatrial>().HasData(
-    new ProductMatrial { Id = 1, ProductId = 1, MatrialId = 6 },  // Waterfilter
-    new ProductMatrial { Id = 2, ProductId = 2, MatrialId = 5 },  // Ontkalker
-    new ProductMatrial { Id = 3, ProductId = 2, MatrialId = 13 }, // Zeef
-    new ProductMatrial { Id = 4, ProductId = 3, MatrialId = 10 }, // Tandwiel 110mm
-    new ProductMatrial { Id = 5, ProductId = 2, MatrialId = 15 }  // Reinigingsborsteltjes
-);
+                new Matrial { Id = 1, Name = "Rubber (10 mm)", Stock = 12, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 2, Name = "Rubber (14 mm)", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 3, Name = "Slang", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 4, Name = "Voeding (elektra)", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 2, MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 5, Name = "Ontkalker", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 6, Name = "Waterfilter", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 7, Name = "Reservoir sensor", Stock = 3, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 8, Name = "Druppelstop", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 9, Name = "Elektrische pomp", Stock = 1, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 10, Name = "Tandwiel 110mm", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 11, Name = "Tandwiel 70mm", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 12, Name = "Maalmotor", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 13, Name = "Zeef", Stock = 9, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 14, Name = "Reinigingstabletten", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 3, MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 15, Name = "Reinigingsborsteltjes", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 6, MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Matrial { Id = 16, Name = "Ontkalkingspijp", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 }
+                ); 
+            modelBuilder.Entity<ProductMatrial>().HasData(
+                new ProductMatrial { Id = 1, ProductId = 1, MatrialId = 6 },  // Waterfilter
+                new ProductMatrial { Id = 2, ProductId = 2, MatrialId = 5 },  // Ontkalker
+                new ProductMatrial { Id = 3, ProductId = 2, MatrialId = 13 }, // Zeef
+                new ProductMatrial { Id = 4, ProductId = 3, MatrialId = 10 }, // Tandwiel 110mm
+                new ProductMatrial { Id = 5, ProductId = 2, MatrialId = 15 }  // Reinigingsborsteltjes
+            );
 
 
         }

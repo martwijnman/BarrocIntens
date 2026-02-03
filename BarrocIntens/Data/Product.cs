@@ -53,8 +53,8 @@ namespace BarrocIntens.Data
             get { return NotificationOutOfStock ? "○" : "●"; }
         }
         public Brush NotificationColor =>
-            NotificationOutOfStock ? new SolidColorBrush(Colors.LimeGreen)
-                   : new SolidColorBrush(Colors.Red);
+            NotificationOutOfStock ? new SolidColorBrush(Colors.Red)
+                   : new SolidColorBrush(Colors.LimeGreen);
 
         [Required]
         public string Image { get; set; }

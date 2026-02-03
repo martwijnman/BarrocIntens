@@ -65,6 +65,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -89,12 +90,14 @@
             <ComboBox x:Name="PaidCombobox"
                   PlaceholderText="Selecteer status"
                   SelectionChanged="Filter_Changed">
+                <x:String>Alles</x:String>
                 <x:String>Betaald</x:String>
                 <x:String>Niet betaald</x:String>
             </ComboBox>
         </StackPanel>
 
         <!-- LIST -->
+        <TextBlock x:Name="NoResultText" Foreground="White"/>
         <ListView x:Name="FactureListView"
               Grid.Row="2"
               Background="Transparent"

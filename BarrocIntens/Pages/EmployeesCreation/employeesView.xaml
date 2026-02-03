@@ -22,9 +22,16 @@
             CornerRadius="16"
             Padding="16"
             Margin="0,0,0,20">
+            <!--<StackPanel>
+                <TextBlock Text="Medewerkers"
+                   FontSize="32"
+                   FontWeight="SemiBold"
+                   Foreground="#FFD600"/>
+            </StackPanel>-->
 
             <StackPanel Orientation="Horizontal"
                     Spacing="14">
+
 
                 <TextBox x:Name="employeesNameSearchTextBox"
                      PlaceholderText="Zoek op naam"
