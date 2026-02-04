@@ -27,8 +27,9 @@ namespace BarrocIntens.Data
         public double Price { get; set; }
 
         [Required]
-        [Range(0, 9999, ErrorMessage = "Stock moet tussen 1 en 9999 liggen")]
+        //[Range(0, 9999, ErrorMessage = "Stock moet tussen 1 en 9999 liggen")]
         public int Stock { get; set; }
+        public string StockText => $"{Stock} op voorraad";
 
         [Required]
         public int MinimumStock { get; set; }
@@ -62,6 +63,7 @@ namespace BarrocIntens.Data
         public string ImagePath => $"ms-appx:///Assets/{Image}";
 
        public int WalletCount { get; set; }
+       public string WalletCountText => $"Totaal in winkelandje {WalletCount}";
         // CRUD operations for Planning
 
         // Update

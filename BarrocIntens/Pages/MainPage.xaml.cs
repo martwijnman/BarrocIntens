@@ -102,7 +102,7 @@ namespace BarrocIntens.Pages
         {
             base.OnNavigatedTo(e);
             //EmployeeId = (int)e.Parameter;
-            
+
         }
 
         private void PlanningClick(object sender, RoutedEventArgs e)
@@ -138,7 +138,10 @@ namespace BarrocIntens.Pages
         }
         private void ApplyDepartmentVisibility()
         {
-            var department = Employee.LoggedInEmployee?.Department.Name;
+            var department = Employee.LoggedInEmployee?.Department?.Name;
+
+            if (string.IsNullOrEmpty(department))
+                return;
 
             PlanningButton.Visibility = Visibility.Collapsed;
             CustomerButton.Visibility = Visibility.Collapsed;
@@ -170,7 +173,6 @@ namespace BarrocIntens.Pages
                     break;
 
                 case "Management":
-                    // Management ziet alles 👑
                     PlanningButton.Visibility = Visibility.Visible;
                     CustomerButton.Visibility = Visibility.Visible;
                     EmployeeButton.Visibility = Visibility.Visible;
@@ -179,9 +181,8 @@ namespace BarrocIntens.Pages
                     MonteurButton.Visibility = Visibility.Visible;
                     break;
             }
+
         }
 
-
     }
-
 }
