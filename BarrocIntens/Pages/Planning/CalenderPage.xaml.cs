@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -37,6 +38,8 @@ public sealed partial class CalenderPage : Page
 {
     public CalenderPage()
     {
+
+
         InitializeComponent();
         using (var db = new AppDbContext())
         {
@@ -156,28 +159,30 @@ public sealed partial class CalenderPage : Page
 
     private void Filter_Changed(object sender, object e)
     {
-        using (var db = new AppDbContext())
+        using var db = new AppDbContext();
+
+        var query = db.Plannings.AsQueryable();
+
+        // Filter op Status
+        if (StatusCheckbox.SelectedItem != null)
         {
-            var query = db.Plannings.AsQueryable();
-
-            if (StatusCheckbox.SelectedItem as string != "")
-            {
-                var planningStatus = db.Plannings
-                                .Where(p => p.Status == StatusCheckbox.SelectedItem)
-                                .Select(p => p.Status);
-                query = query.Where(p => planningStatus.Contains(p.Status));
-            }
-
-            if (CategoryCheckbox.SelectedItem as string != "")
-            {
-                var planningCategories = db.Plannings
-                                .Where(p => p.Category == CategoryCheckbox.SelectedItem)
-                                .Select(p => p.Category);
-                query = query.Where(p => planningCategories.Contains(p.Category));
-            }
-            calendarView.InvalidateArrange();
-
+            string status = StatusCheckbox.SelectedItem as string;
+            query = query.Where(p => p.Status == status);
         }
+
+        // Filter op Categorie
+        if (CategoryCheckbox.SelectedItem != null)
+        {
+            string category = CategoryCheckbox.SelectedItem as string;
+            query = query.Where(p => p.Category == category);
+        }
+
+        // Filter op vandaag
+        query = query.Where(p => p.Date == DateOnly.FromDateTime(DateTime.Today));
+
+        // Zet het resultaat terug in de ListView
+        TodayPlanningListView.ItemsSource = query.ToList();
     }
+
 
 }

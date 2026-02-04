@@ -57,7 +57,7 @@ namespace BarrocIntens.Data
                     planning.Status = status;
                     planning.Location = location;
                     planning.Description = description;
-                    db.SaveChanges();
+        db.SaveChanges();
                 }
             }
         }
