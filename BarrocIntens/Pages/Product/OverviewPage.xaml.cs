@@ -21,7 +21,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using PdfSharp.Pdf;
 using PdfSharp.Quality;
 
@@ -37,6 +36,10 @@ namespace BarrocIntens.Pages.Product
     public sealed partial class OverviewPage : Page
     {
         private List<Data.Product> AllProducts;
+
+
+
+
 
         public OverviewPage()
         {
@@ -79,6 +82,8 @@ namespace BarrocIntens.Pages.Product
                 wallet[product]++;
             else
                 wallet[product] = 1;
+            ProductView.ItemsSource = null;
+            ProductView.ItemsSource = AllProducts;
 
         }
 
@@ -97,6 +102,8 @@ namespace BarrocIntens.Pages.Product
 
             if (wallet[product] <= 0)
                 wallet.Remove(product);
+            ProductView.ItemsSource = null;
+            ProductView.ItemsSource = AllProducts;
         }
 
 
@@ -339,6 +346,19 @@ namespace BarrocIntens.Pages.Product
                 }.ShowAsync();
                 GenerateOrder();
             }
+        }
+
+        // I made this to show to the customer how many are in stock, and how many he selected
+        // So he can see how many he can order
+        public string GetWalletCount(object dataContext)
+        {
+            if (dataContext is Data.Product product &&
+                wallet.ContainsKey(product))
+            {
+                return $"👜 In wallet: {wallet[product]}";
+            }
+
+            return "👜 In wallet: 0";
         }
 
 

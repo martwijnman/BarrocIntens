@@ -121,19 +121,31 @@
                                     BorderThickness="1"
                                     HorizontalAlignment="Left">
 
-                                    <TextBlock
-                                    Text="{x:Bind Stock}"
-                                    FontSize="12"
-                                           Foreground="#B5B5B5"/>
+                                    <Border Background="#0F0F0F"
+                                        Padding="6,3"
+                                        CornerRadius="8"
+                                        BorderBrush="#2A2A2A"
+                                        BorderThickness="1"
+                                        HorizontalAlignment="Left">
 
-                                    <!--<TextBlock-->
-                                    <!--Text="{x:Bind TimesSelected, Mode=OneWay}"
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Foreground="White"/>-->
+                                        <StackPanel>
+                                            <TextBlock
+                                                Text="{x:Bind Stock}"
+                                                FontSize="12"
+                                                Foreground="#B5B5B5"/>
+
+                                            <TextBlock
+                                                Text="{x:Bind WalletCount}"
+                                                FontSize="12"
+                                                Foreground="White"/>
+                                        </StackPanel>
+
+                                    </Border>
 
 
                                 </Border>
+
+
 
                                 <StackPanel Orientation="Horizontal"
                                         Spacing="10"
