@@ -7,141 +7,150 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:lvc="using:LiveChartsCore.SkiaSharpView.WinUI"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+     Background="#000000">
 
     <Page.Resources>
-        <Style TargetType="Button">
-            <Setter Property="CornerRadius" Value="16"/>
-            <Setter Property="Background" Value="#2D2D2D"/>
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
+        <ItemsRepeater x:Name="DashboardButtons">
+            <ItemsRepeater.Layout>
+                <UniformGridLayout MinItemWidth="150"
+                           MinItemHeight="150"
+                           ItemsJustification="Start"
+                           Orientation="Horizontal"/>
+            </ItemsRepeater.Layout>
+
+            <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                    <ContentPresenter Content="{Binding}"/>
+                </DataTemplate>
+            </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+
     </Page.Resources>
 
-
-    <Grid Background="#1E1E1E">
+    <!-- ================= ROOT GRID ================= -->
+    <Grid Padding="20">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock 
-        x:Name="Greeting"
-        FontSize="32"
-        FontWeight="SemiBold"
-        Margin="40"
-        Foreground="White"/>
+        <!-- ===== GREETING ===== -->
+        <TextBlock
+            x:Name="Greeting"
+            Text="Dashboard"
+            FontSize="32"
+            FontWeight="SemiBold"
+            Foreground="White"
+            Margin="20"/>
 
-        <Grid Grid.Row="1" Padding="5">
+        <!-- ===== CONTENT ===== -->
+        <Grid Grid.Row="1">
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="880"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="600"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <!-- Knoppen -->
-                <RowDefinition Height="*"/>
-                <!-- Chart -->
-            </Grid.RowDefinitions>
-            <TextBlock x:Name="greetingText" />
-            <Grid Grid.Row="1" Padding="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <!-- ================= BUTTONS ================= -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Grid.Row="1" Margin="20,0,20,0" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <!-- PLANNING -->
-                <Button x:Name="PlanningButton"
-            Grid.Row="0" Grid.Column="0"
-            Width="150" Height="150"
-            Margin="10"
-            Click="PlanningClick">
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE787;" FontSize="50"/>
-                        <TextBlock Text="Planning" FontSize="17" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Button>
+                    <Button x:Name="PlanningButton"
+                            Grid.Column="0"
+                            Width="150"
+                            Height="150"
+                            Margin="10"
+                            Click="PlanningClick">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE787;" FontSize="50"/>
+                            <TextBlock Text="Planning" FontSize="17" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </Button>
 
-                <!-- CUSTOMER -->
-                <Button x:Name="CustomerButton"
-            Grid.Row="0" Grid.Column="1"
-            Width="150" Height="150"
-            Margin="10"
-            Click="linkdiewerkt">
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE77B;" FontSize="50"/>
-                        <TextBlock Text="Klant" FontSize="17" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Button>
+                    <Button x:Name="CustomerButton"
+                            Grid.Column="1"
+                            Width="150"
+                            Height="150"
+                            Margin="10"
+                            Click="linkdiewerkt"
+                            Background="#ffff00">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE77B;" FontSize="50" Foreground="Black"/>
+                            <TextBlock Text="Klant" FontSize="17" Margin="0,10,0,0" Foreground="Black"/>
+                        </StackPanel>
+                    </Button>
 
-                <!-- EMPLOYEE -->
-                <Button x:Name="EmployeeButton"
-            Grid.Row="0" Grid.Column="2"
-            Width="150" Height="150"
-            Margin="10"
-            Click="EmployeeClick">
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE125;" FontSize="50"/>
-                        <TextBlock Text="Werknemer" FontSize="17" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Button>
+                    <Button x:Name="EmployeeButton"
+                            Grid.Column="2"
+                            Width="150"
+                            Height="150"
+                            Margin="10"
+                            Click="EmployeeClick"
+                            Background="Yellow">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE125;" FontSize="50" Foreground="Black"/>
+                            <TextBlock Text="Werknemer" FontSize="17" Margin="0,10,0,0" Foreground="Black"/>
+                        </StackPanel>
+                    </Button>
 
-                <!-- VERKOOP -->
-                <Button x:Name="SalesButton"
-            Grid.Row="1" Grid.Column="0"
-            Width="150" Height="150"
-            Margin="10"
-            Click="ProductClick">
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE7BF;" FontSize="50"/>
-                        <TextBlock Text="Verkoop" FontSize="17" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Button>
+                    <Button x:Name="SalesButton"
+                            Grid.Column="3"
+                            Width="150"
+                            Height="150"
+                            Margin="10"
+                            Click="ProductClick"
+                            Background="Yellow">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE7BF;" FontSize="50" Foreground="Black"/>
+                            <TextBlock Text="Verkoop" FontSize="17" Margin="0,10,0,0" Foreground="Black"/>
+                        </StackPanel>
+                    </Button>
 
-                <!-- CONTRACTEN -->
-                <Button x:Name="ContractButton"
-            Grid.Row="1" Grid.Column="1"
-            Width="150" Height="150"
-            Margin="10">
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE8A5;" FontSize="50"/>
-                        <TextBlock Text="Contracten" FontSize="17" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Button>
+                    <Button x:Name="ContractButton"
+                            Grid.Column="4"
+                            Width="150"
+                            Height="150"
+                            Margin="10"
+                            Click="ContractClick"
+                            Background="Yellow">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE8A5;" FontSize="50" Foreground="Black"/>
+                            <TextBlock Text="Contracten" FontSize="17" Margin="0,10,0,0" Foreground="Black"/>
+                        </StackPanel>
+                    </Button>
 
-                <!-- MONTEURS -->
-                <Button x:Name="MonteurButton"
-            Grid.Row="1" Grid.Column="2"
-            Width="150" Height="150"
-            Margin="10"
-            Click="MonteurClick">
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE822;" FontSize="50"/>
-                        <TextBlock Text="Monteurs" FontSize="17" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Button>
+                    <Button x:Name="MonteurButton"
+                            Grid.Column="5"
+                            Width="150"
+                            Height="150"
+                            Margin="10"
+                            Click="MonteurClick"
+                            Background="Yellow">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE822;" FontSize="50" Foreground="Black"/>
+                            <TextBlock Text="Monteurs" FontSize="17" Margin="0,10,0,0" Foreground="Black"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </ScrollViewer>
 
-
-        </Grid>
-
-
-        <lvc:CartesianChart
-            VerticalAlignment="Bottom"
-            HorizontalAlignment="Right"
-            Width="600"
-            Grid.Row="1" 
-            Grid.Column="3"
-            x:Name="SalesChart"
-            Height="300"
-            Series="{x:Bind SalesSeries, Mode=OneWay}"
-            Background="#1E1E1E"/>
+            <!-- ================= CHART ================= -->
+            <lvc:CartesianChart
+                Grid.Column="1"
+                VerticalAlignment="Bottom"
+                Height="300"
+                Series="{x:Bind SalesSeries, Mode=OneWay}"
+                Background="#000000"/>
 
         </Grid>
     </Grid>
