@@ -49,7 +49,7 @@ namespace BarrocIntens.Data
 
 
         [Required]
-        public bool NotificationOutOfStock { get; set; }
+        public bool NotificationOutOfStock => Stock <= MinimumStock; // { get; set; }
         public string NotificationSymbol
         {
             get { return NotificationOutOfStock ? "○" : "●"; }
@@ -80,7 +80,7 @@ namespace BarrocIntens.Data
                     planning.Stock = stock;
                     planning.MinimumStock = minimumStock;
                     planning.DelivererId = delivererId;
-                    planning.NotificationOutOfStock = notificationOutOfStock;
+                    //planning.NotificationOutOfStock = notificationOutOfStock;
                     planning.Image = image;
                     db.SaveChanges();
                 }

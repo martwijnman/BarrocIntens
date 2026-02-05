@@ -34,7 +34,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-
+using BarrocIntens.Helpers;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -53,14 +53,9 @@ public sealed partial class OverviewPage : Page
 
     // I made this to put the products in the wallet, because I need 
     private Dictionary<Data.Product, int> walletProduct = new();
-    private Dictionary<Data.Matrial, int> walletMatrial = new();
-
-
-
+    private Dictionary<Data.Material, int> walletMaterial = new();
 
     // oplossing voor refresh
-
-
     public OverviewPage()
     {
         InitializeComponent();
@@ -69,7 +64,6 @@ public sealed partial class OverviewPage : Page
         ApplyFiltersMatrials();
         DrawRevenueChart();
     }
-
 
     private void LoadData()
     {
@@ -80,7 +74,7 @@ public sealed partial class OverviewPage : Page
             .Include(p => p.Deliverer)
             .ToList();
 
-        MatrialListView.ItemsSource = db.Matrials
+        MatrialListView.ItemsSource = db.Materials
             //.Where(m => m.Stock < m.MinimumStock)
             .ToList();
 
@@ -109,7 +103,6 @@ public sealed partial class OverviewPage : Page
     /// Dit heb ik gemaakt zodat de gebruiker naar de detailpage kan gaan, en de info van het product kan zien.
     /// Ook gebruik ik de shortcut om zo snel mogelijk te editten.
     /// </summary>
-
     private async void ProductListView_ItemClick(object sender, ItemClickEventArgs e)
     {
         if (e.ClickedItem is not Data.Product product) return;
@@ -174,7 +167,7 @@ public sealed partial class OverviewPage : Page
         dialog.PrimaryButtonClick += async (sender, args) =>
         {
             var db = new AppDbContext();
-            var selectedProduct = db.Matrials.FirstOrDefault(p => p.Id == product.Id);
+            var selectedProduct = db.Materials.FirstOrDefault(p => p.Id == product.Id);
             // Validatie en opslaan logica hier
             if (!int.TryParse(stockTextBox.Text, out int stock))
             {
@@ -198,7 +191,7 @@ public sealed partial class OverviewPage : Page
 
     private async void MatrialListView_ItemClick(object sender, ItemClickEventArgs e)
     {
-        if (e.ClickedItem is not Data.Matrial matrial) return;
+        if (e.ClickedItem is not Data.Material matrial) return;
         if (XamlRoot == null) return;
 
         var stackPanel = new StackPanel
@@ -260,7 +253,7 @@ public sealed partial class OverviewPage : Page
         dialog.PrimaryButtonClick += async (sender, args) =>
         {
             var db = new AppDbContext();
-            var selectedMatrial = db.Matrials.FirstOrDefault(m => m.Id == matrial.Id);
+            var selectedMatrial = db.Materials.FirstOrDefault(m => m.Id == matrial.Id);
             // Validatie en opslaan logica hier
             if (!int.TryParse(stockTextBox.Text, out int stock))
             {
@@ -313,7 +306,7 @@ public sealed partial class OverviewPage : Page
                 Shortage = p.MinimumStock - p.Stock
             })
             .Concat(
-                db.Matrials
+                db.Materials
                     .Where(m => m.Stock < m.MinimumStock)
                     .Select(m => new
                     {
@@ -401,7 +394,7 @@ public sealed partial class OverviewPage : Page
                 Stock = int.TryParse(stockBox.Text, out var s) ? s : 0,
                 MinimumStock = int.TryParse(minStockBox.Text, out var m) ? m : 0,
                 DelivererId = 1, // optioneel, kan later dynamisch
-                NotificationOutOfStock = false,
+                //NotificationOutOfStock = false,
                 Image = imageBox.Text
             };
 
@@ -447,14 +440,14 @@ public sealed partial class OverviewPage : Page
 
 
         //var dbMatrial = (Data.Matrial)button.DataContext;
-        var dbMatrial = db.Matrials.First(m => m.Id == product.Id);
+        var dbMaterial = db.Materials.First(m => m.Id == product.Id);
 
-        dbMatrial.Stock++;
+        dbMaterial.Stock++;
 
-        if (walletMatrial.ContainsKey(dbMatrial))
-            walletMatrial[dbMatrial]++;
+        if (walletMaterial.ContainsKey(dbMaterial))
+            walletMaterial[dbMaterial]++;
         else
-            walletMatrial[dbMatrial] = 1;
+            walletMaterial[dbMaterial] = 1;
 
 
         //dbMatrial.Stock += 1;
@@ -467,7 +460,7 @@ public sealed partial class OverviewPage : Page
     private async void OrderASpecificMatrial_Button(object sender, RoutedEventArgs e)
     {
         if (sender is not Button button) return;
-        if (button.DataContext is not Matrial matrial) return;
+        if (button.DataContext is not Material matrial) return;
         if (XamlRoot == null) return;
 
         var dialog = new ContentDialog
@@ -484,7 +477,7 @@ public sealed partial class OverviewPage : Page
 
         using var db = new AppDbContext();
 
-        var dbMatrial = db.Matrials.First(m => m.Id == matrial.Id);
+        var dbMatrial = db.Materials.First(m => m.Id == matrial.Id);
         dbMatrial.Stock += 1;
 
         db.SaveChanges();
@@ -495,7 +488,7 @@ public sealed partial class OverviewPage : Page
     {
         using var db = new AppDbContext();
 
-        var tekort = db.Matrials.Where(m => m.Stock < m.MinimumStock).ToList();
+        var tekort = db.Materials.Where(m => m.Stock < m.MinimumStock).ToList();
         if (!tekort.Any()) return;
 
         if (!await Confirm("Alle voorraadtekorten aanvullen?"))
@@ -503,7 +496,9 @@ public sealed partial class OverviewPage : Page
 
         foreach (var m in tekort)
             m.Stock = m.MinimumStock;
-
+        db.Database.ExecuteSqlRaw(
+            "UPDATE materials SET Stock = MinimumStock WHERE Stock < MinimumStock"
+        );
         await db.SaveChangesAsync();
         LoadData();
         DrawRevenueChart();
@@ -516,7 +511,7 @@ public sealed partial class OverviewPage : Page
 
         using var db = new AppDbContext();
 
-        var matrials = db.Matrials
+        var matrials = db.Materials
             .Where(m => m.MinimumStock > m.Stock)
             .ToList();
 
@@ -601,12 +596,8 @@ public sealed partial class OverviewPage : Page
 
         using var db = new AppDbContext();
 
-        var products = db.Products
-            .Where(p => p.DelivererId == deliverer.Id && p.Stock < p.MinimumStock);
-
-        foreach (var p in products)
-            p.Stock = p.MinimumStock;
-
+       var sql = $"UPDATE products SET Stock = MinimumStock WHERE Stock < MinimumStock AND DelivererId = {deliverer.Id}";
+        db.Database.ExecuteSqlRaw(sql);
         await db.SaveChangesAsync();
 
         LoadData();
@@ -621,7 +612,7 @@ public sealed partial class OverviewPage : Page
     {
         using var db = new AppDbContext();
 
-        var matrials = db.Matrials
+        var matrials = db.Materials
             .Where(p => p.MinimumStock > p.Stock)
             .ToList();
 
@@ -682,15 +673,13 @@ public sealed partial class OverviewPage : Page
         XamlRoot = XamlRoot
     };
 
-    //if (await dialog.ShowAsync() != ContentDialogResult.Primary)
-    //    return;
-
     using var db = new AppDbContext();
 
     var products = db.Products.Where(p => p.Stock < p.MinimumStock);
-    foreach (var p in products)
-        p.Stock = p.MinimumStock;
 
+    db.Database.ExecuteSqlRaw(
+        "UPDATE products SET Stock = MinimumStock WHERE Stock < MinimumStock"
+    );
     db.SaveChanges();
 
     LoadData();
@@ -714,10 +703,10 @@ public sealed partial class OverviewPage : Page
 
         using var db = new AppDbContext();
 
-        var matrials = db.Matrials.Where(m => m.Stock < m.MinimumStock);
-        foreach (var m in matrials)
-            m.Stock = m.MinimumStock;
-
+        var materials = db.Materials.Where(m => m.Stock < m.MinimumStock);
+        db.Database.ExecuteSqlRaw(
+            $"UPDATE materials SET Stock = MinimumStock WHERE Stock < MinimumStock"
+        );
         db.SaveChanges();
 
         LoadData();
@@ -739,14 +728,14 @@ public sealed partial class OverviewPage : Page
         DrawRevenueChart();
     }
 
-    public async Task OrderMatrial(Matrial matrial)
+    public async Task OrderMatrial(Material material)
     {
-        if (!await Confirm($"Bestel {matrial.MinimumStock - matrial.Stock} stuks van {matrial.Name}?"))
+        if (!await Confirm($"Bestel {material.MinimumStock - material.Stock} stuks van {material.Name}?"))
             return;
 
         using var db = new AppDbContext();
-        var dbMatrial = await db.Matrials.FirstAsync(m => m.Id == matrial.Id);
-        dbMatrial.Stock = dbMatrial.MinimumStock;
+        var dbMaterial = await db.Materials.FirstAsync(m => m.Id == material.Id);
+        dbMaterial.Stock = dbMaterial.MinimumStock;
 
         await db.SaveChangesAsync();
         LoadData();
@@ -806,7 +795,7 @@ public sealed partial class OverviewPage : Page
         var selectedStatus =
             (StatusComboBoxMatrial.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
-        var queryMatrial = db.Matrials.AsQueryable();
+        var queryMatrial = db.Materials.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(matrialFilter))
             queryMatrial = queryMatrial
@@ -849,7 +838,7 @@ public sealed partial class OverviewPage : Page
 
         using var db = new AppDbContext();
 
-        if (!walletProduct.Any() && !walletMatrial.Any())
+        if (!walletProduct.Any() && !walletMaterial.Any())
             return;
 
         var dialog = new ContentDialog
@@ -879,7 +868,7 @@ public sealed partial class OverviewPage : Page
         }
 
         // 🔹 materialen (zelfde leverancier-id gebruiken!)
-        foreach (var kvp in walletMatrial)
+        foreach (var kvp in walletMaterial)
         {
             items.Add(new OfferItem
             {
@@ -895,10 +884,8 @@ public sealed partial class OverviewPage : Page
         foreach (var group in grouped)
         {
             var deliverer = db.Deliverers.First(d => d.Id == group.Key);
-
             var pdfPath = MakeOfferPDF(deliverer, group.ToList());
-
-            SendOfferEmail(deliverer.Email, pdfPath);
+            HelperEmail.SendEmail(deliverer.Email, "Nieuwe offerte", "Beste leverancier,\n\nIn de bijlage vindt u een offerte.\n\nMet vriendelijke groet,\nBarrocIntens", pdfPath);
         }
     }
     private string MakeOfferPDF(Deliverer deliverer, List<OfferItem> items)
@@ -936,27 +923,6 @@ public sealed partial class OverviewPage : Page
 
         document.Save(path);
         return path;
-    }
-    private void SendOfferEmail(string email, string pdfPath)
-    {
-        var mail = new MailMessage
-        {
-            From = new MailAddress("noreply@barrocintens.nl"),
-            Subject = "Nieuwe offerte",
-            Body = "Beste leverancier,\n\nIn de bijlage vindt u een offerte.\n\nMet vriendelijke groet,\nBarrocIntens"
-        };
-
-        mail.To.Add(email);
-        mail.Attachments.Add(new Attachment(pdfPath));
-
-        var smtp = new SmtpClient("smtp.jouwdomein.nl")
-        {
-            Port = 587,
-            EnableSsl = true,
-            Credentials = new NetworkCredential("EMAIL", "WACHTWOORD")
-        };
-
-        //smtp.Send(mail);
     }
 
 

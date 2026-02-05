@@ -32,7 +32,6 @@
     <None Remove="Pages\Planning\EditPage.xaml" />
     <None Remove="Pages\Product\OrderPage.xaml" />
     <None Remove="Pages\Product\OverviewPage.xaml" />
-    <None Remove="Pages\Purchase\CreatePage.xaml" />
     
   </ItemGroup>
 
@@ -92,11 +91,6 @@
     <Folder Include="Pages\NewFolder2\" />
     <Folder Include="Pages\NewFolder\" />
     <Folder Include="Pages\Owner\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Pages\Purchase\CreatePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Purchase\OverviewPage.xaml">

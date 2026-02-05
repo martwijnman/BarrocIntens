@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BarrocIntens.Data
 {
-    class ProductMatrial
+    class ProductMaterial
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
 
-        public int MatrialId { get; set; }
+        public int MaterialId { get; set; }
 
-        public Matrial Matrial { get; set; }
+        public Material Material { get; set; }
     }
 }

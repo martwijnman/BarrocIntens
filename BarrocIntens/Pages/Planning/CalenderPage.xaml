@@ -35,7 +35,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Horizontal" Spacing="16">
-                        <ComboBox x:Name="StatusCheckbox"
+                        <!--<ComboBox x:Name="StatusCheckbox"
                               PlaceholderText="Status"
                               Width="180"
                               Background="#0F0F0F"
@@ -59,7 +59,7 @@
                             <x:String>Vergadering</x:String>
                             <x:String>Controle</x:String>
                             <x:String>Adviesbezoek</x:String>
-                        </ComboBox>
+                        </ComboBox>-->
                     </StackPanel>
 
                     <Button Grid.Column="1"

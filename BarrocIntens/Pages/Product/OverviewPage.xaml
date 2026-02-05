@@ -13,10 +13,7 @@
       Padding="24">
 
         <StackPanel Spacing="26">
-            <TextBlock Text="Productoverzicht"
-                   FontSize="32"
-                   FontWeight="SemiBold"
-                   Foreground="#FFD600"/>
+
 
             <!-- FILTER BAR -->
             <Border Background="#141414"

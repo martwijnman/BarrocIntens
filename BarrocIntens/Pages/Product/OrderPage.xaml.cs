@@ -132,11 +132,11 @@ public sealed partial class OrderPage : Page
                 Total = aantal
             });
 
-            dbProduct.Stock -= aantal;
-            if (dbProduct.Stock <= dbProduct.MinimumStock)
-            {
-                dbProduct.NotificationOutOfStock = true;
-            }
+            //dbProduct.Stock -= aantal;
+            //if (dbProduct.Stock <= dbProduct.MinimumStock)
+            //{
+            //    dbProduct.NotificationOutOfStock = true;
+            //}
         }
 
         db.Quotes.Add(quote);

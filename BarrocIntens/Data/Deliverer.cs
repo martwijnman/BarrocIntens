@@ -19,6 +19,6 @@ namespace BarrocIntens.Data
         [AllowNull]
         public ProductDeliverer ProductDeliverer { get; set; }
         [AllowNull]
-        public MatrialDeliverer MatrialDeliverer { get; set; }
+        public MaterialDeliverer MatrialDeliverer { get; set; }
     }
 }

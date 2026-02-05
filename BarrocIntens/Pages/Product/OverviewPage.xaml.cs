@@ -326,8 +326,8 @@ namespace BarrocIntens.Pages.Product
                     });
 
                     product.Stock -= kvp.Value;
-                    if (product.Stock <= product.MinimumStock)
-                        product.NotificationOutOfStock = true;
+                    //if (product.Stock <= product.MinimumStock)
+                    //    product.NotificationOutOfStock = true;
                 }
 
                 db.Quotes.Add(quote);
