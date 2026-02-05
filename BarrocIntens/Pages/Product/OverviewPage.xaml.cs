@@ -37,10 +37,6 @@ namespace BarrocIntens.Pages.Product
     {
         private List<Data.Product> AllProducts;
 
-
-
-
-
         public OverviewPage()
         {
             InitializeComponent();
@@ -77,6 +73,7 @@ namespace BarrocIntens.Pages.Product
                 return;
 
             product.Stock--;
+            product.WalletCount++;
 
             if (wallet.ContainsKey(product))
                 wallet[product]++;
@@ -99,6 +96,7 @@ namespace BarrocIntens.Pages.Product
 
             wallet[product]--;
             product.Stock++;
+            product.WalletCount--;
 
             if (wallet[product] <= 0)
                 wallet.Remove(product);
@@ -111,8 +109,6 @@ namespace BarrocIntens.Pages.Product
 
         private async Task Errors(string type)
         {
-
-
             string error = "";
 
 

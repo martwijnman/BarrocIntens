@@ -1,4 +1,5 @@
 ﻿using BarrocIntens.Data;
+using CSharpMarkup.WinUI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -23,6 +24,15 @@ using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using CSharpMarkup.WinUI;
+using CalendarView = Microsoft.UI.Xaml.Controls.CalendarView;
+using CalendarViewDayItem = Microsoft.UI.Xaml.Controls.CalendarViewDayItem;
+using ListView = Microsoft.UI.Xaml.Controls.ListView;
+using Page = Microsoft.UI.Xaml.Controls.Page;
+using SolidColorBrush = Microsoft.UI.Xaml.Media.SolidColorBrush;
+using ContentDialog = Microsoft.UI.Xaml.Controls.ContentDialog;
+
+
 
 
 
@@ -52,6 +62,8 @@ public sealed partial class CalenderPage : Page
         }
 
     }
+    private HashSet<DateOnly> _planningDates = new();
+
     private void AddCalendarItemButton_Click(object sender, RoutedEventArgs e)
     {
         Frame.Navigate(typeof(Pages.Planning.CreatePage));
@@ -74,11 +86,20 @@ public sealed partial class CalenderPage : Page
         var date = DateOnly.FromDateTime(args.Item.Date.DateTime);
 
         using var db = new AppDbContext();
-        bool heeftPlanning = db.Plannings.Any(p => p.Date == date);
 
-        if (heeftPlanning)
+        var planningDates = db.Plannings
+        .Select(p => p.Date)
+        .ToHashSet();
+        var dateOnly = DateOnly.FromDateTime(
+            args.Item.Date.DateTime
+        );
+
+        if (planningDates.Contains(dateOnly))
         {
-            args.Item.Foreground = new SolidColorBrush(Colors.Yellow);
+            args.Item.Background = new SolidColorBrush(Colors.Yellow);
+            args.Item.Foreground = new SolidColorBrush(Colors.Black);
+            //args.Item.BorderBrush = new SolidColorBrush(Colors.Yellow);
+            //args.Item.BorderThickness = new Thickness(2);
         }
         else
         {
@@ -119,7 +140,7 @@ public sealed partial class CalenderPage : Page
         listView.ItemClick += (s, e) =>
         {
             var item = (Data.Planning)e.ClickedItem;
-            Frame.Navigate(typeof(Pages.Planning.EditPage), item.Id);
+            Frame.Navigate(typeof(Pages.Planning.DetailPage), item.Id);
         };
 
         var dialog = new ContentDialog
@@ -135,25 +156,23 @@ public sealed partial class CalenderPage : Page
 
     // I made this to show which days have a planning
     private void CalendarView_DayItemChanging(
-    CalendarView sender,
-    CalendarViewDayItemChangingEventArgs args)
+        CalendarView sender,
+        CalendarViewDayItemChangingEventArgs args)
     {
-        if (args.Item == null) return;
+        var dateOnly = DateOnly.FromDateTime(
+            args.Item.Date.DateTime
+        );
 
-        var date = DateOnly.FromDateTime(args.Item.Date.DateTime);
-
-        using var db = new AppDbContext();
-        bool heeftPlanning = db.Plannings.Any(p => p.Date == date);
-
-        if (heeftPlanning)
+        if (_planningDates.Contains(dateOnly))
         {
-            args.Item.Foreground = new SolidColorBrush(Colors.Yellow);
+            args.Item.Tag = "HasPlanning";
         }
         else
         {
-            args.Item.ClearValue(CalendarViewDayItem.ForegroundProperty);
+            args.Item.Tag = null;
         }
     }
+
 
 
 
@@ -163,26 +182,31 @@ public sealed partial class CalenderPage : Page
 
         var query = db.Plannings.AsQueryable();
 
-        // Filter op Status
         if (StatusCheckbox.SelectedItem != null)
         {
             string status = StatusCheckbox.SelectedItem as string;
             query = query.Where(p => p.Status == status);
         }
 
-        // Filter op Categorie
         if (CategoryCheckbox.SelectedItem != null)
         {
             string category = CategoryCheckbox.SelectedItem as string;
             query = query.Where(p => p.Category == category);
         }
 
-        // Filter op vandaag
-        query = query.Where(p => p.Date == DateOnly.FromDateTime(DateTime.Today));
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        TodayPlanningListView.ItemsSource =
+            query.Where(p => p.Date == today).ToList();
 
-        // Zet het resultaat terug in de ListView
-        TodayPlanningListView.ItemsSource = query.ToList();
+        _planningDates = query
+            .Select(p => p.Date)
+            .Distinct()
+            .ToHashSet();
+
+
+        calendarView.SelectedDates.Clear();
     }
+
 
 
 }

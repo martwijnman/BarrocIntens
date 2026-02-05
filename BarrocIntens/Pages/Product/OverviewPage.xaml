@@ -130,12 +130,12 @@
 
                                         <StackPanel>
                                             <TextBlock
-                                                Text="{x:Bind Stock}"
+                                                Text="{x:Bind StockText}"
                                                 FontSize="12"
                                                 Foreground="#B5B5B5"/>
 
                                             <TextBlock
-                                                Text="{x:Bind WalletCount}"
+                                                Text="{x:Bind WalletCountText}"
                                                 FontSize="12"
                                                 Foreground="White"/>
                                         </StackPanel>
