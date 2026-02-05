@@ -39,27 +39,31 @@ public sealed partial class OverviewQuotePage : Page
         using (var db = new Data.AppDbContext())
         {
             var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            if (settings.Values["Role"] == "Owner")
-            {
-                QuoteListView.ItemsSource = db.Quotes
+            var role = settings.Values["Role"]?.ToString();
+
+            IQueryable<Quote> query = db.Quotes
                 .Include(q => q.Customer)
                 .Include(q => q.Items)
-                .Where(q => q.IsAccepted == false && q.IsRejected == false)
-                .ToList();
-            }
-            else
+                    .ThenInclude(i => i.Product)
+                .Where(q => !q.IsAccepted && !q.IsRejected);
+
+            if (role != "Owner")
             {
-                QuoteListView.ItemsSource = db.Quotes
-                .Include(q => q.Customer)
-                .Include(q => q.Items)
-                .ThenInclude(i => i.Product)
-                .Where(q => !q.IsAccepted && !q.IsRejected)
-                .AsEnumerable()
-                .Where(q => q.Items.Sum(item => item.Total * item.Product.Price) <= 5000)
-                .ToList();
+                query = query
+                    .AsEnumerable()
+                    .Where(q => q.Items.Sum(i => i.Total * i.Product.Price) <= 5000)
+                    .AsQueryable();
             }
-            
+
+            var result = query.ToList();
+
+            QuoteListView.ItemsSource = result;
+
+            NoResultText.Text = result.Any()
+                ? string.Empty
+                : "Geen contracten";
         }
+
     }
 
     private void Button_Click(object sender, RoutedEventArgs e) // accepteren
@@ -188,7 +192,7 @@ public sealed partial class OverviewQuotePage : Page
     // pdf produceren
     private void MakePDFFacture(Quote quote)
     {
-        var db = new AppDbContext();
+        using var db = new AppDbContext();
 
         var quoteItems = db.QuoteItems
             .Where(qi => qi.QuoteId == quote.Id)
@@ -197,64 +201,75 @@ public sealed partial class OverviewQuotePage : Page
 
         PdfDocument document = new PdfDocument();
         document.Info.Title = $"Factuur #{quote.Id}";
+
         PdfPage page = document.AddPage();
+        page.Size = PdfSharp.PageSize.A4;
+
         XGraphics gfx = XGraphics.FromPdfPage(page);
 
-        // Fonts
-        XFont titleFont = new XFont("Verdana", 22);
-        XFont normalFont = new XFont("Verdana", 12);
-        XFont boldFont = new XFont("Verdana", 12);
+        // COLORS -------------------------------------------------------
+        XColor accentYellow = XColor.FromArgb(255, 255, 214, 0);
+        XBrush yellowBrush = new XSolidBrush(accentYellow);
+        XBrush grayBrush = XBrushes.Gray;
+        XBrush darkBrush = XBrushes.Black;
+
+        // FONTS --------------------------------------------------------
+        XFont titleFont = new XFont("Segoe UI", 26);
+        XFont sectionFont = new XFont("Segoe UI", 14);
+        XFont normalFont = new XFont("Segoe UI", 11);
+        XFont boldFont = new XFont("Segoe UI", 11);
 
         double y = 40;
 
-        // LOGO ----------------------------------------------------------
+        // HEADER -------------------------------------------------------
+        gfx.DrawRectangle(yellowBrush, 0, 0, page.Width, 90);
+
         try
         {
-            XImage logo = XImage.FromFile("/Assets/logo.png"); // <-- PAS DIT AAN NAAR JOUW LOGO
-            gfx.DrawImage(logo, 20, 20, 120, 60);
+            XImage logo = XImage.FromFile("Assets/logo.png");
+            gfx.DrawImage(logo, 40, 20, 120, 50);
         }
         catch
         {
-            gfx.DrawString("BarrocIntens.", boldFont, XBrushes.Gray, new XRect(20, 20, 200, 40), XStringFormats.TopLeft);
+            gfx.DrawString("BarrocIntens.", boldFont, XBrushes.Black, 40, 50);
         }
 
-        y = 100;
-
-        // FACTUUR TITEL ------------------------------------------------
         gfx.DrawString($"FACTUUR #{quote.Id}", titleFont, XBrushes.Black,
-            new XRect(0, y, page.Width, 40), XStringFormats.TopCenter);
+            new XRect(0, 30, page.Width - 40, 40), XStringFormats.TopRight);
 
-        y += 50;
+        y = 120;
 
-        // BARROCINTENS INFO ---------------------------------------------------
-        gfx.DrawString("Bedrijfsgegevens.", boldFont, XBrushes.Black, 20, y);
+        // BEDRIJF ------------------------------------------------------
+        gfx.DrawString("Bedrijfsgegevens", sectionFont, darkBrush, 40, y);
         y += 20;
-        gfx.DrawString("Naam: BarrocIntens B.V.", normalFont, XBrushes.Black, 20, y);
+
+        gfx.DrawString("BarrocIntens B.V.", boldFont, darkBrush, 40, y);
+        y += 16;
+        gfx.DrawString("info@barrocintens.nl", normalFont, grayBrush, 40, y);
+        y += 30;
+
+        // KLANT --------------------------------------------------------
+        gfx.DrawString("Klantgegevens", sectionFont, darkBrush, 40, y);
         y += 20;
-        gfx.DrawString("Email: info@barrocintens.nl", normalFont, XBrushes.Black, 20, y);
-        gfx.DrawString("Email: info@barrocintens.nl", normalFont, XBrushes.Black, 20, y);
+
+        gfx.DrawString($"Naam: {quote.Customer.Name}", normalFont, darkBrush, 40, y);
+        y += 16;
+        gfx.DrawString($"Factuurdatum: {quote.CreatedAt:dd-MM-yyyy}", normalFont, darkBrush, 40, y);
         y += 40;
 
-        // KLANT INFO ---------------------------------------------------
-        gfx.DrawString("Klantgegevens", boldFont, XBrushes.Black, 20, y);
-        y += 20;
-        gfx.DrawString($"Naam: {quote.Customer.Name}", normalFont, XBrushes.Black, 20, y);
-        y += 20;
-        gfx.DrawString($"Factuurdatum: {quote.CreatedAt:dd/MM/yyyy}", normalFont, XBrushes.Black, 20, y);
-        y += 40;
-
-        // PRODUCT TABEL ------------------------------------------------
-        gfx.DrawString("Producten", boldFont, XBrushes.Black, 20, y);
+        // PRODUCTEN ----------------------------------------------------
+        gfx.DrawString("Overzicht producten", sectionFont, darkBrush, 40, y);
         y += 25;
 
-        // Tabel headers
-        gfx.DrawRectangle(XPens.Black, 20, y, page.Width - 40, 25);
-        gfx.DrawString("Product", boldFont, XBrushes.Black, new XRect(25, y + 5, 200, 20), XStringFormats.TopLeft);
-        gfx.DrawString("Aantal", boldFont, XBrushes.Black, new XRect(230, y + 5, 80, 20), XStringFormats.TopLeft);
-        gfx.DrawString("Prijs", boldFont, XBrushes.Black, new XRect(310, y + 5, 80, 20), XStringFormats.TopLeft);
-        gfx.DrawString("Totaal", boldFont, XBrushes.Black, new XRect(390, y + 5, 100, 20), XStringFormats.TopLeft);
+        // TABEL HEADER
+        gfx.DrawRectangle(yellowBrush, 40, y, page.Width - 80, 28);
 
-        y += 25;
+        gfx.DrawString("Product", boldFont, XBrushes.Black, 45, y + 18);
+        gfx.DrawString("Aantal", boldFont, XBrushes.Black, 260, y + 18);
+        gfx.DrawString("Prijs", boldFont, XBrushes.Black, 340, y + 18);
+        gfx.DrawString("Totaal", boldFont, XBrushes.Black, 430, y + 18);
+
+        y += 32;
 
         double totalPrice = 0;
 
@@ -263,37 +278,51 @@ public sealed partial class OverviewQuotePage : Page
             double rowTotal = item.Total * item.Product.Price;
             totalPrice += rowTotal;
 
-            gfx.DrawRectangle(XPens.Gray, 20, y, page.Width - 40, 25);
+            gfx.DrawString(item.Product.Name, normalFont, darkBrush, 45, y);
+            gfx.DrawString(item.Total.ToString(), normalFont, darkBrush, 260, y);
+            gfx.DrawString($"€ {item.Product.Price:F2}", normalFont, darkBrush, 340, y);
+            gfx.DrawString($"€ {rowTotal:F2}", boldFont, darkBrush, 430, y);
 
-            gfx.DrawString(item.Product.Name, normalFont, XBrushes.Black, new XRect(25, y + 5, 200, 20), XStringFormats.TopLeft);
-            gfx.DrawString($"{item.Total}", normalFont, XBrushes.Black, new XRect(230, y + 5, 80, 20), XStringFormats.TopLeft);
-            gfx.DrawString($"€{item.Product.Price:F2}", normalFont, XBrushes.Black, new XRect(310, y + 5, 80, 20), XStringFormats.TopLeft);
-            gfx.DrawString($"€{rowTotal:F2}", normalFont, XBrushes.Black, new XRect(390, y + 5, 100, 20), XStringFormats.TopLeft);
-
-            y += 25;
+            y += 22;
         }
 
-        y += 20;
+        y += 30;
 
-        // TOTALEN -------------------------------------------------------
-        gfx.DrawString("Totaalbedrag:", boldFont, XBrushes.Black, 20, y);
-        gfx.DrawString($"€{totalPrice:F2}", boldFont, XBrushes.Black, 150, y);
-        y += 10;
-        gfx.DrawString($"Van {DateOnly.FromDateTime(DateTime.Now).AddDays(5)} tot {DateOnly.FromDateTime(DateTime.Now).AddDays(370)}", boldFont, XBrushes.Gray, 5, y);
+        // TOTAAL -------------------------------------------------------
+        gfx.DrawLine(new XPen(accentYellow, 2), 340, y, page.Width - 40, y);
+        y += 14;
+
+        gfx.DrawString("Totaalbedrag", sectionFont, darkBrush, 340, y);
+        gfx.DrawString($"€ {totalPrice:F2}", sectionFont, darkBrush, 430, y);
 
         y += 40;
 
+        // GELDIGHEID ---------------------------------------------------
+        gfx.DrawString(
+            $"Geldig van {DateOnly.FromDateTime(DateTime.Now).AddDays(5)} tot {DateOnly.FromDateTime(DateTime.Now).AddDays(370)}",
+            normalFont,
+            grayBrush,
+            40,
+            y
+        );
+
         // FOOTER -------------------------------------------------------
-        gfx.DrawLine(XPens.Black, 20, page.Height - 80, page.Width - 20, page.Height - 80);
-        gfx.DrawString("BarrocIntens. B.V.", boldFont, XBrushes.Black, 20, page.Height - 65);
-        gfx.DrawString("www.barrocintens.nl", normalFont, XBrushes.DarkGray, 20, page.Height - 45);
-        gfx.DrawString("info@barrocintens.nl", normalFont, XBrushes.DarkGray, 20, page.Height - 30);
+        gfx.DrawLine(XPens.LightGray, 40, page.Height - 80, page.Width - 40, page.Height - 80);
+
+        gfx.DrawString("BarrocIntens B.V.", boldFont, darkBrush, 40, page.Height - 60);
+        gfx.DrawString("www.barrocintens.nl", normalFont, grayBrush, 40, page.Height - 42);
+        gfx.DrawString("info@barrocintens.nl", normalFont, grayBrush, 40, page.Height - 28);
 
         // SAVE ---------------------------------------------------------
         string fileName = $"factuur_{quote.Id}.pdf";
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), fileName);
+        string path = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            fileName
+        );
+
         document.Save(path);
     }
+
 
 
 

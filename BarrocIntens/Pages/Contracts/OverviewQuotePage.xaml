@@ -54,6 +54,7 @@
             </StackPanel>
 
             <!-- LIST -->
+            <TextBlock x:Name="NoResultText" Foreground="White"/>
             <ListView x:Name="QuoteListView"
                   Background="Transparent"
                   BorderThickness="0"
@@ -96,18 +97,7 @@
                                 </StackPanel>
 
                                 <!-- ITEMS -->
-                                <StackPanel Grid.Column="1"
-                                        VerticalAlignment="Center">
 
-                                    <TextBlock Text="Items"
-                                           FontSize="12"
-                                           Foreground="#8A8A8A"/>
-
-                                    <TextBlock Text="{Binding ItemsCount}"
-                                           FontSize="18"
-                                           FontWeight="Bold"
-                                           Foreground="#FFD600"/>
-                                </StackPanel>
 
                                 <!-- ACTIONS -->
                                 <StackPanel Grid.Column="2"

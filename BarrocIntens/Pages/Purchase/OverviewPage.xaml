@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="BarrocIntens.Pages.Purchase.OverviewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BarrocIntens.Pages.Purchase"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BarrocIntens.Data"
+    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.WinUI"
+    Background="Black"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="#111"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="AccentButton" TargetType="Button">
+            <Setter Property="Background" Value="#FFD600"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer>
+        <Grid Padding="40" Background="Black">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- HEADER -->
+            <Button
+                Content="Bestelling bevestigen"
+                HorizontalAlignment="Right"
+                Width="180"
+                Height="48"
+                CornerRadius="10"
+                FontSize="16"
+                FontWeight="SemiBold"
+                BorderThickness="0"
+                Background="#FFD600"
+                Foreground="Black"
+                Click="ApproveOrder_Button"/>
+
+
+            <!-- MAIN -->
+            <Grid Grid.Row="1" Margin="0,30,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- LEFT -->
+                <StackPanel Grid.Column="0" Spacing="28">
+
+                    <!-- VOORRAADTEKORT CHART -->
+                    <Border Background="#111" CornerRadius="16" Padding="16">
+                        <lvc:CartesianChart
+                            x:Name="StockChart"
+                            Width="600"
+                            Height="300"
+                            Background="#1E1E1E"
+                            ZoomMode="None"/>
+                    </Border>
+
+                    <!-- PRODUCTEN -->
+                    <Border 
+                        Background="#111"
+                        Padding="20"
+                        CornerRadius="16"
+                        BorderBrush="#333"
+                        BorderThickness="1">
+                        <StackPanel Spacing="18">
+
+
+                            <TextBlock
+                                Text="Producten"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Foreground="White"/>
+
+
+                            <Grid ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox
+                                    x:Name="FilterTextBoxProduct"
+                                    PlaceholderText="Zoek op naam of leverancier…"
+                                    Background="#1A1A1A"
+                                    Foreground="White"
+                                    BorderBrush="#333"
+                                    CornerRadius="8"
+                                    Padding="10,6"
+                                    TextChanged="Product_TextChanged"/>
+
+                                <ComboBox
+                                    x:Name="StatusComboBoxProduct"
+                                    Grid.Column="1"
+                                    Width="160"
+                                    PlaceholderText="Status"
+                                    Background="#1A1A1A"
+                                    Foreground="White"
+                                    BorderBrush="#333"
+                                    CornerRadius="8"
+                                    SelectionChanged="StatusProduct_SelectionChanged">
+                                    <ComboBoxItem Content="Alles"/>
+                                    <ComboBoxItem Content="Tekort"/>
+                                    <ComboBoxItem Content="Op voorraad"/>
+                                </ComboBox>
+                            </Grid>
+                            <Grid
+                                Margin="0,0,17,6"
+                                Padding="10"
+                                Height="48">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Text="Product"
+                                    Foreground="#FFD600"
+                                    FontWeight="SemiBold"
+                                    VerticalAlignment="Center"/>
+
+                                <!--<TextBlock
+                                    Text="Leverancier"
+                                    Grid.Column="1"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>-->
+
+                                <TextBlock
+                                    Text="Stock"
+                                    Grid.Column="2"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+
+                                <TextBlock
+                                    Text="Min"
+                                    Grid.Column="3"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+
+                                <TextBlock
+                                    Text="Status"
+                                    Grid.Column="4"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+                            </Grid>
+
+
+                            <ScrollViewer Height="220">
+                                <ListView x:Name="ProductListView"
+                                    IsItemClickEnabled="True"
+                                    ItemClick="ProductListView_ItemClick"
+                                    HorizontalContentAlignment="Stretch">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Product">
+                                            <Border
+                                                CornerRadius="10"
+                                                Padding="10"
+                                                Margin="0,4"
+                                                Background="#161616">
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*"/>
+                                                        <ColumnDefinition Width="2*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Text="{x:Bind Name}" Foreground="White"/>
+                                                    <!--<TextBlock Text="{x:Bind Deliverer.Name}" Grid.Column="1" Foreground="#CCC"/>-->
+                                                    <TextBlock Text="{x:Bind WalletCountText}" Grid.Column="2" Foreground="White"/>
+                                                    <TextBlock Text="{x:Bind StockText}" Grid.Column="3" Foreground="#AAA"/>
+
+                                                    <!-- Status dot -->
+                                                    <Ellipse
+                                                        Grid.Column="4"
+                                                        Width="8"
+                                                        Height="8"
+                                                        Fill="{x:Bind NotificationColor}"
+                                                        VerticalAlignment="Center"/>
+
+                                                    <Button
+                                                        Content="+"
+                                                        Grid.Column="5"
+                                                        Padding="12,4"
+                                                        CornerRadius="8"
+                                                        Background="#FFD600"
+                                                        Foreground="Black"
+                                                        Click="OrderASpecificProduct_Button"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </ScrollViewer>
+                            <!-- Actie knop -->
+                            <Button
+                                Content="Alles bijvullen"
+                                HorizontalAlignment="Right"
+                                Padding="12,6"
+                                CornerRadius="8"
+                                Background="#FFD600"
+                                Foreground="Black"
+                                Click="Order_AllProduct_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- RIGHT -->
+                <StackPanel Grid.Column="1" Margin="30,0,0,0" Spacing="28">
+
+                    <!-- MATERIALEN -->
+                    <Border
+                        Background="#111"
+                        Padding="20"
+                        CornerRadius="16"
+                        BorderBrush="#333"
+                        BorderThickness="1">
+
+                        <StackPanel Spacing="16">
+
+                            <!-- Titel -->
+                            <TextBlock
+                                Text="Materialen"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Foreground="White"/>
+
+                            <!-- Filter -->
+                            <Grid ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox
+                                    x:Name="FilterTextBoxMatrial"
+                                    PlaceholderText="Zoek op materiaalnaam…"
+                                    Background="#1A1A1A"
+                                    Foreground="White"
+                                    BorderBrush="#333"
+                                    CornerRadius="8"
+                                    Padding="10,6"
+                                    TextChanged="Matrial_TextChanged"/>
+
+                                <ComboBox
+                                    x:Name="StatusComboBoxMatrial"
+                                    Grid.Column="1"
+                                    Width="160"
+                                    PlaceholderText="Status"
+                                    Background="#1A1A1A"
+                                    Foreground="White"
+                                    BorderBrush="#333"
+                                    CornerRadius="8"
+                                    SelectionChanged="StatusMatrial_SelectionChanged">
+                                    <ComboBoxItem Content="Alles"/>
+                                    <ComboBoxItem Content="Tekort"/>
+                                    <ComboBoxItem Content="Op voorraad"/>
+                                </ComboBox>
+                            </Grid>
+
+                            <!-- Header -->
+                            <Grid
+                                Margin="0,0,17,6"
+                                Padding="10"
+                                Height="48">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Text="Product"
+                                    Foreground="#FFD600"
+                                    FontWeight="SemiBold"
+                                    VerticalAlignment="Center"/>
+
+                                <!--<TextBlock
+                                    Text="Leverancier"
+                                    Grid.Column="1"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>-->
+
+                                <TextBlock
+                                    Text="Stock"
+                                    Grid.Column="2"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+
+                                <TextBlock
+                                    Text="Min"
+                                    Grid.Column="3"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+
+                                <TextBlock
+                                    Text="Status"
+                                    Grid.Column="4"
+                                    Foreground="#FFD600"
+                                    VerticalAlignment="Center"/>
+                            </Grid>
+
+
+                            <!-- List -->
+                            <ScrollViewer Height="200">
+                                <ListView
+                                    x:Name="MatrialListView"
+                                    IsItemClickEnabled="True"
+                                    ItemClick="MatrialListView_ItemClick">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Matrial">
+
+                                            <Border
+                                                Background="#161616"
+                                                CornerRadius="10"
+                                                Padding="10"
+                                                Margin="0,4">
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="3*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock
+                                                        Text="{x:Bind Name}"
+                                                        Foreground="White"/>
+
+                                                    <TextBlock
+                                                        Text="{x:Bind Stock}"
+                                                        Grid.Column="1"
+                                                        Foreground="White"/>
+
+                                                    <TextBlock
+                                                        Text="{x:Bind MinimumStock}"
+                                                        Grid.Column="2"
+                                                        Foreground="#AAA"/>
+
+                                                    <Ellipse
+                                                        Grid.Column="3"
+                                                        Width="8"
+                                                        Height="8"
+                                                        Fill="{x:Bind NotificationColor}"
+                                                        VerticalAlignment="Center"/>
+
+                                                    <Button
+                                                        Grid.Column="4"
+                                                        Content="+"
+                                                        Padding="10,4"
+                                                        CornerRadius="8"
+                                                        Background="#FFD600"
+                                                        Foreground="Black"
+                                                        Click="OrderASpecificMatrial_Button"/>
+                                                </Grid>
+
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </ScrollViewer>
+
+                            <!-- Actie knop -->
+                            <Button
+                                Content="Alles bijvullen"
+                                HorizontalAlignment="Right"
+                                Padding="12,6"
+                                CornerRadius="8"
+                                Background="#FFD600"
+                                Foreground="Black"
+                                Click="Order_AllMatrial_Click"/>
+
+                        </StackPanel>
+                    </Border>
+
+                    <!-- LEVERANCIERS -->
+                    <Border Background="#111" Padding="22" CornerRadius="16" BorderBrush="#333" BorderThickness="1">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="Leveranciers" FontSize="20" FontWeight="Bold" Foreground="White"/>
+
+                            <ListView x:Name="DelivererListView" IsItemClickEnabled="True" ItemClick="DelivererListView_ItemClick">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Deliverer">
+                                        <Grid ColumnDefinitions="2*,*">
+                                            <TextBlock Text="{x:Bind Name}" Foreground="White"/>
+
+                                            <Button
+                                                Grid.Column="1"
+                                                Content="Bestel alles"
+                                                CornerRadius="6"
+                                                Padding="10,4"
+                                                Background="#FFD600"
+                                                Foreground="Black"
+                                                Click="Shortcut_Company_Button"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+
+
+</Page>

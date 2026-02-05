@@ -31,6 +31,7 @@ namespace BarrocIntens.Pages
         public DashboardWindow()
         {
             InitializeComponent();
+            // add with the facture an autofill if products are out of term
         }
 
 
@@ -74,9 +75,12 @@ namespace BarrocIntens.Pages
                         break;
                     case "Technicians.TechniciansViewPage":
                         dashboardFrame.Navigate(typeof(Technicians.TechniciansViewPage));
-                        break;
+                        break; 
                     case "Settings":
                         dashboardFrame.Navigate(typeof(Settings.SettingsPage));
+                        break;
+                    case "Purchase.OverviewPage":
+                        dashboardFrame.Navigate(typeof(Purchase.OverviewPage));
                         break;
                 }
             }

@@ -1,4 +1,9 @@
-﻿using BarrocIntens.Data;
+﻿
+
+
+
+
+using BarrocIntens.Data;
 using BarrocIntens.Pages.EmployeesCreation;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -10,6 +15,14 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Microsoft.EntityFrameworkCore;
+
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace BarrocIntens.Pages.Technicians
 {
@@ -41,9 +54,8 @@ namespace BarrocIntens.Pages.Technicians
 
             var nameFilter = TechniciansNameSearchTextBox.Text?.ToLower() ?? string.Empty;
 
-            var query = db.Employees
-                .Where(c => c.Department == "Maintenance")
-                .AsQueryable();
+            var query = db.Employees.Include(e => e.Department).Where(e => e.Department.Name == "Maintenance").
+                AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(nameFilter))
                 query = query.Where(c => c.Name.ToLower().Contains(nameFilter));

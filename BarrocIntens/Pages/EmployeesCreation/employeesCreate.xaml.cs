@@ -31,7 +31,7 @@ public sealed partial class employeesCreate : Page
         InitializeComponent();
     }
 
-
+    private List<int> SelectedDepartmentIds = new();
     private bool IsValidEmail(string email)
     {
         try
@@ -108,7 +108,7 @@ public sealed partial class employeesCreate : Page
             Password = hashedPassword,         // <-- hashed password
             PhoneNumber = employeePhoneTextBox.Text,
             City = employeeCityTextBox.Text,
-            Department = department
+            DepartmentId = 1 // voeg nog department toe
         };
 
         // Clear all inputs

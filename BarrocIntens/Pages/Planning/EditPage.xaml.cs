@@ -81,5 +81,5 @@ namespace BarrocIntens.Pages.Planning
                 Frame.Navigate(typeof(Pages.Planning.CalenderPage));
             }
         }
-        }
+    }
 }

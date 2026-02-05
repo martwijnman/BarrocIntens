@@ -13,7 +13,7 @@
 
     <Page.Resources>
 
-        <!-- TITELS -->
+        <!-- ===== TYPOGRAFIE ===== -->
         <Style x:Key="PageTitle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -27,7 +27,25 @@
             <Setter Property="Margin" Value="0,0,0,24"/>
         </Style>
 
-        <!-- BUTTONS -->
+        <Style x:Key="LabelText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#8A8A8A"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="CardTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="CardSubText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#8A8A8A"/>
+        </Style>
+
+
+        <!-- ===== BUTTONS ===== -->
         <Style x:Key="PrimaryButton" TargetType="Button">
             <Setter Property="CornerRadius" Value="10"/>
             <Setter Property="Padding" Value="14,6"/>
@@ -46,7 +64,8 @@
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
 
-        <!-- COMBOBOX -->
+
+        <!-- ===== INPUTS ===== -->
         <Style TargetType="ComboBox">
             <Setter Property="Background" Value="#141414"/>
             <Setter Property="Foreground" Value="White"/>
@@ -57,10 +76,24 @@
             <Setter Property="Margin" Value="0,0,0,24"/>
         </Style>
 
+
+        <!-- ===== LIST ===== -->
+        <Style TargetType="ListViewItem">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,0,0,14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="#141414"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="Padding" Value="18"/>
+        </Style>
+
     </Page.Resources>
 
-    <Grid Background="#0B0B0B"
-      Padding="28">
+
+    <Grid Background="#0B0B0B" Padding="28">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -69,30 +102,25 @@
         </Grid.RowDefinitions>
 
         <!-- HEADER -->
-        <StackPanel Grid.Row="0">
-            <TextBlock Text="Facturen"
-                   Style="{StaticResource PageTitle}"/>
-
-            <TextBlock Text="Overzicht van alle facturen"
-                   Style="{StaticResource PageSubTitle}"/>
+        <StackPanel>
+            <TextBlock Text="Facturen" Style="{StaticResource PageTitle}"/>
+            <TextBlock Text="Overzicht van alle facturen" Style="{StaticResource PageSubTitle}"/>
         </StackPanel>
 
         <!-- FILTER -->
-        <StackPanel Grid.Row="1"
-                Margin="0,0,0,16">
-
-            <TextBlock Text="Filter op betaalstatus"
-                   FontSize="13"
-                   Foreground="#8A8A8A"
-                   Margin="0,0,0,6"/>
+        <StackPanel Grid.Row="1" Margin="0,0,0,16">
+            <TextBlock Text="Filter op betaalstatus" Style="{StaticResource LabelText}"/>
 
             <ComboBox x:Name="PaidCombobox"
                   PlaceholderText="Selecteer status"
                   SelectionChanged="Filter_Changed">
+                <x:String>Alles</x:String>
                 <x:String>Betaald</x:String>
                 <x:String>Niet betaald</x:String>
             </ComboBox>
         </StackPanel>
+
+
 
         <!-- LIST -->
         <ListView x:Name="FactureListView"
@@ -100,23 +128,15 @@
               Background="Transparent"
               BorderThickness="0"
               IsItemClickEnabled="True">
-
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0,0,0,14"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-
+            <TextBlock x:Name="NoResultText"
+           Grid.Row="2"
+           Foreground="White"
+           TextAlignment="Center"
+           Margin="0,16,0,0"/>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Facture">
 
-                    <!-- CARD -->
-                    <Border Background="#141414"
-                        CornerRadius="18"
-                        Padding="18">
-
+                    <Border Style="{StaticResource Card}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>
@@ -127,30 +147,26 @@
                             <!-- KLANT -->
                             <StackPanel Spacing="4">
                                 <TextBlock Text="{Binding Quote.Customer.Name}"
-                                       FontSize="16"
-                                       FontWeight="SemiBold"
-                                       Foreground="White"/>
+                                       Style="{StaticResource CardTitle}"/>
 
                                 <TextBlock Text="Factuur"
-                                       FontSize="12"
-                                       Foreground="#8A8A8A"/>
+                                       Style="{StaticResource CardSubText}"/>
                             </StackPanel>
 
                             <!-- STATUS -->
                             <TextBlock Grid.Column="1"
                                    Text="{Binding PayCheck}"
+                                   Foreground="{x:Bind PayColor}"
                                    FontSize="14"
                                    FontWeight="SemiBold"
-                                   Foreground="#FFD600"
                                    VerticalAlignment="Center"/>
 
                             <!-- ACTIE -->
                             <Button Grid.Column="2"
                                 Content="Details"
                                 Style="{StaticResource GhostButton}"
-                                Click="Button_Click"/>
+                                Click="Button_Click_Detail_Facture"/>
                         </Grid>
-
                     </Border>
 
                 </DataTemplate>

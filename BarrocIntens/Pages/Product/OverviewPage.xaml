@@ -13,6 +13,10 @@
       Padding="24">
 
         <StackPanel Spacing="26">
+            <TextBlock Text="Productoverzicht"
+                   FontSize="32"
+                   FontWeight="SemiBold"
+                   Foreground="#FFD600"/>
 
             <!-- FILTER BAR -->
             <Border Background="#141414"
@@ -36,15 +40,7 @@
                         <x:String>Niet op voorraad</x:String>
                     </ComboBox>
 
-                    <NumberBox x:Name="PriceFilter"
-                           Width="150"
-                           Header="Max prijs"
-                           Background="#0F0F0F"
-                           Foreground="White"
-                           BorderBrush="#2A2A2A"
-                           BorderThickness="1"
-                           CornerRadius="10"
-                           ValueChanged="Filter_Changed"/>
+
 
                     <TextBox x:Name="ProductSearchTextBox"
                          Width="240"
@@ -125,10 +121,31 @@
                                     BorderThickness="1"
                                     HorizontalAlignment="Left">
 
-                                    <TextBlock Text="{x:Bind Stock}"
-                                           FontSize="12"
-                                           Foreground="#B5B5B5"/>
+                                    <Border Background="#0F0F0F"
+                                        Padding="6,3"
+                                        CornerRadius="8"
+                                        BorderBrush="#2A2A2A"
+                                        BorderThickness="1"
+                                        HorizontalAlignment="Left">
+
+                                        <StackPanel>
+                                            <TextBlock
+                                                Text="{x:Bind StockText}"
+                                                FontSize="12"
+                                                Foreground="#B5B5B5"/>
+
+                                            <TextBlock
+                                                Text="{x:Bind WalletCountText}"
+                                                FontSize="12"
+                                                Foreground="White"/>
+                                        </StackPanel>
+
+                                    </Border>
+
+
                                 </Border>
+
+
 
                                 <StackPanel Orientation="Horizontal"
                                         Spacing="10"
