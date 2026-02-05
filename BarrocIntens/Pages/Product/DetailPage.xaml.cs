@@ -46,6 +46,15 @@ namespace BarrocIntens.Pages.Product
         {
             var db = new AppDbContext();
             var product = db.Products.FirstOrDefault(p => p.Id == productId);
+
+            if (product == null)
+            {
+                // Optional: Show an error or navigate back
+                return;
+            }
+
+
+
             ProductImage.Source = new BitmapImage(new Uri($"ms-appx:///Assets/{product.Image}", UriKind.RelativeOrAbsolute));
             NameText.Text = product.Name;
             CategoryText.Text = product.Category;
@@ -56,6 +65,9 @@ namespace BarrocIntens.Pages.Product
             DelivererText.Text = product.Deliverer;
             IsMachineText.Text = product.IsMachine ? "Yes" : "No";
             NotificationText.Text = product.NotificationOutOfStock ? "Yes" : "No";
+            ExtraInfo.Text = product.ExtraInformation;
+
+
         }
 
         private void EditProduct_Click(object sender, RoutedEventArgs e)

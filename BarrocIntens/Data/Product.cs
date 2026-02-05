@@ -16,6 +16,8 @@ namespace BarrocIntens.Data
         [MaxLength(180)]
         public string Name { get; set; }
 
+        public string ExtraInformation { get; set; }
+
         [Required]
         public string Category { get; set; }
 

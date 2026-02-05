@@ -8,56 +8,119 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Padding="15" Spacing="15">
-        <TextBlock Foreground="Black">Naam:</TextBlock>
-        <TextBox x:Name="employeeNameTextBox" 
-             ></TextBox>
-        <TextBlock Foreground="Black">E-mail:</TextBlock>
-        <TextBox x:Name="employeeEmailTextBox" 
-        ></TextBox>
+    <Page.Resources>
+        <Style x:Key="PageTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#FFD600"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
 
-        <TextBlock Foreground="Black">Wachtwoord:</TextBlock>
-        <PasswordBox x:Name="generatePasswordBox" Width="200" PlaceholderText="Generate password"
-        PasswordChanged="PasswordHiddenBox_PasswordChanged"/>
-        
-        <Button Content="Generate" Click="GeneratePassword_Click"/>
+        <Style x:Key="SubTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#AAAAAA"/>
+            <Setter Property="Margin" Value="0,0,0,25"/>
+        </Style>
 
-        <TextBox
-            x:Name="passwordVisibleBox"
-            Width="200"
-            Visibility="Collapsed"
-            TextChanged="PasswordVisibleBox_TextChanged"
-        />
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Background" Value="#2A2A2A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFD600"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
 
-        <Button
-            x:Name="togglePasswordButton"
-            Click="TogglePasswordVisibility_Click"
-            Content="👁"
-        />
-        <TextBlock Foreground="Black">Telefoonnummer:</TextBlock>
-        <TextBox x:Name="employeePhoneTextBox" 
-            ></TextBox>
+        <Style TargetType="PasswordBox">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Background" Value="#2A2A2A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFD600"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
 
-        <TextBlock Foreground="Black">Stad:</TextBlock>
-        <TextBox x:Name="employeeCityTextBox" 
-             ></TextBox>
+        <Style TargetType="ComboBox">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Background" Value="#2A2A2A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFD600"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
 
-        
-        <TextBlock Foreground="Black">Afdeling:</TextBlock>
-        <ComboBox RelativePanel.AlignVerticalCenterWithPanel="True" x:Name="employeeDepartmentComboBox">
-            <ComboBoxItem>Sales</ComboBoxItem>
-            <ComboBoxItem>Purchasing</ComboBoxItem>
-            <ComboBoxItem>Maintenance</ComboBoxItem>
-            <ComboBoxItem>Finance</ComboBoxItem>
-            <ComboBoxItem>Planning</ComboBoxItem>
-        </ComboBox>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FFD600"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+    </Page.Resources>
 
+    <Grid Padding="80" Background="Black">
+        <ScrollViewer>
+            <StackPanel Spacing="10">
 
-        <TextBlock x:Name="ErrorTextBlock" Foreground="red"></TextBlock>
+                <TextBlock Text="Nieuwe Medewerker"
+                           Style="{StaticResource PageTitle}"/>
 
-        <TextBlock x:Name="CheckTextBlock" Foreground="Green"></TextBlock>
+                <TextBlock Text="Vul de gegevens in om een nieuwe medewerker te registreren"
+                           Style="{StaticResource SubTitle}"/>
 
-        <Button x:Name="SaveButton" Click="SaveButton_Click">Opslaan</Button>
+                <TextBox x:Name="employeeNameTextBox" Header="Volledige Naam"/>
 
-    </StackPanel>
+                <TextBox x:Name="employeeEmailTextBox" Header="E-mailadres"/>
+
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <TextBox x:Name="employeePhoneTextBox" Header="Telefoonnummer" Width="145"/>
+                    <TextBox x:Name="employeeCityTextBox" Header="Stad" Width="145"/>
+                </StackPanel>
+
+                <ComboBox x:Name="employeeDepartmentComboBox" Header="Afdeling">
+                    <ComboBoxItem Content="Sales"/>
+                    <ComboBoxItem Content="Purchasing"/>
+                    <ComboBoxItem Content="Maintenance"/>
+                    <ComboBoxItem Content="Finance"/>
+                    <ComboBoxItem Content="Planning"/>
+                </ComboBox>
+
+                <TextBlock Text="Wachtwoord" Foreground="White" FontSize="12" Margin="0,10,0,0"/>
+                <Grid Width="300" HorizontalAlignment="Left">
+                    <PasswordBox x:Name="generatePasswordBox" 
+                                 PasswordChanged="PasswordHiddenBox_PasswordChanged"
+                                 PlaceholderText="Wachtwoord"/>
+                    <TextBox x:Name="passwordVisibleBox"
+                             Visibility="Collapsed"
+                             TextChanged="PasswordVisibleBox_TextChanged"/>
+                    <Button Padding="0,0,0,10"
+                        x:Name="togglePasswordButton"
+                            Content="👁"
+                            Click="TogglePasswordVisibility_Click"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            Width="40"
+                            BorderThickness="0"/>
+                </Grid>
+
+                <Button Content="Genereer Wachtwoord" 
+                        Click="GeneratePassword_Click" 
+                        FontSize="12" Width="150" Height="32" Padding="5"/>
+
+                <TextBlock x:Name="ErrorTextBlock" Foreground="#FF4D4D" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                <TextBlock x:Name="CheckTextBlock" Foreground="#4DFF88" FontWeight="SemiBold"/>
+
+                <Button x:Name="SaveButton"
+                        Content="Medewerker opslaan"
+                        Width="300"
+                        Margin="0,25,0,0"
+                        Click="SaveButton_Click"/>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </Page>

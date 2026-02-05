@@ -39,15 +39,14 @@ namespace BarrocIntens.Pages.Product
             using (var db = new AppDbContext())
             {
                 AllProducts = db.Products
-                .OrderBy(p => p.Name)
-                .ToList();
+                    .Where(p => p.Category != "Tools")
+                    .OrderBy(p => p.Name)
+                    .ToList();
 
-                var products = db.Products.ToList();
-                ProductView.ItemsSource = products;
+                // Use the filtered list for the UI
+                ProductView.ItemsSource = AllProducts;
             }
             this.Loaded += OverviewPage_Loaded;
-
-
         }
 
         private Dictionary<Data.Product, int> wallet = new();
@@ -172,7 +171,12 @@ namespace BarrocIntens.Pages.Product
 
             var nameFilter = ProductSearchTextBox.Text?.ToLower() ?? string.Empty;
 
-            var query = db.Products.AsQueryable();
+            // Start with a query that ALREADY excludes the toolkit
+            var query = db.Products
+                .Where(p => p.Category != "Tools");
+
+            if (!string.IsNullOrWhiteSpace(nameFilter))
+                query = query.Where(c => c.Name.ToLower().Contains(nameFilter));
 
 
 

@@ -1,4 +1,4 @@
-using BarrocIntens.Data;
+﻿using BarrocIntens.Data;
 using BarrocIntens.Pages.EmployeesCreation;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -9,35 +9,29 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace BarrocIntens.Pages.Technicians
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class TechniciansViewPage : Page
     {
-        private object query;
+        // Wallet to track selected products
+        private Dictionary<Data.Product, int> wallet = new();
 
         public TechniciansViewPage()
         {
             InitializeComponent();
 
-            ApplyFilters(); //Load all data beforehand
-            var db = new AppDbContext();
+            // Load technicians
+            ApplyFilters();
 
-
+            // Load only the toolkit product for the Technicians page
+            LoadToolkitProduct();
         }
 
+        // =====================
+        // Technicians Filtering
+        // =====================
         private void TechniciansNameSearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
             => ApplyFilters();
 
@@ -47,14 +41,14 @@ namespace BarrocIntens.Pages.Technicians
 
             var nameFilter = TechniciansNameSearchTextBox.Text?.ToLower() ?? string.Empty;
 
-            var query = db.Employees.Where(c => c.Department == "Maintenance").
-                AsQueryable();
+            var query = db.Employees
+                .Where(c => c.Department == "Maintenance")
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(nameFilter))
                 query = query.Where(c => c.Name.ToLower().Contains(nameFilter));
 
-            TechniciansListView.ItemsSource = query
-                .ToList();
+            TechniciansListView.ItemsSource = query.ToList();
         }
 
         private void TechniciansListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -68,11 +62,7 @@ namespace BarrocIntens.Pages.Technicians
             var button = (Button)sender;
             var selectedEmployee = (Employee)button.DataContext;
 
-            if (selectedEmployee == null)
-            {
-                // This should never happen now
-                return;
-            }
+            if (selectedEmployee == null) return;
 
             Frame.Navigate(typeof(EmployeesUpdatePage), selectedEmployee);
         }
@@ -82,67 +72,90 @@ namespace BarrocIntens.Pages.Technicians
             Frame.Navigate(typeof(Pages.Planning.CreatePage));
         }
 
-        // Gebruikte bron: https://stackoverflow.com/a/75269157
-        private void CalendarView_CalendarViewDayItemChanging(CalendarView sender, CalendarViewDayItemChangingEventArgs args)
-        {
-            var calendarItemDate = args.Item.Date.Date;
-            using (var db = new AppDbContext())
-            {
-                string status = StatusCheckbox.SelectedItem?.ToString();
-                var relevantCalendarItems = db.Plannings
-                    .Where(item => item.Date == DateOnly.FromDateTime(calendarItemDate))
-                    .Where(p => status == null || p.Status == status)
-                    .ToList();
-
-                args.Item.DataContext = relevantCalendarItems;
-                args.Item.IsBlackout = relevantCalendarItems.Count == 0;
-            }
-        }
-
         private async void DayItemListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            // Hiermee gaan we naar een afspraak
             var clickedCalendarItem = (Data.Planning)e.ClickedItem;
             int clickedCalendarItemId = clickedCalendarItem.Id;
             Frame.Navigate(typeof(Pages.Planning.DetailPage), clickedCalendarItemId);
         }
 
-
-        private void Filter_Changed(object sender, object e)
+        // =====================
+        // Toolkit Product Logic
+        // =====================
+        private void LoadToolkitProduct()
         {
-            using (var db = new AppDbContext())
+            using var db = new AppDbContext();
+
+            //All the products pulled into this page need to be from the catagory 'Tools', 
+            //because the tools are the products that the Technicians use.
+
+            // This pulls every product with the catagory 'Tools'.
+            var toolkit = db.Products
+                            .Where(p => p.Category == "Tools")
+                            .ToList();
+
+            ProductView.ItemsSource = toolkit;
+            ShowToolkitStockWarning();
+        }
+
+        private async void ShowToolkitStockWarning()
+        {
+            using var db = new AppDbContext();
+            var toolkit = db.Products.FirstOrDefault(p => p.Category == "Tools");
+            if (toolkit == null) return;
+
+            if (toolkit.Stock <= 0)
             {
-                var query = db.Plannings.AsQueryable();
-
-                if (StatusCheckbox.SelectedItem as string != "")
+                var dialog = new ContentDialog
                 {
-                    var planningStatus = db.Plannings
-                                    .Where(p => p.Status == StatusCheckbox.SelectedItem)
-                                    .Select(p => p.Status);
-                    query = query.Where(p => planningStatus.Contains(p.Status));
-                }
-
-                if (CategoryCheckbox.SelectedItem as string != "")
-                {
-                    var planningCategories = db.Plannings
-                                    .Where(p => p.Category == CategoryCheckbox.SelectedItem)
-                                    .Select(p => p.Category);
-                    query = query.Where(p => planningCategories.Contains(p.Category));
-                }
-                //if (DepartmentCheckbox.SelectedValue as string != "")
-                //{
-                //    var planningDepartments = db.Plannings
-                //                    .Where(p => p.DepartmentId == DepartmentCheckbox.SelectedItem)
-                //                    .Select(p => p.DepartmentId);
-                //    query = query.Where(p => planningDepartments.Contains(p.DepartmentId));
-                //}
-
-                //calendarView.ItemTemplate = query.ToList();
-                calendarView.InvalidateArrange();
-
+                    Title = "Waarschuwing",
+                    Content = "⚠ Toolkit is uitverkocht!",
+                    CloseButtonText = "Sluiten",
+                    XamlRoot = this.XamlRoot
+                };
+                await dialog.ShowAsync();
             }
+        }
 
+        // =====================
+        // Product Buttons
+        // =====================
+        private void PlusClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var product = (Data.Product)button.DataContext;
+
+            if (product.Stock <= 0) return;
+
+            product.Stock--;
+
+            if (wallet.ContainsKey(product))
+                wallet[product]++;
+            else
+                wallet[product] = 1;
+        }
+
+        private void MinClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var product = (Data.Product)button.DataContext;
+
+            if (!wallet.ContainsKey(product)) return;
+
+            wallet[product]--;
+            product.Stock++;
+
+            if (wallet[product] <= 0)
+                wallet.Remove(product);
+        }
+
+        private void ProductClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var product = (Data.Product)button.DataContext;
+
+            // Navigate to the Product DetailPage
+            Frame.Navigate(typeof(Pages.Product.DetailPage), product.Id);
         }
     }
 }
-

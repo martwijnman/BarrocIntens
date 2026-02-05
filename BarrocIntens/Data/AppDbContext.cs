@@ -204,7 +204,18 @@ namespace BarrocIntens.Data
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Root"),
                     Department = "Management"
-                });
+                },
+
+            new Employee
+            {
+                Id = 5,
+                Name = "Marius The Aquarius",
+                Email = "Mari@Aquari.nl",
+                PhoneNumber = "0625242128",
+                City = "Breda",
+                Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
+                Department = "Maintenance"
+            });
 
             modelBuilder.Entity<Malfunction>().HasData(
                 new Malfunction
@@ -273,24 +284,24 @@ namespace BarrocIntens.Data
                 });
 
             //modelBuilder.Entity<Planning>()
-    //.HasMany(p => p.Customers)
-    //.WithMany()
-    //.UsingEntity<Dictionary<string, object>>(
-    //    "PlanningCustomers",
-    //    j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
-    //    j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
-    //    j =>
-        //{
-        //    j.HasKey("PlanningId", "CustomerId");
-        //    j.ToTable("PlanningCustomers");
+            //.HasMany(p => p.Customers)
+            //.WithMany()
+            //.UsingEntity<Dictionary<string, object>>(
+            //    "PlanningCustomers",
+            //    j => j.HasOne<Customer>().WithMany().HasForeignKey("CustomerId"),
+            //    j => j.HasOne<Planning>().WithMany().HasForeignKey("PlanningId"),
+            //    j =>
+            //{
+            //    j.HasKey("PlanningId", "CustomerId");
+            //    j.ToTable("PlanningCustomers");
 
-        //    // ✅ Join table seeding
-        //    j.HasData(
-        //        new { CustomerId = 1, PlanningId = 1 },
-        //        new { CustomerId = 2, PlanningId = 2 },
-        //        new { CustomerId = 3, PlanningId = 3 }
-        //    );
-        //});
+            //    // ✅ Join table seeding
+            //    j.HasData(
+            //        new { CustomerId = 1, PlanningId = 1 },
+            //        new { CustomerId = 2, PlanningId = 2 },
+            //        new { CustomerId = 3, PlanningId = 3 }
+            //    );
+            //});
 
 
             modelBuilder.Entity<Product>().HasData(
@@ -298,6 +309,7 @@ namespace BarrocIntens.Data
                 {
                     Id = 1,
                     Name = "Wizzmie Coffee Machine",
+                    ExtraInformation = "N/A",
                     Category = "IceCoffee",
                     Price = 249.99,
                     Stock = 50,
@@ -311,6 +323,7 @@ namespace BarrocIntens.Data
                 {
                     Id = 2,
                     Name = "Amazon Coffee machine",
+                    ExtraInformation = "N/A",
                     Category = "Verwarming",
                     Price = 1299.00,
                     Stock = 15,
@@ -324,6 +337,7 @@ namespace BarrocIntens.Data
                 {
                     Id = 3,
                     Name = "Arah Kopi",
+                    ExtraInformation = "N/A",
                     Category = "AllTypes",
                     Price = 199.99,
                     Stock = 25,
@@ -337,6 +351,7 @@ namespace BarrocIntens.Data
                 {
                     Id = 4,
                     Name = "Pawon Luwak Machine",
+                    ExtraInformation = "N/A",
                     Category = "Warm",
                     Price = 899.00,
                     Stock = 5,
@@ -350,6 +365,7 @@ namespace BarrocIntens.Data
             {
                 Id = 5,
                 Name = "Aceh Arabica 1.000 kg",
+                ExtraInformation = "N/A",
                 Category = "Arabica",
                 Price = 159.00,
                 Stock = 5,
@@ -357,6 +373,23 @@ namespace BarrocIntens.Data
                 Deliverer = "Aceh Coffee Company",
                 NotificationOutOfStock = false,
                 Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
+                IsMachine = false
+            },
+
+            new Product
+            {
+                Id = 6,
+                Name = "Ready-Steady Toolkid",
+                ExtraInformation = "Top:\n\nDriver Bit Set (Top Left)\nCombination Wrenches (Right)\nPrecision Driver/Extension (Center)\n\nBottom:\n\n" +
+                "Socket Wrench / Ratchet (Left)\nPliers (Center): * Combination Pliers\nNeedle-Nose/Diagonal Hybrid\nBit Driver / Nut Driver (Far Right)\n" +
+                "Small Accessories: Various sockets, adapters, and spacers",
+                Category = "Tools",
+                Price = 357.99,
+                Stock = 50,
+                MinimumStock = 10,
+                Deliverer = "",
+                NotificationOutOfStock = false,
+                Image = "Toolkit.png.png",
                 IsMachine = false
             });
         }
