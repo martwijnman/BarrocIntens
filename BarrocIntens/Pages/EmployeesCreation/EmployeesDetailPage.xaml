@@ -12,7 +12,7 @@
     <Grid>
         <StackPanel Spacing="25" Margin="30"  Width="750" BorderBrush="Yellow">
             <Button x:Name="backButton"
-         Click="backButton_Click">Terug naar Overzicht</Button>
+         Click="backButton_Click" Background="Yellow" Foreground="Black">Terug naar Overzicht</Button>
             <TextBlock Foreground="Yellow" x:Name="employeeNameTextBlock"/>
             <TextBlock Foreground="Yellow" x:Name="employeeEmailTextBlock"/>
             <TextBlock Foreground="Yellow" x:Name="EmployeePhoneTextBlock"/>

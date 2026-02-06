@@ -1,4 +1,5 @@
 using BarrocIntens.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -35,6 +36,7 @@ namespace BarrocIntens.Pages.EmployeesCreation
             using var db = new AppDbContext();
             var employee = db.Employees
                 .Where(e => e.Id == empId)
+                .Include(e => e.Department)
                 .Select(emp => new
                 {
                     emp.Name,
@@ -56,7 +58,7 @@ namespace BarrocIntens.Pages.EmployeesCreation
             employeeEmailTextBlock.Text = $"Email: {employee.Email}";
             EmployeePhoneTextBlock.Text = $"Telefoon: {employee.PhoneNumber}";
             EmployeeCityTextBlock.Text = $"Stad: {employee.City}";
-            EmployeeDepartmentTextBlock.Text = $"Afdeling: {employee.Department}";
+            EmployeeDepartmentTextBlock.Text = employee.Department?.Name ?? "No Department";
 
             // Handle tasks safely
             if (employee.Tasks == null || employee.Tasks.Count == 0)

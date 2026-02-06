@@ -55,7 +55,7 @@
                      Padding="10,6"
                      TextChanged="departmentSearchTextBox_TextChanged"/>
 
-                <Button x:Name="CreateButton" Content="+" Click="CreateButton_Click" ></Button>
+                <Button x:Name="CreateButton" Content="+" Click="CreateButton_Click" Background="Yellow" Foreground="Black" Padding="10" Margin="10" ></Button>
             </StackPanel>
         </Border>
 
