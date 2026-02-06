@@ -47,7 +47,10 @@ namespace BarrocIntens.Pages.Product
         private void LoadProduct(int productId)
         {
             var db = new AppDbContext();
-            var product = db.Products.Include(p => p.Deliverer).FirstOrDefault(p => p.Id == productId);
+            var product = db.Products
+        .Include(p => p.Deliverer)
+        .FirstOrDefault(p => p.Id == productId);
+
             if (product == null)
             {
                 // Optional: Show an error or navigate back
@@ -56,7 +59,7 @@ namespace BarrocIntens.Pages.Product
 
 
 
-            // product d4tails
+            // product details
             ProductImage.Source = new BitmapImage(new Uri($"ms-appx:///Assets/{product.Image}", UriKind.RelativeOrAbsolute));
             NameText.Text = product.Name;
             CategoryText.Text = product.Category;
@@ -71,8 +74,8 @@ namespace BarrocIntens.Pages.Product
 
 
 
-            // matrials for the product
-            var matrials = db.ProductMaterials
+            // materials for the product
+            var materials = db.ProductMaterials
                 .Include(c => c.Material)
                 .Where(p => p.ProductId == product.Id)
                 .ToList()
@@ -86,7 +89,7 @@ namespace BarrocIntens.Pages.Product
                         : Colors.Green
                 });
 
-            MaterialsList.ItemsSource = matrials;
+            MaterialsList.ItemsSource = materials;
         }
         private void GoBack_Button(object sender, RoutedEventArgs e)
         {

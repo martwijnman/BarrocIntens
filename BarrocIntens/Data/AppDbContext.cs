@@ -173,7 +173,7 @@ namespace BarrocIntens.Data
                 new Department
                 {
                     Id = 6,
-                    Name = "mantenance",
+                    Name = "maintenance",
                     Description =
                       "Beheert alle storingen, monteurs"
                 });
@@ -233,6 +233,18 @@ namespace BarrocIntens.Data
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Root"),
                     DepartmentId = 5,
+                },
+
+
+                new Employee
+                {
+                    Id = 6,
+                    Name = "Marius The Aquarius",
+                    Email = "MariThe@Aquari.nl",
+                    PhoneNumber = "0685288128",
+                    City = "Breda",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
+                    DepartmentId = 6,
                 });
 
             modelBuilder.Entity<Malfunction>().HasData(
