@@ -31,7 +31,7 @@ namespace BarrocIntens.Pages.Product
             LoadDeliverers();
             LoadMatrials();
         }
-        public List<int> SelectedMatrialIds = new();
+        public List<int> SelectedMaterialIds = new();
         private void CreateButton(object sender, RoutedEventArgs e)
         {
             using (var db = new Data.AppDbContext())
@@ -44,7 +44,7 @@ namespace BarrocIntens.Pages.Product
                     Stock = int.Parse(StockTextbox.Text),
                     MinimumStock = int.Parse(MinimumStockTextbox.Text),
                     DelivererId = 1,
-                    NotificationOutOfStock = false,
+                    //NotificationOutOfStock = false,
                     Image = ImageTextbox.Text
                 };
 
@@ -72,18 +72,18 @@ namespace BarrocIntens.Pages.Product
 
             if (btn.IsChecked == true)
             {
-                if (!SelectedMatrialIds.Contains(id)) SelectedMatrialIds.Add(id);
+                if (!SelectedMaterialIds.Contains(id)) SelectedMaterialIds.Add(id);
             }
             else
             {
-                SelectedMatrialIds.Remove(id);
+                SelectedMaterialIds.Remove(id);
             }
         }
         
         private void LoadMatrials()
         {
             using var db = new AppDbContext();
-            foreach (var matrial in db.Matrials.ToList())
+            foreach (var matrial in db.Materials.ToList())
             {
                 var btn = new ToggleButton
                 {

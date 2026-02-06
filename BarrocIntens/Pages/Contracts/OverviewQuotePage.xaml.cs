@@ -1,4 +1,6 @@
 using BarrocIntens.Data;
+using BarrocIntens.Helpers;
+using Microsoft.Azure.Amqp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -8,7 +10,6 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using PdfSharp.Drawing;
-using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using PdfSharp.Quality;
 using System;
@@ -16,11 +17,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using System.Net;
-using System.Net.Mail;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -97,22 +98,12 @@ public sealed partial class OverviewQuotePage : Page
         }
     }
 
-
-
-
-
-
     // Accepted button
     private void SendEmail(Quote quote)
     {
         if (quote.IsAccepted == true && quote.IsRejected == false)
         {
-            MailMessage mail = new MailMessage();
-            mail.From = new MailAddress("sender@example.com");
-            mail.To.Add("recipient@example.com");
-            mail.Subject = $"Offerte {quote.Id} goedgekeurd!";
-            mail.Body =
-            $@"Geachte {quote.Customer.Name},
+            HelperEmail.SendEmail(quote.Customer.Email, $@"Geachte {quote.Customer.Name},
 
             Uw offerte met nummer {quote.Id} is succesvol goedgekeurd!
             Wij gaan direct voor u aan de slag met de verdere verwerking.
@@ -120,25 +111,12 @@ public sealed partial class OverviewQuotePage : Page
             U ontvangt binnenkort een factuur en aanvullende details over de bestelling.
 
             Met vriendelijke groet,  
-            Team BarrocIntens";
-
-            mail.IsBodyHtml = false; // Set to true for HTML content
-
-            // Configure SMTP client
-            SmtpClient smtp = new SmtpClient("smtp.example.com", 587);
-            smtp.Credentials = new NetworkCredential("username", "password");
-            smtp.EnableSsl = true;
-            //smtp.Send(mail);
+            Team BarrocIntens", "");
 
         }
         else if(quote.IsAccepted == false && quote.IsRejected == true)
         {
-            MailMessage mail = new MailMessage();
-            mail.From = new MailAddress("sender@example.com");
-            mail.To.Add("recipient@example.com");
-            mail.Subject = $"Offerte {quote.Id} geweigerd!";
-            mail.Body =
-            $@"Geachte {quote.Customer.Name},
+            HelperEmail.SendEmail(quote.Customer.Email, $@"Geachte {quote.Customer.Name},
 
             Uw offerte met nummer {quote.Id} is helaas afgoedgekeurd!
             U kunt een nieuwe afspraak maken met ons, dan gaan wij u spoedig mogelijk helpen.
@@ -146,14 +124,7 @@ public sealed partial class OverviewQuotePage : Page
             Sorry voor het ongemak.
 
             Met vriendelijke groet,  
-            Team BarrocIntens";
-            mail.IsBodyHtml = false; // Set to true for HTML content
-
-            // Configure SMTP client
-            SmtpClient smtp = new SmtpClient("smtp.example.com", 587);
-            smtp.Credentials = new NetworkCredential("username", "password");
-            smtp.EnableSsl = true;
-            //smtp.Send(mail);
+            Team BarrocIntens", "");
         }
     }
     private void SaveFacture(Quote quote)
@@ -184,10 +155,6 @@ public sealed partial class OverviewQuotePage : Page
         db.SaveChanges();
         Frame.Navigate(typeof(Pages.Contracts.OverviewQuotePage));
     }
-
-
-
-
 
     // pdf produceren
     private void MakePDFFacture(Quote quote)

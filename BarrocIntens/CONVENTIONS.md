@@ -47,7 +47,7 @@
 - mode: darkmode
 
 ## commands
-- no click-events in code-behind
+- no click-events in code-bind
 - commands are allowed in dutch
 
 ## Layouts (Reusable UI)

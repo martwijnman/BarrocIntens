@@ -2,17 +2,23 @@
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation.Metadata;
+using System.Runtime.CompilerServices;
+
 
 namespace BarrocIntens.Data
 {
-    public class Product
+    public class Product : INotifyPropertyChanged
+
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
         [Key]
         public int Id { get; set; }
 
@@ -30,7 +36,19 @@ namespace BarrocIntens.Data
 
         [Required]
         //[Range(0, 9999, ErrorMessage = "Stock moet tussen 1 en 9999 liggen")]
-        public int Stock { get; set; }
+        private int _stock;
+        public int Stock
+        {
+            get => _stock;
+            set
+            {
+                _stock = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotificationOutOfStock)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotificationColor)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotificationSymbol)));
+            }
+        }
+
         public string StockText => $"{Stock} op voorraad";
 
         [Required]
@@ -49,16 +67,18 @@ namespace BarrocIntens.Data
         public int DelivererId { get; set; }
         public Deliverer Deliverer { get; set; }
 
+        [NotMapped]
+        public bool NotificationOutOfStock => Stock <= MinimumStock;
 
-        [Required]
-        public bool NotificationOutOfStock { get; set; }
-        public string NotificationSymbol
-        {
-            get { return NotificationOutOfStock ? "○" : "●"; }
-        }
+        [NotMapped]
+        public string NotificationSymbol =>
+            NotificationOutOfStock ? "○" : "●";
+
+        [NotMapped]
         public Brush NotificationColor =>
-            NotificationOutOfStock ? new SolidColorBrush(Colors.Red)
-                   : new SolidColorBrush(Colors.LimeGreen);
+            NotificationOutOfStock
+                ? new SolidColorBrush(Colors.Red)
+                : new SolidColorBrush(Colors.LimeGreen);
 
         [Required]
         public string Image { get; set; }
@@ -82,7 +102,7 @@ namespace BarrocIntens.Data
                     planning.Stock = stock;
                     planning.MinimumStock = minimumStock;
                     planning.DelivererId = delivererId;
-                    planning.NotificationOutOfStock = notificationOutOfStock;
+                    //planning.NotificationOutOfStock = notificationOutOfStock;
                     planning.Image = image;
                     db.SaveChanges();
                 }

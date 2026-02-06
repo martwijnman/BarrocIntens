@@ -47,8 +47,7 @@ namespace BarrocIntens.Pages.Product
         private void LoadProduct(int productId)
         {
             var db = new AppDbContext();
-            var product = db.Products.FirstOrDefault(p => p.Id == productId);
-
+            var product = db.Products.Include(p => p.Deliverer).FirstOrDefault(p => p.Id == productId);
             if (product == null)
             {
                 // Optional: Show an error or navigate back
@@ -73,16 +72,16 @@ namespace BarrocIntens.Pages.Product
 
 
             // matrials for the product
-            var matrials = db.ProductMatrials
-                .Include(c => c.Matrial)
+            var matrials = db.ProductMaterials
+                .Include(c => c.Material)
                 .Where(p => p.ProductId == product.Id)
                 .ToList()
                 .Select(m => new
                 {
-                    Name = m.Matrial.Name,
-                    Image = $"Assets/Materials/{m.Matrial.Id}.png", // bv. 1.png, 2.png...
-                    StockText = $"Stock: {m.Matrial.Stock}",
-                    StockColor = m.Matrial.Stock < m.Matrial.MinimumStock
+                    Name = m.Material.Name,
+                    Image = $"Assets/Materials/{m.Material.Id}.png", // bv. 1.png, 2.png...
+                    StockText = $"Stock: {m.Material.Stock}",
+                    StockColor = m.Material.Stock < m.Material.MinimumStock
                         ? Colors.Red
                         : Colors.Green
                 });

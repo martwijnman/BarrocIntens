@@ -25,8 +25,8 @@ namespace BarrocIntens.Data
         public DbSet<QuoteItem> QuoteItems { get; set; }
         public DbSet<Facture> Factures { get; set; }
         public DbSet<PlanningEmployee> PlanningEmployees { get; set; }
-        public DbSet<Matrial> Matrials { get; set; }
-        public DbSet<ProductMatrial> ProductMatrials { get; set; }
+        public DbSet<Material> Materials { get; set; }
+        public DbSet<ProductMaterial> ProductMaterials { get; set; }
         public DbSet<Deliverer> Deliverers { get; set; }
 
 
@@ -308,117 +308,115 @@ namespace BarrocIntens.Data
                 }
                 );
             modelBuilder.Entity<Product>().HasData(
-    new Product
-    {
-        Id = 1,
-        Name = "Wizzmie Coffee Machine",
-        ExtraInformation = "N/A",
-        Category = "IceCoffee",
-        Price = 249.99,
-        Stock = 50,
-        MinimumStock = 10,
-        DelivererId = 1,
-        NotificationOutOfStock = false,
-        Image = "wizzmie.jpg",
-        IsMachine = true
-    },
-    new Product
-    {
-        Id = 2,
-        Name = "Amazon Coffee machine",
-        ExtraInformation = "N/A",
-        Category = "Verwarming",
-        Price = 1299.00,
-        Stock = 15,
-        MinimumStock = 5,
-        DelivererId = 1,
-        NotificationOutOfStock = false,
-        Image = "arah.jpg",
-        IsMachine = true
-    },
-    new Product
-    {
-        Id = 3,
-        Name = "Arah Kopi",
-        ExtraInformation = "N/A",
-        Category = "AllTypes",
-        Price = 199.99,
-        Stock = 25,
-        MinimumStock = 8,
-        DelivererId = 1,
-        NotificationOutOfStock = false,
-        Image = "arah.jpg",
-        IsMachine = true
-    },
-    new Product
-    {
-        Id = 4,
-        Name = "Pawon Luwak Machine",
-        ExtraInformation = "N/A",
-        Category = "Warm",
-        Price = 899.00,
-        Stock = 5,
-        MinimumStock = 3,
-        DelivererId = 1,
-        NotificationOutOfStock = false,
-        Image = "wizzmie.jpg",
-        IsMachine = true
-    },
-    new Product
-    {
-        Id = 5,
-        Name = "Aceh Arabica 1.000 kg",
-        ExtraInformation = "N/A",
-        Category = "Arabica",
-        Price = 159.00,
-        Stock = 5,
-        MinimumStock = 3,
-        DelivererId = 1,
-        NotificationOutOfStock = false,
-        Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
-        IsMachine = false
-    },
-    new Product
-    {
-        Id = 6,
-        Name = "Ready-Steady Toolkid",
-        ExtraInformation =
-            "Driver Bit Set, Combination Wrenches, Precision Driver, " +
-            "Socket Wrench, Pliers, Bit Driver",
-        Category = "Tools",
-        Price = 357.99,
-        Stock = 50,
-        MinimumStock = 10,
-        DelivererId = 1,
-        NotificationOutOfStock = false,
-        Image = "Toolkit.png.png",
-        IsMachine = false
-    }
-);
-            modelBuilder.Entity<Matrial>().HasData(
-                new Matrial { Id = 1, Name = "Rubber (10 mm)", Stock = 12, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 2, Name = "Rubber (14 mm)", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 3, Name = "Slang", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 4, Name = "Voeding (elektra)", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 2, MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 5, Name = "Ontkalker", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 6, Name = "Waterfilter", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 7, Name = "Reservoir sensor", Stock = 3, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 8, Name = "Druppelstop", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 9, Name = "Elektrische pomp", Stock = 1, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 10, Name = "Tandwiel 110mm", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 11, Name = "Tandwiel 70mm", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 12, Name = "Maalmotor", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 13, Name = "Zeef", Stock = 9, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 14, Name = "Reinigingstabletten", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 3, MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 15, Name = "Reinigingsborsteltjes", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 6, MinimumStock = 3, Quantity = 0, DelivererId = 1 },
-                new Matrial { Id = 16, Name = "Ontkalkingspijp", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 }
+                new Product
+                {
+                    Id = 1,
+                    Name = "Wizzmie Coffee Machine",
+                    ExtraInformation = "N/A",
+                    Category = "IceCoffee",
+                    Price = 249.99,
+                    Stock = 50,
+                    MinimumStock = 10,
+                    DelivererId = 1,
+                    //NotificationOutOfStock = false,
+                    Image = "wizzmie.jpg",
+                    IsMachine = true
+                },
+                new Product
+                {
+                    Id = 2,
+                    Name = "Amazon Coffee machine",
+                    Category = "AllTypes",
+                    ExtraInformation = "N/A",
+                    Price = 1299.00,
+                    Stock = 15,
+                    MinimumStock = 5,
+                    DelivererId = 1,
+                    //NotificationOutOfStock = false,
+                    Image = "arah.jpg",
+                    IsMachine = true
+                },
+                new Product
+                {
+                    Id = 3,
+                    Name = "Arah Kopi",
+                    ExtraInformation = "N/A",
+                    Category = "AllTypes",
+                    Price = 199.99,
+                    Stock = 25,
+                    MinimumStock = 8,
+                    DelivererId = 1,
+                    //NotificationOutOfStock = false,
+                    Image = "arah.jpg",
+                    IsMachine = true
+                },
+                new Product
+                {
+                    Id = 4,
+                    Name = "Pawon Luwak Machine",
+                    Category = "AllTypes",
+                    ExtraInformation = "N/A",
+                    Price = 899.00,
+                    Stock = 5,
+                    MinimumStock = 3,
+                    DelivererId = 1,
+                    //NotificationOutOfStock = false,
+                    Image = "wizzmie.jpg",
+                    IsMachine = true
+                },
+            new Product
+            {
+                Id = 5,
+                Name = "Aceh Arabica 1.000 kg",
+                ExtraInformation = "N/A",
+                Category = "Arabica",
+                Price = 159.00,
+                Stock = 5,
+                MinimumStock = 3,
+                DelivererId = 1,
+                Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
+                IsMachine = false
+            },
+
+            new Product
+            {
+                Id = 6,
+                Name = "Ready-Steady Toolkid",
+                ExtraInformation = "Top:\n\nDriver Bit Set (Top Left)\nCombination Wrenches (Right)\nPrecision Driver/Extension (Center)\n\nBottom:\n\n" +
+                "Socket Wrench / Ratchet (Left)\nPliers (Center): * Combination Pliers\nNeedle-Nose/Diagonal Hybrid\nBit Driver / Nut Driver (Far Right)\n" +
+                "Small Accessories: Various sockets, adapters, and spacers",
+                Category = "Tools",
+                Price = 357.99,
+                Stock = 50,
+                MinimumStock = 10,
+                DelivererId = 1,
+                Image = "Toolkit.png.png",
+                IsMachine = false
+            });
+            modelBuilder.Entity<Material>().HasData(
+                new Material { Id = 1, Name = "Rubber (10 mm)", Stock = 12, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 2, Name = "Rubber (14 mm)", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 3, Name = "Slang", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 4, Name = "Voeding (elektra)", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 2, MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 5, Name = "Ontkalker", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 6, Name = "Waterfilter", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 7, Name = "Reservoir sensor", Stock = 3, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 8, Name = "Druppelstop", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 9, Name = "Elektrische pomp", Stock = 1, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 10, Name = "Tandwiel 110mm", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 11, Name = "Tandwiel 70mm", Stock = 5, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 12, Name = "Maalmotor", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 13, Name = "Zeef", Stock = 9, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 14, Name = "Reinigingstabletten", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 3, MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 15, Name = "Reinigingsborsteltjes", Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", Stock = 6, MinimumStock = 3, Quantity = 0, DelivererId = 1 },
+                new Material { Id = 16, Name = "Ontkalkingspijp", Stock = 2, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 }
                 ); 
-            modelBuilder.Entity<ProductMatrial>().HasData(
-                new ProductMatrial { Id = 1, ProductId = 1, MatrialId = 6 },  // Waterfilter
-                new ProductMatrial { Id = 2, ProductId = 2, MatrialId = 5 },  // Ontkalker
-                new ProductMatrial { Id = 3, ProductId = 2, MatrialId = 13 }, // Zeef
-                new ProductMatrial { Id = 4, ProductId = 3, MatrialId = 10 }, // Tandwiel 110mm
-                new ProductMatrial { Id = 5, ProductId = 2, MatrialId = 15 }  // Reinigingsborsteltjes
+            modelBuilder.Entity<ProductMaterial>().HasData(
+                new ProductMaterial { Id = 1, ProductId = 1, MaterialId = 6 },  // Waterfilter
+                new ProductMaterial { Id = 2, ProductId = 2, MaterialId = 5 },  // Ontkalker
+                new ProductMaterial { Id = 3, ProductId = 2, MaterialId = 13 }, // Zeef
+                new ProductMaterial { Id = 4, ProductId = 3, MaterialId = 10 }, // Tandwiel 110mm
+                new ProductMaterial { Id = 5, ProductId = 2, MaterialId = 15 }  // Reinigingsborsteltjes
             );
 
 

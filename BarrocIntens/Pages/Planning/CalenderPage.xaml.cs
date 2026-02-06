@@ -182,17 +182,17 @@ public sealed partial class CalenderPage : Page
 
         var query = db.Plannings.AsQueryable();
 
-        if (StatusCheckbox.SelectedItem != null)
-        {
-            string status = StatusCheckbox.SelectedItem as string;
-            query = query.Where(p => p.Status == status);
-        }
+        //if (StatusCheckbox.SelectedItem != null)
+        //{
+        //    string status = StatusCheckbox.SelectedItem as string;
+        //    query = query.Where(p => p.Status == status);
+        //}
 
-        if (CategoryCheckbox.SelectedItem != null)
-        {
-            string category = CategoryCheckbox.SelectedItem as string;
-            query = query.Where(p => p.Category == category);
-        }
+        //if (CategoryCheckbox.SelectedItem != null)
+        //{
+        //    string category = CategoryCheckbox.SelectedItem as string;
+        //    query = query.Where(p => p.Category == category);
+        //}
 
         var today = DateOnly.FromDateTime(DateTime.Today);
         TodayPlanningListView.ItemsSource =
