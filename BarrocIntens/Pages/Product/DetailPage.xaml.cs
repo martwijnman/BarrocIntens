@@ -57,10 +57,6 @@ namespace BarrocIntens.Pages.Product
 
 
 
-            var product = db.Products.Include(p => p.Deliverer).FirstOrDefault(p => p.Id == productId);
-
-
-
             // product d4tails
             ProductImage.Source = new BitmapImage(new Uri($"ms-appx:///Assets/{product.Image}", UriKind.RelativeOrAbsolute));
             NameText.Text = product.Name;

@@ -168,6 +168,14 @@ namespace BarrocIntens.Data
                     Name = "Management",
                     Description =
                       "Beheert alles"
+                },
+
+                new Department
+                {
+                    Id = 6,
+                    Name = "mantenance",
+                    Description =
+                      "Beheert alle storingen, monteurs"
                 });
             modelBuilder.Entity<Employee>().HasData(
                 new Employee
@@ -179,8 +187,8 @@ namespace BarrocIntens.Data
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
                     DepartmentId = 4,
-                    
-                    
+
+
 
                 },
 
@@ -208,6 +216,17 @@ namespace BarrocIntens.Data
                 new Employee
                 {
                     Id = 4,
+                    Name = "Rooly",
+                    Email = "Rooly@rooly.nl",
+                    PhoneNumber = "0676287228",
+                    City = "Breda",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
+                    DepartmentId = 6,
+                },
+
+                new Employee
+                {
+                    Id = 5,
                     Name = "Root",
                     Email = "Root@root.nl",
                     PhoneNumber = "0675287128",
@@ -289,107 +308,93 @@ namespace BarrocIntens.Data
                 }
                 );
             modelBuilder.Entity<Product>().HasData(
-                new Product
-                {
-                    Id = 1,
-                    Name = "Wizzmie Coffee Machine",
-                    ExtraInformation = "N/A",
-                    Category = "IceCoffee",
-                    Price = 249.99,
-                    Stock = 50,
-                    MinimumStock = 10,
-                    DelivererId = 1,
-                    NotificationOutOfStock = false,
-                    Image = "wizzmie.jpg",
-                    IsMachine = true
-                },
-                new Product
-                {
-                    Id = 2,
-                    Name = "Amazon Coffee machine",
-                    ExtraInformation = "N/A",
-                    Category = "Verwarming",
-                    Price = 1299.00,
-                    Stock = 15,
-                    MinimumStock = 5,
-                    DelivererId = 1,
-                    NotificationOutOfStock = false,
-                    Image = "arah.jpg",
-                    IsMachine = true
-                },
-                new Product
-                {
-                    Id = 3,
-                    Name = "Arah Kopi",
-                    ExtraInformation = "N/A",
-                    Category = "AllTypes",
-                    Price = 199.99,
-                    Stock = 25,
-                    MinimumStock = 8,
-                    DelivererId = 1,
-                    NotificationOutOfStock = false,
-                    Image = "arah.jpg",
-                    IsMachine = true
-                },
-                new Product
-                {
-                    Id = 4,
-                    Name = "Pawon Luwak Machine",
-                    ExtraInformation = "N/A",
-                    Category = "Warm",
-                    Price = 899.00,
-                    Stock = 5,
-                    MinimumStock = 3,
-                    DelivererId = 1,
-                    NotificationOutOfStock = false,
-                    Image = "wizzmie.jpg",
-                    IsMachine = true
-                },
-            new Product
-            {
-                Id = 5,
-                Name = "Aceh Arabica 1.000 kg",
-                ExtraInformation = "N/A",
-                Category = "Arabica",
-                Price = 159.00,
-                Stock = 5,
-                MinimumStock = 3,
-                Deliverer = "Aceh Coffee Company",
-                NotificationOutOfStock = false,
-                Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
-                IsMachine = false
-            },
-
-            new Product
-            {
-                Id = 6,
-                Name = "Ready-Steady Toolkid",
-                ExtraInformation = "Top:\n\nDriver Bit Set (Top Left)\nCombination Wrenches (Right)\nPrecision Driver/Extension (Center)\n\nBottom:\n\n" +
-                "Socket Wrench / Ratchet (Left)\nPliers (Center): * Combination Pliers\nNeedle-Nose/Diagonal Hybrid\nBit Driver / Nut Driver (Far Right)\n" +
-                "Small Accessories: Various sockets, adapters, and spacers",
-                Category = "Tools",
-                Price = 357.99,
-                Stock = 50,
-                MinimumStock = 10,
-                Deliverer = "",
-                NotificationOutOfStock = false,
-                Image = "Toolkit.png.png",
-                IsMachine = false
-            });
-                new Product
-                {
-                    Id = 5,
-                    Name = "Aceh Arabica 1.000 kg",
-                    Category = "Arabica",
-                    Price = 159.00,
-                    Stock = 5,
-                    MinimumStock = 3,
-                    DelivererId = 1,
-                    NotificationOutOfStock = false,
-                    Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
-                    IsMachine = false
-                }
-            );
+    new Product
+    {
+        Id = 1,
+        Name = "Wizzmie Coffee Machine",
+        ExtraInformation = "N/A",
+        Category = "IceCoffee",
+        Price = 249.99,
+        Stock = 50,
+        MinimumStock = 10,
+        DelivererId = 1,
+        NotificationOutOfStock = false,
+        Image = "wizzmie.jpg",
+        IsMachine = true
+    },
+    new Product
+    {
+        Id = 2,
+        Name = "Amazon Coffee machine",
+        ExtraInformation = "N/A",
+        Category = "Verwarming",
+        Price = 1299.00,
+        Stock = 15,
+        MinimumStock = 5,
+        DelivererId = 1,
+        NotificationOutOfStock = false,
+        Image = "arah.jpg",
+        IsMachine = true
+    },
+    new Product
+    {
+        Id = 3,
+        Name = "Arah Kopi",
+        ExtraInformation = "N/A",
+        Category = "AllTypes",
+        Price = 199.99,
+        Stock = 25,
+        MinimumStock = 8,
+        DelivererId = 1,
+        NotificationOutOfStock = false,
+        Image = "arah.jpg",
+        IsMachine = true
+    },
+    new Product
+    {
+        Id = 4,
+        Name = "Pawon Luwak Machine",
+        ExtraInformation = "N/A",
+        Category = "Warm",
+        Price = 899.00,
+        Stock = 5,
+        MinimumStock = 3,
+        DelivererId = 1,
+        NotificationOutOfStock = false,
+        Image = "wizzmie.jpg",
+        IsMachine = true
+    },
+    new Product
+    {
+        Id = 5,
+        Name = "Aceh Arabica 1.000 kg",
+        ExtraInformation = "N/A",
+        Category = "Arabica",
+        Price = 159.00,
+        Stock = 5,
+        MinimumStock = 3,
+        DelivererId = 1,
+        NotificationOutOfStock = false,
+        Image = "Gemini_Generated_Image_j5hdvhj5hdvhj5hd.png",
+        IsMachine = false
+    },
+    new Product
+    {
+        Id = 6,
+        Name = "Ready-Steady Toolkid",
+        ExtraInformation =
+            "Driver Bit Set, Combination Wrenches, Precision Driver, " +
+            "Socket Wrench, Pliers, Bit Driver",
+        Category = "Tools",
+        Price = 357.99,
+        Stock = 50,
+        MinimumStock = 10,
+        DelivererId = 1,
+        NotificationOutOfStock = false,
+        Image = "Toolkit.png.png",
+        IsMachine = false
+    }
+);
             modelBuilder.Entity<Matrial>().HasData(
                 new Matrial { Id = 1, Name = "Rubber (10 mm)", Stock = 12, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
                 new Matrial { Id = 2, Name = "Rubber (14 mm)", Stock = 8, Image = "Gemini_Generated_Image_pdr2g3pdr2g3pdr2.png", MinimumStock = 3, Quantity = 0, DelivererId = 1 },
