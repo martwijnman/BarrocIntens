@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,8 @@ namespace BarrocIntens.Data
         [Required(ErrorMessage ="vul naam in")]
         [MaxLength(180)]
         public string Name { get; set; }
+
+        public string ExtraInformation { get; set; }
 
         [Required]
         public string Category { get; set; }
@@ -47,16 +50,18 @@ namespace BarrocIntens.Data
         public int DelivererId { get; set; }
         public Deliverer Deliverer { get; set; }
 
+        [NotMapped]
+        public bool NotificationOutOfStock => Stock <= MinimumStock;
 
-        [Required]
-        public bool NotificationOutOfStock => Stock <= MinimumStock; // { get; set; }
-        public string NotificationSymbol
-        {
-            get { return NotificationOutOfStock ? "○" : "●"; }
-        }
+        [NotMapped]
+        public string NotificationSymbol =>
+            NotificationOutOfStock ? "○" : "●";
+
+        [NotMapped]
         public Brush NotificationColor =>
-            NotificationOutOfStock ? new SolidColorBrush(Colors.Red)
-                   : new SolidColorBrush(Colors.LimeGreen);
+            NotificationOutOfStock
+                ? new SolidColorBrush(Colors.Red)
+                : new SolidColorBrush(Colors.LimeGreen);
 
         [Required]
         public string Image { get; set; }

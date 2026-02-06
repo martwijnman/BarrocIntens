@@ -402,7 +402,7 @@
                                                         CornerRadius="8"
                                                         Background="#FFD600"
                                                         Foreground="Black"
-                                                        Click="OrderASpecificMatrial_Button"/>
+                                                        Click="OrderASpecificMaterial_Button"/>
                                                 </Grid>
 
                                             </Border>

@@ -1,4 +1,4 @@
-﻿using BarrocIntens.Data;
+using BarrocIntens.Data;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
@@ -33,9 +33,14 @@ namespace BarrocIntens.Pages
         public ISeries[] SalesSeries { get; set; }
         public Axis[] XAxes { get; set; }
 
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ApplyDepartmentVisibility();
+        }
         public MainPage()
         {
             this.InitializeComponent();
+            this.Loaded += MainPage_Loaded;
 
             // user login data
             var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -136,53 +141,66 @@ namespace BarrocIntens.Pages
         {
             Frame.Navigate(typeof(Pages.Technicians.TechniciansViewPage));
         }
-        private void ApplyDepartmentVisibility()
+
+        private void HideAllButtons()
         {
-            var department = Employee.LoggedInEmployee?.Department?.Name;
-
-            if (string.IsNullOrEmpty(department))
-                return;
-
-            PlanningButton.Visibility = Visibility.Collapsed;
-            CustomerButton.Visibility = Visibility.Collapsed;
-            EmployeeButton.Visibility = Visibility.Collapsed;
-            SalesButton.Visibility = Visibility.Collapsed;
-            ContractButton.Visibility = Visibility.Collapsed;
-            MonteurButton.Visibility = Visibility.Collapsed;
-
-            switch (department)
-            {
-                case "Planning":
-                    PlanningButton.Visibility = Visibility.Visible;
-                    CustomerButton.Visibility = Visibility.Visible;
-                    break;
-
-                case "Sales":
-                    SalesButton.Visibility = Visibility.Visible;
-                    ContractButton.Visibility = Visibility.Visible;
-                    CustomerButton.Visibility = Visibility.Visible;
-                    break;
-
-                case "HR":
-                    EmployeeButton.Visibility = Visibility.Visible;
-                    break;
-
-                case "Maintenance":
-                    PlanningButton.Visibility = Visibility.Visible;
-                    MonteurButton.Visibility = Visibility.Visible;
-                    break;
-
-                case "Management":
-                    PlanningButton.Visibility = Visibility.Visible;
-                    CustomerButton.Visibility = Visibility.Visible;
-                    EmployeeButton.Visibility = Visibility.Visible;
-                    SalesButton.Visibility = Visibility.Visible;
-                    ContractButton.Visibility = Visibility.Visible;
-                    MonteurButton.Visibility = Visibility.Visible;
-                    break;
-            }
-
+            Hide(PlanningButton);
+            Hide(CustomerButton);
+            Hide(EmployeeButton);
+            Hide(SalesButton);
+            Hide(ContractButton);
+            Hide(MonteurButton);
         }
 
+        private void Hide(Button button)
+        {
+            button.Visibility = Visibility.Collapsed;
+            button.IsEnabled = false;
+        }
+
+        private void Show(Button button)
+        {
+            button.Visibility = Visibility.Visible;
+            button.IsEnabled = true;
+        }
+
+        private void ApplyDepartmentVisibility()
+        {
+            var departmentId = Employee.LoggedInEmployee?.DepartmentId;
+            if (departmentId == null)
+                return;
+
+            HideAllButtons();
+
+            switch (departmentId)
+            {
+                case 1: // Technische Dienst
+                    Show(PlanningButton);
+                    Show(MonteurButton);
+                    break;
+
+                case 2: // Klantenservice
+                    Show(CustomerButton);
+                    break;
+
+                case 3: // Administratie
+                    Show(ContractButton);
+                    break;
+
+                case 4: // Sales
+                    Show(SalesButton);
+                    Show(CustomerButton);
+                    break;
+
+                case 5: // Management
+                    Show(PlanningButton);
+                    Show(CustomerButton);
+                    Show(EmployeeButton);
+                    Show(SalesButton);
+                    Show(ContractButton);
+                    Show(MonteurButton);
+                    break;
+            }
+        }
     }
 }

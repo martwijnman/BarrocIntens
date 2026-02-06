@@ -421,68 +421,57 @@ public sealed partial class OverviewPage : Page
     // bestellingen
     private async void OrderASpecificProduct_Button(object sender, RoutedEventArgs e)
     {
-        var db = new AppDbContext();
         if (sender is not Button button) return;
         if (button.DataContext is not Data.Product product) return;
-        if (XamlRoot == null) return;
-
-        var dialog = new ContentDialog
-        {
-            Title = "Materiaal bestellen",
-            Content = $"Wilt u 1x '{product.Name}' bestellen?",
-            PrimaryButtonText = "Bestellen",
-            SecondaryButtonText = "Annuleren",
-            XamlRoot = XamlRoot
-        };
-
-        if (await dialog.ShowAsync() != ContentDialogResult.Primary)
-            return;
-
-
-        //var dbMatrial = (Data.Matrial)button.DataContext;
-        var dbMaterial = db.Materials.First(m => m.Id == product.Id);
-
-        dbMaterial.Stock++;
-
-        if (walletMaterial.ContainsKey(dbMaterial))
-            walletMaterial[dbMaterial]++;
-        else
-            walletMaterial[dbMaterial] = 1;
-
-
-        //dbMatrial.Stock += 1;
-
-        //db.SaveChanges();
-        LoadData();
-    }
-
-
-    private async void OrderASpecificMatrial_Button(object sender, RoutedEventArgs e)
-    {
-        if (sender is not Button button) return;
-        if (button.DataContext is not Material matrial) return;
-        if (XamlRoot == null) return;
-
-        var dialog = new ContentDialog
-        {
-            Title = "Materiaal bestellen",
-            Content = $"Wilt u 1x '{matrial.Name}' bestellen?",
-            PrimaryButtonText = "Bestellen",
-            SecondaryButtonText = "Annuleren",
-            XamlRoot = XamlRoot
-        };
-
-        if (await dialog.ShowAsync() != ContentDialogResult.Primary)
-            return;
 
         using var db = new AppDbContext();
 
-        var dbMatrial = db.Materials.First(m => m.Id == matrial.Id);
-        dbMatrial.Stock += 1;
+        var dialog = new ContentDialog
+        {
+            Title = "Product bestellen",
+            Content = $"Wilt u 1x '{product.Name}' bestellen?",
+            PrimaryButtonText = "Bestellen",
+            SecondaryButtonText = "Annuleren",
+            XamlRoot = this.Content.XamlRoot
+        };
 
+        if (await dialog.ShowAsync() != ContentDialogResult.Primary)
+            return;
+
+        var dbProduct = db.Products.First(p => p.Id == product.Id);
+
+        dbProduct.Stock += 1;
         db.SaveChanges();
+
         LoadData();
     }
+
+    private async void OrderASpecificMaterial_Button(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button) return;
+        if (button.DataContext is not Material material) return;
+
+        using var db = new AppDbContext();
+
+        var dialog = new ContentDialog
+        {
+            Title = "Materiaal bestellen",
+            Content = $"Wilt u 1x '{material.Name}' bestellen?",
+            PrimaryButtonText = "Bestellen",
+            SecondaryButtonText = "Annuleren",
+            XamlRoot = this.Content.XamlRoot
+        };
+
+        if (await dialog.ShowAsync() != ContentDialogResult.Primary)
+            return;
+
+        var dbMaterial = db.Materials.First(m => m.Id == material.Id);
+        dbMaterial.Stock += 1;
+        db.SaveChanges();
+
+        LoadData();
+    }
+
 
     private async void OrderAll_Button(object sender, RoutedEventArgs e)
     {
@@ -832,11 +821,67 @@ public sealed partial class OverviewPage : Page
     public string Email { get; set; }
     List<dynamic> items = new();
 
+    //private async void ApproveOrder_Button(object sender, RoutedEventArgs e)
+    //{
+    //    if (XamlRoot == null) return;
+
+    //    using var db = new AppDbContext();
+
+    //    if (!walletProduct.Any() && !walletMaterial.Any())
+    //        return;
+
+    //    var dialog = new ContentDialog
+    //    {
+    //        Title = "Offerte versturen",
+    //        Content = "Offertes worden per leverancier verstuurd.",
+    //        PrimaryButtonText = "Versturen",
+    //        CloseButtonText = "Annuleren",
+    //        XamlRoot = XamlRoot
+    //    };
+
+    //    if (await dialog.ShowAsync() != ContentDialogResult.Primary)
+    //        return;
+
+    //    var items = new List<OfferItem>();
+
+    //    // 🔹 producten
+    //    foreach (var kvp in walletProduct)
+    //    {
+    //        items.Add(new OfferItem
+    //        {
+    //            DelivererId = kvp.Key.DelivererId,
+    //            Name = kvp.Key.Name,
+    //            Amount = kvp.Value,
+    //            Price = kvp.Key.Price
+    //        });
+    //    }
+
+    //    // 🔹 materialen (zelfde leverancier-id gebruiken!)
+    //    foreach (var kvp in walletMaterial)
+    //    {
+    //        items.Add(new OfferItem
+    //        {
+    //            DelivererId = kvp.Key.DelivererId, // ← moet bestaan in Matrial
+    //            Name = kvp.Key.Name,
+    //            Amount = kvp.Value,
+    //            Price = kvp.Key.Price
+    //        });
+    //    }
+
+    //    var grouped = items.GroupBy(i => i.DelivererId);
+
+    //    foreach (var group in grouped)
+    //    {
+    //        var deliverer = db.Deliverers.First(d => d.Id == group.Key);
+    //        var pdfPath = MakeOfferPDF(deliverer, group.ToList());
+    //        HelperEmail.SendEmail(deliverer.Email, "Nieuwe offerte", "Beste leverancier,\n\nIn de bijlage vindt u een offerte.\n\nMet vriendelijke groet,\nBarrocIntens", pdfPath);
+    //    }
+    //}
     private async void ApproveOrder_Button(object sender, RoutedEventArgs e)
     {
-        if (XamlRoot == null) return;
-
         using var db = new AppDbContext();
+
+        db.ChangeTracker.Clear();
 
         if (!walletProduct.Any() && !walletMaterial.Any())
             return;
@@ -847,7 +892,7 @@ public sealed partial class OverviewPage : Page
             Content = "Offertes worden per leverancier verstuurd.",
             PrimaryButtonText = "Versturen",
             CloseButtonText = "Annuleren",
-            XamlRoot = XamlRoot
+            XamlRoot = this.Content.XamlRoot
         };
 
         if (await dialog.ShowAsync() != ContentDialogResult.Primary)
@@ -855,7 +900,6 @@ public sealed partial class OverviewPage : Page
 
         var items = new List<OfferItem>();
 
-        // 🔹 producten
         foreach (var kvp in walletProduct)
         {
             items.Add(new OfferItem
@@ -867,27 +911,35 @@ public sealed partial class OverviewPage : Page
             });
         }
 
-        // 🔹 materialen (zelfde leverancier-id gebruiken!)
         foreach (var kvp in walletMaterial)
         {
             items.Add(new OfferItem
             {
-                DelivererId = kvp.Key.DelivererId, // ← moet bestaan in Matrial
+                DelivererId = kvp.Key.DelivererId,
                 Name = kvp.Key.Name,
                 Amount = kvp.Value,
                 Price = kvp.Key.Price
             });
         }
 
-        var grouped = items.GroupBy(i => i.DelivererId);
-
-        foreach (var group in grouped)
+        foreach (var group in items.GroupBy(i => i.DelivererId))
         {
-            var deliverer = db.Deliverers.First(d => d.Id == group.Key);
+            var deliverer = db.Deliverers
+                .AsNoTracking()
+                .First(d => d.Id == group.Key);
+
             var pdfPath = MakeOfferPDF(deliverer, group.ToList());
-            HelperEmail.SendEmail(deliverer.Email, "Nieuwe offerte", "Beste leverancier,\n\nIn de bijlage vindt u een offerte.\n\nMet vriendelijke groet,\nBarrocIntens", pdfPath);
+
+            HelperEmail.SendEmail(
+                deliverer.Email,
+                "Nieuwe offerte",
+                "Beste leverancier,\n\nIn de bijlage vindt u een offerte.\n\nMet vriendelijke groet,\nBarrocIntens",
+                pdfPath
+            );
         }
     }
+
+
     private string MakeOfferPDF(Deliverer deliverer, List<OfferItem> items)
     {
         PdfDocument document = new PdfDocument();

@@ -39,7 +39,7 @@ namespace BarrocIntens.Helpers
                     "WACHTWOORD")
             };
 
-            smtp.Send(mail);
+            //smtp.Send(mail);
         }
     }
 }

@@ -48,20 +48,27 @@ namespace BarrocIntens.Pages.Product
         {
             var db = new AppDbContext();
             var product = db.Products.Include(p => p.Deliverer).FirstOrDefault(p => p.Id == productId);
-
+            if (product == null)
+            {
+                // Optional: Show an error or navigate back
+                return;
+            }
 
 
             // product d4tails
             ProductImage.Source = new BitmapImage(new Uri($"ms-appx:///Assets/{product.Image}", UriKind.RelativeOrAbsolute));
             NameText.Text = product.Name;
             CategoryText.Text = product.Category;
-            PriceText.Text = $"€{product.Price:F2}";
+            PriceText.Text = $"ï¿½{product.Price:F2}";
             StockText.Text = product.Stock.ToString();
             MinimumStockText.Text = $"(Minimum: {product.MinimumStock})";
             StockWarning.Visibility = product.Stock < product.MinimumStock ? Visibility.Visible : Visibility.Collapsed;
             DelivererText.Text = product.Deliverer.Name;
             IsMachineText.Text = product.IsMachine ? "Machine" : "Onderdeel";
             NotificationText.Text = product.NotificationOutOfStock ? "Yes" : "No";
+            ExtraInfo.Text = product.ExtraInformation;
+
+
 
             // matrials for the product
             var matrials = db.ProductMaterials

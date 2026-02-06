@@ -1,156 +1,139 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="BarrocIntens.Pages.Technicians.TechniciansViewPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BarrocIntens.Pages.Technicians"
-    xmlns:localData="using:BarrocIntens.Data"
     xmlns:models="using:BarrocIntens.Data"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="#0B0B0B">
 
-    <!-- ROOT GRID -->
-    <Grid>
-
-        <!-- MAIN CONTENT GRID -->
+    <!-- PAGE GRID -->
+    <Grid Background="#0B0B0B">
         <Grid.ColumnDefinitions>
-            <!-- Technicians -->
-            <ColumnDefinition Width="2*"/>
-            <!-- Right side (filters + calendar) -->
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 
-        <!-- 👷 TECHNICIANS SIDE -->
-        <Grid Grid.Column="0">
+
+        <!-- =====================
+             LEFT: TECHNICIANS
+             ===================== -->
+        <Grid Grid.Column="0" RowSpacing="16">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <!-- Search bar -->
                 <RowDefinition Height="*"/>
-                <!-- Technicians list -->
             </Grid.RowDefinitions>
 
-            <!-- 🔍 SEARCH BAR -->
-            <StackPanel
-                Grid.Row="0"
-                Orientation="Horizontal"
-                Spacing="10"
-                Margin="10">
+            <!-- Search -->
+            <TextBox
+                x:Name="TechniciansNameSearchTextBox"
+                PlaceholderText="Zoek op naam..."
+                TextChanged="TechniciansNameSearchTextBox_TextChanged"
+                Foreground="Yellow"/>
 
-                <TextBox
-                    x:Name="TechniciansNameSearchTextBox"
-                    PlaceholderText="Zoek op naam..."
-                    Width="200"
-                    TextChanged="TechniciansNameSearchTextBox_TextChanged"/>
-            </StackPanel>
-
-            <!-- TECHNICIANS LIST (like EmployeesListView) -->
+            <!-- Technicians list -->
             <ListView
-                x:Name="TechniciansListView"
                 Grid.Row="1"
+                x:Name="TechniciansListView"
                 IsItemClickEnabled="True"
-                ItemClick="TechniciansListView_ItemClick">
+                ItemClick="TechniciansListView_ItemClick"
+                Background="#141414"
+                BorderBrush="#2A2A2A"
+                BorderThickness="1"
+                Padding="10">
 
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="localData:Employee">
-                        <StackPanel Spacing="10" Padding="20">
-                            <TextBlock>
-                                <Run Text="(#"/>
-                                <Run Text="{x:Bind Id}"/>
-                                <Run Text=") "/>
-                                <Run Text="{x:Bind Name}"/>
-                            </TextBlock>
+                    <DataTemplate x:DataType="models:Employee">
+                        <Border
+                            Background="#0F0F0F"
+                            CornerRadius="10"
+                            Padding="12"
+                            Margin="0,0,0,12">
 
-                            <Button Click="UpdateButton_Click">
-                                <FontIcon
-                                    FontFamily="Segoe Fluent Icons"
-                                    Glyph="&#xE104;"/>
-                            </Button>
-                        </StackPanel>
+                            <StackPanel Spacing="6">
+                                <TextBlock Foreground="Yellow">
+                                    <Run Text="(#"/>
+                                    <Run Text="{x:Bind Id}"/>
+                                    <Run Text=") "/>
+                                    <Run Text="{x:Bind Name}"/>
+                                </TextBlock>
+
+                                <TextBlock
+                                    Text="{x:Bind Email}"
+                                    Foreground="#B5B5B5"/>
+
+                                <Button
+                                    HorizontalAlignment="Left"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Click="UpdateButton_Click">
+                                    <FontIcon
+                                        FontFamily="Segoe Fluent Icons"
+                                        Glyph="&#xE104;"
+                                        Foreground="Yellow"/>
+                                </Button>
+                            </StackPanel>
+                        </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
 
-        <!-- RIGHT SIDE (FILTERS + CALENDAR) -->
+        <!-- =====================
+             RIGHT: PRODUCT
+             ===================== -->
         <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <!-- Filters + add button -->
-                <RowDefinition Height="*"/>
-                <!-- Calendar -->
-            </Grid.RowDefinitions>
+            <ListView
+        x:Name="ProductView"
+        Background="Transparent"
+        SelectionMode="None"
+        IsItemClickEnabled="True"
+        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        ScrollViewer.VerticalScrollBarVisibility="Auto">
 
-            <!-- 🎛 FILTERS + ADD BUTTON -->
-            <StackPanel
-                Grid.Row="0"
-                Orientation="Horizontal"
-                Spacing="10"
-                Margin="10">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid
+                    Orientation="Horizontal"
+                    ItemWidth="260"
+                    ItemHeight="480"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
 
-                <ComboBox
-                    x:Name="StatusCheckbox"
-                    Header="Status"
-                    Width="180"
-                    SelectionChanged="Filter_Changed">
-                    <x:String>Gedaan</x:String>
-                    <x:String>Niet Gedaan</x:String>
-                </ComboBox>
-
-                <ComboBox
-                    x:Name="CategoryCheckbox"
-                    Header="Categorie"
-                    Width="180"
-                    SelectionChanged="Filter_Changed">
-                    <x:String>Storing</x:String>
-                    <x:String>Vergadering</x:String>
-                    <x:String>Controle</x:String>
-                    <x:String>Adviesbezoek</x:String>
-                </ComboBox>
-
-                <Button
-                    x:Name="addCalendarItemButton"
-                    Padding="10"
-                    Click="AddCalendarItemButton_Click">
-                    Add Calendar
-                </Button>
-            </StackPanel>
-
-            <!-- 📅 CALENDAR -->
-            <CalendarView
-                x:Name="calendarView"
-                Grid.Row="1"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                CalendarViewDayItemChanging="CalendarView_CalendarViewDayItemChanging">
-
-                <CalendarView.CalendarViewDayItemStyle>
-                    <Style TargetType="CalendarViewDayItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="CalendarViewDayItem">
-                                    <ListView
-                                        ItemsSource="{Binding}"
-                                        IsItemClickEnabled="True"
-                                        ItemClick="DayItemListView_ItemClick">
-
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="models:Planning">
-                                                <TextBlock
-                                                    Text="{x:Bind Plan}"
-                                                    FontWeight="Bold"/>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-
-                                    </ListView>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="14"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                     </Style>
-                </CalendarView.CalendarViewDayItemStyle>
-            </CalendarView>
+                </ListView.ItemContainerStyle>
 
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Product">
+                        <Border
+                    Background="#141414"
+                    CornerRadius="20"
+                    Padding="16">
+
+                            <StackPanel Spacing="16">
+                                <Image Source="{x:Bind ImagePath}" Height="140" Stretch="UniformToFill"/>
+                                <TextBlock Text="{x:Bind Name}" FontSize="17" FontWeight="SemiBold" Foreground="White" TextWrapping="Wrap" MaxLines="2"/>
+                                <TextBlock Text="{x:Bind Price}" FontSize="16" FontWeight="Bold" Foreground="#FFD600"/>
+                                <Border Background="#0F0F0F" Padding="6,3" CornerRadius="8" BorderBrush="#2A2A2A" BorderThickness="1" HorizontalAlignment="Left">
+                                    <TextBlock Text="{x:Bind Stock}" FontSize="12" Foreground="#B5B5B5"/>
+                                </Border>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Button Content="Detail" Width="82" Background="Transparent" Foreground="#FFD600" BorderBrush="#FFD600" BorderThickness="1" CornerRadius="10" Click="ProductClick"/>
+                                    <Button Content="+" Width="42" Background="#FFD600" Foreground="Black" CornerRadius="10" Click="PlusClick"/>
+                                    <Button Content="-" Width="42" Background="#FFD600" Foreground="Black" CornerRadius="10" Click="MinClick"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
-
     </Grid>
 </Page>
