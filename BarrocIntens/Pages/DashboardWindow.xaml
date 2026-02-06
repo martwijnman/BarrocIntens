@@ -21,28 +21,25 @@
         <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="Gray"/>
     </Page.Resources>
 
-    <ScrollView>
-        <StackPanel
-        Orientation="Horizontal"
-        >
-            <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed"
-            SelectionChanged="NavigationView_SelectionChanged"
-                            Background="Yellow">
-                <NavigationView.MenuItems>
-                    <NavigationViewItem Content="Home" Icon="Home" Tag="DashboardPage"/>
-                    <NavigationViewItem Content="Klanten" Icon="Contact" Tag="Customer.CustomerView"/>
-                    <NavigationViewItem Content="Medewerkers" Icon="Contact" Tag="EmployeesCreation.employeesView"/>
-                    <NavigationViewItem Content="Planning" Icon="Calendar" Tag="Planning.CalenderPage"/>
-                    <NavigationViewItem Content="Inkoop" Icon="Shop" Tag="Purchase.OverviewPage"/>
-                    <NavigationViewItem Content="Verkoop" Icon="Shop" Tag="Product.OverviewPage"/>
-                    <NavigationViewItem Content="Monteurs" Icon="Repair" Tag="Technicians.TechniciansViewPage"/>
-                    <NavigationViewItem Content="Contracts" Icon="Mail" Tag="Contracts.OverviewPage"/>
-                </NavigationView.MenuItems>
-                <Frame x:Name="dashboardFrame"/>
-            </NavigationView>
+    <Grid>
+        <NavigationView x:Name="NavigationViewControl"
+                        PaneDisplayMode="Left"
+                        IsBackButtonVisible="Collapsed"
+                        SelectionChanged="NavigationView_SelectionChanged"
+                        Background="Yellow">
 
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Name="DashboardPageItem" Content="Home" Icon="Home"/>
+                <NavigationViewItem x:Name="CustomerViewItem" Content="Klanten" Icon="Contact"/>
+                <NavigationViewItem x:Name="EmployeesViewItem" Content="Medewerkers" Icon="Contact"/>
+                <NavigationViewItem x:Name="PlanningPageItem" Content="Planning" Icon="Calendar"/>
+                <NavigationViewItem x:Name="PurchasePageItem" Content="Inkoop" Icon="Shop"/>
+                <NavigationViewItem x:Name="ProductPageItem" Content="Verkoop" Icon="Shop"/>
+                <NavigationViewItem x:Name="TechniciansPageItem" Content="Monteurs" Icon="Repair"/>
+                <NavigationViewItem x:Name="ContractsPageItem" Content="Contracten" Icon="Mail"/>
+            </NavigationView.MenuItems>
 
-
-        </StackPanel>
-    </ScrollView>
+            <Frame x:Name="dashboardFrame"/>
+        </NavigationView>
+    </Grid>
 </Page>
