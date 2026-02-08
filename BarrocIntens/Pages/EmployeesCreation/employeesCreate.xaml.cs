@@ -52,6 +52,8 @@ public sealed partial class employeesCreate : Page
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
+
+        var db = new AppDbContext();
         if (string.IsNullOrWhiteSpace(employeeNameTextBox.Text))
         {
             ErrorTextBlock.Text = "Naam mag niet leeg zijn";
@@ -89,8 +91,8 @@ public sealed partial class employeesCreate : Page
             return;
         }
 
-        // Extract actual string
-        string department = departmentItem.Content.ToString(); 
+        // Fetch all departments to fill the dropdown
+        employeeDepartmentComboBox.ItemsSource = db.Departments.ToList();
 
 
         // Get password depending on visibility
@@ -214,5 +216,10 @@ public sealed partial class employeesCreate : Page
             var hash = sha.ComputeHash(bytes);
             return Convert.ToBase64String(hash);
         }
+    }
+
+    private void backButton_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.GoBack();
     }
 }

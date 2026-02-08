@@ -13,6 +13,8 @@
     </Page.Resources>
 
     <StackPanel Padding="80" Spacing="15">
+        <Button x:Name="backButton"
+Click="backButton_Click"  Background="Yellow" Foreground="Black">Terug naar Overzicht</Button>
         <TextBox x:Name="NameTextBox"
              Header="Naam:"></TextBox>
 

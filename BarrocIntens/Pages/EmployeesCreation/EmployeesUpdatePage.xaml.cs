@@ -239,5 +239,10 @@ namespace BarrocIntens.Pages.EmployeesCreation
             db.SaveChanges();
             Frame.Navigate(typeof(employeesView));
         }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.GoBack();
+        }
     }
 }

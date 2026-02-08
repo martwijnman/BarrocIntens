@@ -131,5 +131,10 @@ namespace BarrocIntens.Pages.Customers
             db.SaveChanges();
             Frame.Navigate(typeof(CustomerView));
         }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.GoBack();
+        }
     }
 }

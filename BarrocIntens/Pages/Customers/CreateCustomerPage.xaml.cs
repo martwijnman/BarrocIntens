@@ -105,5 +105,9 @@ namespace BarrocIntens.Pages.Customers
             }
         }
 
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.GoBack();
+        }
     }
 }

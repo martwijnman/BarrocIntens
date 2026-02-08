@@ -74,7 +74,8 @@
 
     <Grid Padding="80" Background="Black">
         <StackPanel Spacing="10">
-
+            <Button x:Name="backButton"
+Click="backButton_Click"  Background="Yellow" Foreground="Black">Terug naar Overzicht</Button>
             <!-- TITEL -->
             <TextBlock Text="Nieuwe medewerker"
                        Style="{StaticResource PageTitle}"/>

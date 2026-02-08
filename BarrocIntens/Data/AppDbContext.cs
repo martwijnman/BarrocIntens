@@ -168,6 +168,14 @@ namespace BarrocIntens.Data
                     Name = "Management",
                     Description =
                       "Beheert alles"
+                },
+
+                new Department
+                {
+                    Id = 6,
+                    Name = "maintenance",
+                    Description =
+                      "Beheert alle storingen, monteurs"
                 });
             modelBuilder.Entity<Employee>().HasData(
                 new Employee
@@ -208,12 +216,35 @@ namespace BarrocIntens.Data
                 new Employee
                 {
                     Id = 4,
+                    Name = "Rooly",
+                    Email = "Rooly@rooly.nl",
+                    PhoneNumber = "0676287228",
+                    City = "Breda",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
+                    DepartmentId = 6,
+                },
+
+                new Employee
+                {
+                    Id = 5,
                     Name = "Root",
                     Email = "Root@root.nl",
                     PhoneNumber = "0675287128",
                     City = "Breda",
                     Password = BCrypt.Net.BCrypt.HashPassword("Root"),
                     DepartmentId = 5,
+                },
+
+
+                new Employee
+                {
+                    Id = 6,
+                    Name = "Marius The Aquarius",
+                    Email = "MariThe@Aquari.nl",
+                    PhoneNumber = "0685288128",
+                    City = "Breda",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Welkom123"),
+                    DepartmentId = 6,
                 });
 
             modelBuilder.Entity<Malfunction>().HasData(
