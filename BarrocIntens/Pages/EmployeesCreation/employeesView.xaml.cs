@@ -1,5 +1,6 @@
 using BarrocIntens.Data;
 using BarrocIntens.Pages.Customers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -45,13 +46,20 @@ namespace BarrocIntens.Pages.EmployeesCreation
             var nameFilter = employeesNameSearchTextBox.Text?.ToLower() ?? string.Empty;
             var departmentFilter = departmentSearchTextBox.Text?.ToLower() ?? string.Empty;
 
-            var query = db.Employees.AsQueryable();
+            // 1. Include the Department table
+            // 2. Filter out anyone in the "Maintenance" department
+            var query = db.Employees
+                .Include(e => e.Department)
+                .Where(e => e.Department.Name != "Maintenance") // <--- This hides the technicians
+                .AsQueryable();
 
+            // Filtering by name
             if (!string.IsNullOrWhiteSpace(nameFilter))
                 query = query.Where(c => c.Name.ToLower().Contains(nameFilter));
 
-            //if (!string.IsNullOrWhiteSpace(departmentFilter))
-            //    query = query.Where(c => c.Department.ToLower().Contains(departmentFilter));
+            // Fix your commented-out department filter too!
+            if (!string.IsNullOrWhiteSpace(departmentFilter))
+                query = query.Where(c => c.Department.Name.ToLower().Contains(departmentFilter));
 
             employeesListView.ItemsSource = query
                 .ToList();

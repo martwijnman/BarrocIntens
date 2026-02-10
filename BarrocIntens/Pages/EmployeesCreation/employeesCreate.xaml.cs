@@ -29,6 +29,13 @@ public sealed partial class employeesCreate : Page
     public employeesCreate()
     {
         InitializeComponent();
+        LoadDepartments();
+    }
+
+    private void LoadDepartments()
+    {
+        using var db = new AppDbContext();
+        employeeDepartmentComboBox.ItemsSource = db.Departments.ToList();
     }
 
     private List<int> SelectedDepartmentIds = new();
@@ -85,9 +92,9 @@ public sealed partial class employeesCreate : Page
         }
 
         // Department check
-        if (employeeDepartmentComboBox.SelectedItem is not ComboBoxItem departmentItem)
+        if (employeeDepartmentComboBox.SelectedItem is not Department selectedDept)
         {
-            ErrorTextBlock.Text = "Medewerkers moeten een afdeling hebben";
+            ErrorTextBlock.Text = "Selecteer een afdeling";
             return;
         }
 
@@ -110,7 +117,7 @@ public sealed partial class employeesCreate : Page
             Password = hashedPassword,         // <-- hashed password
             PhoneNumber = employeePhoneTextBox.Text,
             City = employeeCityTextBox.Text,
-            DepartmentId = 1 // voeg nog department toe
+            DepartmentId = selectedDept.Id // Use the ID from the selection!
         };
 
         // Clear all inputs

@@ -107,36 +107,36 @@ namespace BarrocIntens.Pages.EmployeesCreation
                 return;
             }
 
-            if (!_passwordGenerated){
+            if (!_passwordGenerated)
+            {
                 ErrorTextBlock.Text = "Medewerker moet een wachtwoord hebben";
                 return;
             }
 
-            // Get password depending on visibility
-            string plainPassword = passwordVisible
-                ? passwordVisibleBox.Text
-                : generatePasswordBox.Password;
-
-            // Hash it
+            string plainPassword = passwordVisible ? passwordVisibleBox.Text : generatePasswordBox.Password;
             string hashedPassword = HashPassword(plainPassword);
 
-            // Update the existing employee
-            _employee.Name = employeeNameTextBox.Text;
-            _employee.Email = employeeEmailTextBox.Text;
-            _employee.Password = hashedPassword;
-            _employee.PhoneNumber = employeePhoneTextBox.Text;
-            _employee.City = employeeCityTextBox.Text;
-            _employee.DepartmentId = 1; // vervang met toggle
-
-            // Save changes
             using (var db = new AppDbContext())
             {
-                db.Employees.Update(_employee);
-                db.SaveChanges();
-                Frame.Navigate(typeof(employeesView));
-            }
+                // Fetch the employee from the DB using the ID we have
+                var employeeToUpdate = db.Employees.Find(_employee.Id);
 
-            CheckTextBlock.Text = "Medewerker succesvol opgeslagen!";
+                if (employeeToUpdate != null)
+                {
+                    // Update only the properties that changed
+                    employeeToUpdate.Name = employeeNameTextBox.Text;
+                    employeeToUpdate.Email = employeeEmailTextBox.Text;
+                    employeeToUpdate.PhoneNumber = employeePhoneTextBox.Text;
+                    employeeToUpdate.City = employeeCityTextBox.Text;
+                    employeeToUpdate.DepartmentId = selectedDept.Id; // This will now work!
+
+                    // Only update password if you actually generated a new one/changed it
+                    employeeToUpdate.Password = hashedPassword;
+
+                    db.SaveChanges();
+                    Frame.Navigate(typeof(employeesView));
+                }
+            }
         }
 
 
@@ -144,31 +144,18 @@ namespace BarrocIntens.Pages.EmployeesCreation
 
         private void GeneratePassword_Click(object sender, RoutedEventArgs e)
         {
-            string newPass = GeneratePassword(6);
+            // Call the generation logic
+            string newPass = GeneratePasswords(6);
 
+            // Update the UI boxes
             generatePasswordBox.Password = newPass;
             passwordVisibleBox.Text = newPass;
 
+            // Flip the switch so the Save button knows we are ready!
             _passwordGenerated = true;
-        }
 
-        private string GeneratePassword(int length)
-        {
-            const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            const string lower = "abcdefghijklmnopqrstuvwxyz";
-            const string digits = "0123456789";
-            const string symbols = "!@#$%^&*()_-+=<>?";
-
-            string allChars = upper + lower + digits + symbols;
-            var random = new Random();
-            char[] password = new char[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                password[i] = allChars[random.Next(allChars.Length)];
-            }
-
-            return new string(password);
+            // Clear any previous error message
+            ErrorTextBlock.Text = "";
         }
 
 
@@ -243,6 +230,26 @@ namespace BarrocIntens.Pages.EmployeesCreation
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.GoBack();
+        }
+
+
+        private string GeneratePasswords(int length)
+        {
+            const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string lower = "abcdefghijklmnopqrstuvwxyz";
+            const string digits = "0123456789";
+            const string symbols = "!@#$%^&*()_-+=<>?";
+
+            string allChars = upper + lower + digits + symbols;
+            var random = new Random();
+            char[] password = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                password[i] = allChars[random.Next(allChars.Length)];
+            }
+
+            return new string(password);
         }
     }
 }

@@ -121,7 +121,7 @@
                                     Padding="6,2"
                                     HorizontalAlignment="Left">
 
-                                    <TextBlock Text="{x:Bind Department}"
+                                    <TextBlock Text="{x:Bind Department.Name, Mode=OneWay}"
                                            FontSize="12"
                                            Foreground="#FFD600"/>
                                 </Border>
