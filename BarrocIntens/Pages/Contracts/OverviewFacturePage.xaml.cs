@@ -1,4 +1,4 @@
-using BarrocIntens.Data;
+﻿using BarrocIntens.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI;
 using Microsoft.UI.Text;
@@ -42,13 +42,15 @@ namespace BarrocIntens.Pages.Contracts
                 if (factures.Any())
                 {
                     FactureListView.ItemsSource = factures;
-                    NoResultText.Text = string.Empty;
+                    NoResultText.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     FactureListView.ItemsSource = null;
                     NoResultText.Text = "Geen facturen";
+                    NoResultText.Visibility = Visibility.Visible;
                 }
+
 
             }
 
@@ -71,39 +73,33 @@ namespace BarrocIntens.Pages.Contracts
                 .ThenInclude(q => q.Customer)
                 .AsQueryable();
 
-            string selectedStatus = PaidCombobox.SelectedItem as string;
+            var selected = PaidCombobox.SelectedItem as string;
 
-            switch (selectedStatus)
-            {
-                case "Betaald":
-                    query = query.Where(f => f.IsPaid);
-                    break;
-
-                case "Niet betaald":
-                    query = query.Where(f => !f.IsPaid);
-                    break;
-            }
+            if (selected == "Betaald")
+                query = query.Where(f => f.IsPaid);
+            else if (selected == "Niet betaald")
+                query = query.Where(f => !f.IsPaid);
+            // "Alles" = niks doen
 
             var result = query.ToList();
 
             FactureListView.ItemsSource = result;
-            NoResultText.Text = result.Any() ? "" : "Geen facturen gevonden";
+            NoResultText.Visibility = result.Any() ? Visibility.Collapsed : Visibility.Visible;
+            NoResultText.Text = "Geen facturen gevonden";
         }
+
         private async Task ShowFactureDetailDialog(Facture facture)
         {
             var dialog = new ContentDialog
             {
                 Title = "Factuur details",
                 PrimaryButtonText = "Sluiten",
-                DefaultButton = ContentDialogButton.Primary
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = this.XamlRoot   // 🔥 DIT WAS DE BUG
             };
 
-            var root = new StackPanel
-            {
-                Spacing = 16
-            };
+            var root = new StackPanel { Spacing = 16 };
 
-            // ID
             root.Children.Add(new TextBlock
             {
                 Text = $"Factuur #{facture.Id}",
@@ -111,7 +107,6 @@ namespace BarrocIntens.Pages.Contracts
                 Foreground = new SolidColorBrush(Colors.Gray)
             });
 
-            // Klant
             root.Children.Add(new TextBlock
             {
                 Text = facture.Quote.Customer.Name,
@@ -119,16 +114,14 @@ namespace BarrocIntens.Pages.Contracts
                 FontWeight = FontWeights.SemiBold
             });
 
-            // Totaalprijs
             root.Children.Add(new TextBlock
             {
-                Text = $"� {facture.TotalPrice:0.00}",
+                Text = $"€ {facture.TotalPrice:0.00}",
                 FontSize = 18,
                 FontWeight = FontWeights.Bold,
                 Foreground = new SolidColorBrush(Colors.Gold)
             });
 
-            // Status
             root.Children.Add(new TextBlock
             {
                 Text = facture.IsPaid ? "Betaald" : "Niet betaald",
@@ -137,28 +130,9 @@ namespace BarrocIntens.Pages.Contracts
                 Foreground = facture.PayColor
             });
 
-            // Datums
-            var dateGrid = new Grid();
-            dateGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            dateGrid.ColumnDefinitions.Add(new ColumnDefinition());
-
-            dateGrid.Children.Add(new TextBlock
-            {
-                Text = $"Start: {facture.StartDate}",
-            });
-
-            dateGrid.Children.Add(new TextBlock
-            {
-                Text = $"Einde: {facture.EndDate}",
-            });
-
-            root.Children.Add(dateGrid);
-
             dialog.Content = root;
 
             await dialog.ShowAsync();
-        }
-
-
+        } 
     }
 }
