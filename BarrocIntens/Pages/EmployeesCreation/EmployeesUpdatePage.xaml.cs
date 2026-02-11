@@ -114,7 +114,7 @@ namespace BarrocIntens.Pages.EmployeesCreation
             }
 
             string plainPassword = passwordVisible ? passwordVisibleBox.Text : generatePasswordBox.Password;
-            string hashedPassword = HashPassword(plainPassword);
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(plainPassword);
 
             using (var db = new AppDbContext())
             {
@@ -198,16 +198,6 @@ namespace BarrocIntens.Pages.EmployeesCreation
             if (passwordVisible)
             {
                 generatePasswordBox.Password = passwordVisibleBox.Text;
-            }
-        }
-
-        private string HashPassword(string password)
-        {
-            using (var sha = System.Security.Cryptography.SHA256.Create())
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(password);
-                var hash = sha.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
             }
         }
 
